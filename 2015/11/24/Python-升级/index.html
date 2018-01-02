@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Python 升级 | 有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="转载http://blog.csdn.net/liang19890820 简述CentOS 7 中默认安装了 Python，版本比较低（2.7.5），为了使用新版 3.x，需要对旧版本进行升级。">
+<meta name="keywords" content="LINUX">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python 升级">
+<meta property="og:url" content="http://yoursite.com/2015/11/24/Python-升级/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="转载http://blog.csdn.net/liang19890820 简述CentOS 7 中默认安装了 Python，版本比较低（2.7.5），为了使用新版 3.x，需要对旧版本进行升级。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://img.blog.csdn.net/20160907144113323">
+<meta property="og:image" content="http://img.blog.csdn.net/20160907150938094">
+<meta property="og:updated_time" content="2017-12-05T02:03:56.811Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python 升级">
+<meta name="twitter:description" content="转载http://blog.csdn.net/liang19890820 简述CentOS 7 中默认安装了 Python，版本比较低（2.7.5），为了使用新版 3.x，需要对旧版本进行升级。">
+<meta name="twitter:image" content="http://img.blog.csdn.net/20160907144113323">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Python-升级" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/11/24/Python-升级/" class="article-date">
+  <time datetime="2015-11-24T13:20:59.000Z" itemprop="datePublished">2015-11-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python 升级
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>转载<a href="http://blog.csdn.net/liang19890820" target="_blank" rel="noopener">http://blog.csdn.net/liang19890820</a></p>
+<h1 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h1><p>CentOS 7 中默认安装了 Python，版本比较低（2.7.5），为了使用新版 3.x，需要对旧版本进行升级。<a id="more"></a></p>
+<p>由于很多基本的命令、软件包都依赖旧版本，比如：yum。所以，在更新 Python 时，建议不要删除旧版本（新旧版本可以共存）。</p>
+<ul>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#简述" target="_blank" rel="noopener">简述</a></li>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#查看-python-版本号" target="_blank" rel="noopener">查看 Python 版本号</a></li>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#下载新版本" target="_blank" rel="noopener">下载新版本</a></li>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#解压缩" target="_blank" rel="noopener">解压缩</a></li>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#安装配置" target="_blank" rel="noopener">安装配置</a></li>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#编译-安装" target="_blank" rel="noopener">编译 安装</a></li>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#验证" target="_blank" rel="noopener">验证</a></li>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#设置-3x-为默认版本" target="_blank" rel="noopener">设置 3x 为默认版本</a></li>
+<li><a href="http://blog.csdn.net/liang19890820/article/details/51079633#配置-yum" target="_blank" rel="noopener">配置 yum</a></li>
+</ul>
+<h1 id="查看-Python-版本号"><a href="#查看-Python-版本号" class="headerlink" title="查看 Python 版本号"></a>查看 Python 版本号</h1><p>当 Linux 上安装 Python 后（默认安装），只需要输入简单的命令，就可以查看 Python 的版本号：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># python -V</span><br><span class="line">Python 2.7.512</span><br></pre></td></tr></table></figure>
+<p>或者是：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># python --version</span><br><span class="line">Python 2.7.512</span><br></pre></td></tr></table></figure>
+<p>可以看出，系统自带的 Python 版本是 2.7.5。</p>
+<h1 id="下载新版本"><a href="#下载新版本" class="headerlink" title="下载新版本"></a>下载新版本</h1><p>进入 <a href="https://www.python.org/ftp/python/" target="_blank" rel="noopener">Python下载页面</a>，选择需要的版本。</p>
+<p>这里，我选择的版本是 3.5.2 。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># wget https://www.python.org/ftp/python/3.5.2/Python-3.5.2.tgz1</span><br></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20160907144113323" alt="这里写图片描述"></p>
+<h1 id="解压缩"><a href="#解压缩" class="headerlink" title="解压缩"></a>解压缩</h1><p>下载完成之后，进行解压缩：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># tar -zxvf Python-3.5.2.tgz1</span><br></pre></td></tr></table></figure>
+<h1 id="安装配置"><a href="#安装配置" class="headerlink" title="安装配置"></a>安装配置</h1><p>进入解压缩后的目录，安装配置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># cd Python-3.5.2/</span><br><span class="line"># ./configure 12</span><br></pre></td></tr></table></figure>
+<p>执行 ./configure 时，如果报错：</p>
+<blockquote>
+<p>configure: error: no acceptable C compiler found in $PATH</p>
+</blockquote>
+<p>说明没有安装合适的编译器。这时，需要安装/升级 gcc 及其它依赖包。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># yum install make gcc gcc-c++ 1</span><br></pre></td></tr></table></figure>
+<p>完成之后，重新执行：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ./configure 1</span><br></pre></td></tr></table></figure>
+<p><img src="http://img.blog.csdn.net/20160907150938094" alt="这里写图片描述"></p>
+<h1 id="编译-amp-安装"><a href="#编译-amp-安装" class="headerlink" title="编译 &amp; 安装"></a>编译 &amp; 安装</h1><p>配置完成之后，就可以编译了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># make 1</span><br></pre></td></tr></table></figure>
+<p>漫长的等待……完成后，安装：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># make install 1</span><br></pre></td></tr></table></figure>
+<h1 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h1><p>安装成功以后，就可以查看 Python 的版本了：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># python -V</span><br><span class="line">Python 2.7.5</span><br><span class="line"># python3 -V</span><br><span class="line">Python 3.5.21234</span><br></pre></td></tr></table></figure>
+<p>一个是旧版本 2.x，另外一个是新版本 3.x。</p>
+<p><strong>注意：</strong>在 /usr/local/bin/ 下有一个 python3 的链接，指向 bin 目录下的 python 3.5。</p>
+<h1 id="设置-3-x-为默认版本"><a href="#设置-3-x-为默认版本" class="headerlink" title="设置 3.x 为默认版本"></a>设置 3.x 为默认版本</h1><p>查看 Python 的路径，在 /usr/bin 下面。可以看到 python 链接的是 python 2.7，所以，执行 python 就相当于执行 python 2.7。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># ls -al /usr/bin | grep python</span><br><span class="line">-rwxr-xr-x.  1 root root      11216 12月  1 2015 abrt-action-analyze-python</span><br><span class="line">lrwxrwxrwx.  1 root root          7 8月  30 12:11 python -&gt; python2</span><br><span class="line">lrwxrwxrwx.  1 root root          9 8月  30 12:11 python2 -&gt; python2.7</span><br><span class="line">-rwxr-xr-x.  1 root root       7136 11月 20 2015 python2.712345</span><br></pre></td></tr></table></figure>
+<p>将原来 python 的软链接重命名：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># mv /usr/bin/python /usr/bin/python.bak1</span><br></pre></td></tr></table></figure>
+<p>将 python 链接至 python3：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># ln -s /usr/local/bin/python3 /usr/bin/python1</span><br></pre></td></tr></table></figure>
+<p>这时，再查看 Python 的版本：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"># python -V</span><br><span class="line">Python 3.5.212</span><br></pre></td></tr></table></figure>
+<p>输出的是 3.x，说明已经使用的是 python3了。</p>
+<h1 id="配置-yum"><a href="#配置-yum" class="headerlink" title="配置 yum"></a>配置 yum</h1><p>升级 Python 之后，由于将默认的 python 指向了 python3，yum 不能正常使用，需要编辑 yum 的配置文件：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vi /usr/bin/yum1</span><br></pre></td></tr></table></figure>
+<p>同时修改：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"># vi /usr/libexec/urlgrabber-ext-down1</span><br></pre></td></tr></table></figure>
+<p>将 #!/usr/bin/python 改为 #!/usr/bin/python2.7，保存退出即可。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2015/11/24/Python-升级/" data-id="cjbxg202a000hj0m6sib556ng" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LINUX/">LINUX</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/24/性能测试——腾讯GT/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          性能测试 腾讯GT
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/10/19/Ubuntu下修改环境变量的三种方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Ubuntu下修改环境变量的三种方法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

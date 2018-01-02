@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives | 有志青年</title>
+  <title>python 数据集的使用sklearn | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="from sklearn import svm, datasets   class Dataset:     # 我们创造一个dataset的类，这个类会帮我们下载相关的数据集，     # 并给我们分类好x,y     def __init__(self, name):         # 告诉类，我们需要哪一个数据集         # 我们有两个选择，一个是&amp;apos;iris&amp;apos;一">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 数据集的使用sklearn">
+<meta property="og:url" content="http://yoursite.com/2017/01/10/python-数据集的使用/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="from sklearn import svm, datasets   class Dataset:     # 我们创造一个dataset的类，这个类会帮我们下载相关的数据集，     # 并给我们分类好x,y     def __init__(self, name):         # 告诉类，我们需要哪一个数据集         # 我们有两个选择，一个是&amp;apos;iris&amp;apos;一">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-05T03:05:31.174Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="python 数据集的使用sklearn">
+<meta name="twitter:description" content="from sklearn import svm, datasets   class Dataset:     # 我们创造一个dataset的类，这个类会帮我们下载相关的数据集，     # 并给我们分类好x,y     def __init__(self, name):         # 告诉类，我们需要哪一个数据集         # 我们有两个选择，一个是&amp;apos;iris&amp;apos;一">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,216 +65,120 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/11/python-购物车实例代码/" class="archive-article-date">
-  <time datetime="2017-09-10T18:02:59.000Z" itemprop="datePublished">Sep 11</time>
+        <section id="main"><article id="post-python-数据集的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/10/python-数据集的使用/" class="article-date">
+  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">2017-01-10</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+    <h1 class="article-title" itemprop="name">
+      python 数据集的使用sklearn
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/08/21/python-反射/" class="archive-article-date">
-  <time datetime="2017-08-21T04:02:59.000Z" itemprop="datePublished">Aug 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/21/python-反射/">python 反射</a>
-    </h1>
-  
+        <pre><code>from sklearn import svm, datasets
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/21/python-序列化/" class="archive-article-date">
-  <time datetime="2017-07-20T18:20:59.000Z" itemprop="datePublished">Jul 21</time>
-</a>
+
+class Dataset:
+    # 我们创造一个dataset的类，这个类会帮我们下载相关的数据集，
+    # 并给我们分类好x,y
+    def __init__(self, name):
+        # 告诉类，我们需要哪一个数据集
+        # 我们有两个选择，一个是&apos;iris&apos;一个是&apos;digits&apos;
+        self.name = name
+
+    def download_data(self):
+        # 从sklearn的自带集中下载我们指定的数据集
+        if self.name == &apos;iris&apos;:
+            # 这里是sklearn自带的数据集下载方法，更多信息可以参照官网
+            self.downloaded_data = datasets.load_iris()
+        elif self.name == &apos;digits&apos;:
+            self.downloaded_data = datasets.load_digits()
+        else:
+            # 如果不是我们预想的两种数据集，则报错
+            print(&apos;Dataset Error: No named datasets&apos;)
+
+    def generate_xy(self):
+        # 通过这个过程来把我们的数据集分为原始数据以及他们的label
+        # 我们先把数据下载下来
+        self.download_data()
+        x = self.downloaded_data.data
+        y = self.downloaded_data.target
+        print(&apos;\nOriginal data looks like this: \n&apos;, x)
+        print(&apos;\nLabels looks like this: \n&apos;, y)
+        return x, y
+
+    def get_train_test_set(self, ratio):
+        # 这里，我们把所有的数据分成训练集和测试集
+        # 一个参数要求我们告知，我们以多少的比例来分割训练和测试集
+        # 首先，我们把XY给generate出来：
+        x, y = self.generate_xy()
+
+        # 有个比例，我们首先得知道 一共有多少的数据
+        n_samples = len(x)
+        # 于是我们知道，有多少应该是训练集，多少应该是测试集
+        n_train = int( n_samples * ratio)
+        # 好了，接下来我们分割数据
+        X_train = x[:n_train]
+        y_train = y[:n_train]
+        X_test = x[n_train:]
+        y_test = y[n_train:]
+        # 好，我们得到了所有想要的玩意儿
+        return X_train, y_train, X_test, y_test
+
+    # ====== 我们的dataset类创造完毕=======
+
+    # 比如，我们使用digits数据集
+
+
+data = Dataset(&apos;digits&apos;)
+# 接着，我们可以用0.7的分割率把xy给分割出来
+X_train, y_train, X_test, y_test = data.get_train_test_set(0.7)
+</code></pre>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/21/python-序列化/">python 序列化</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/12/python-property/" class="archive-article-date">
-  <time datetime="2017-06-12T07:20:59.000Z" itemprop="datePublished">Jun 12</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/10/python-数据集的使用/" data-id="cjbxg203r001qj0m6nv63ldgh" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/12/python-property/">python property</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/05/13/python__slots__/" class="archive-article-date">
-  <time datetime="2017-05-13T05:20:59.000Z" itemprop="datePublished">May 13</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/13/python__slots__/">python __slots__</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/02/21/python-文件的读写/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          python 文件读写
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/02/python-生成器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">python生成器，集合，字典，切片，迭代器</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/04/27/python-斐波那契实现/" class="archive-article-date">
-  <time datetime="2017-04-27T03:20:59.000Z" itemprop="datePublished">Apr 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/27/python-斐波那契实现/">python 斐波那契</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/求1000内的素数/" class="archive-article-date">
-  <time datetime="2017-03-21T04:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/求1000内的素数/">python 求1000内的素数</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/python__getitem__ 实现 下标操作/" class="archive-article-date">
-  <time datetime="2017-03-21T01:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/python__getitem__ 实现 下标操作/">python __getitem__ 实现 下标操作</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/02/21/python-文件的读写/" class="archive-article-date">
-  <time datetime="2017-02-20T18:20:59.000Z" itemprop="datePublished">Feb 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/21/python-文件的读写/">python 文件读写</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/10/python-数据集的使用/" class="archive-article-date">
-  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">Jan 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/10/python-数据集的使用/">python 数据集的使用sklearn</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Suivant &raquo;</a>
-  </nav>
 
 </section>
         

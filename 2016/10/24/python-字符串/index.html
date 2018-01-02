@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives | 有志青年</title>
+  <title>python 字符串 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="##字符串 # coding:utf-8 # 字符串 # 练习1：字符串翻转 # 1.将字符串转为数组 # 2.然后倒叙遍历数组，并把倒叙的内容赋值给新数组 # 3.然后新建字符串拼接新数组  mOrigin = &amp;quot; i love china    &amp;quot;; mOriginList = list(mOrigin); mSub = mOrigin.split(&amp;quot; &amp;quot">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python 字符串">
+<meta property="og:url" content="http://yoursite.com/2016/10/24/python-字符串/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="##字符串 # coding:utf-8 # 字符串 # 练习1：字符串翻转 # 1.将字符串转为数组 # 2.然后倒叙遍历数组，并把倒叙的内容赋值给新数组 # 3.然后新建字符串拼接新数组  mOrigin = &amp;quot; i love china    &amp;quot;; mOriginList = list(mOrigin); mSub = mOrigin.split(&amp;quot; &amp;quot">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-05T02:45:56.700Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="python 字符串">
+<meta name="twitter:description" content="##字符串 # coding:utf-8 # 字符串 # 练习1：字符串翻转 # 1.将字符串转为数组 # 2.然后倒叙遍历数组，并把倒叙的内容赋值给新数组 # 3.然后新建字符串拼接新数组  mOrigin = &amp;quot; i love china    &amp;quot;; mOriginList = list(mOrigin); mSub = mOrigin.split(&amp;quot; &amp;quot">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,216 +65,207 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/11/python-购物车实例代码/" class="archive-article-date">
-  <time datetime="2017-09-10T18:02:59.000Z" itemprop="datePublished">Sep 11</time>
+        <section id="main"><article id="post-python-字符串" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/24/python-字符串/" class="article-date">
+  <time datetime="2016-10-24T03:20:59.000Z" itemprop="datePublished">2016-10-24</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+    <h1 class="article-title" itemprop="name">
+      python 字符串
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/08/21/python-反射/" class="archive-article-date">
-  <time datetime="2017-08-21T04:02:59.000Z" itemprop="datePublished">Aug 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/21/python-反射/">python 反射</a>
-    </h1>
-  
+        <p>##字符串</p>
+<pre><code># coding:utf-8
+# 字符串
+# 练习1：字符串翻转
+# 1.将字符串转为数组
+# 2.然后倒叙遍历数组，并把倒叙的内容赋值给新数组
+# 3.然后新建字符串拼接新数组
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/21/python-序列化/" class="archive-article-date">
-  <time datetime="2017-07-20T18:20:59.000Z" itemprop="datePublished">Jul 21</time>
-</a>
+mOrigin = &quot; i love china    &quot;;
+mOriginList = list(mOrigin);
+mSub = mOrigin.split(&quot; &quot;);
+mSubList = list(mSub);
+mZ = len(mSubList);
+mZ = mZ - 1;
+mResult = [];
+while (mZ &gt;= 0):
+    mResult.append(mSubList[mZ]);
+    mZ = mZ - 1;
+
+mR = &quot; &quot;.join(mResult);
+
+print(mR);
+
+# 练习2：打印100000中的素数 素数：只能被1和自己整除的数字 方法：如果m不能被2~√m间任一整数整除，m必定是素数
+import math;
+
+empt = 0;
+i = 3;
+while (i &lt;= 100):
+
+    j = 2;
+    while (j &lt;= math.sqrt(i)):
+        if (i != j):
+            x = i % j;
+            if (x == 0):
+                empt = 0;
+                break;
+            else:
+                j += 1;
+                empt = i;
+                continue;
+    i += 1;
+    if (empt != 0):
+        print(empt);
+
+# 方法定义：
+print(&quot;################################################&quot;);
+
+
+def fun_one(arg1, arg2):
+    print(arg1, arg2);
+    return arg1, arg2;
+
+
+result = fun_one(1, 2);
+print(type(result));  # &lt;type &apos;tuple&apos;&gt; tuple:元组:等价一个不可变数组
+print(result[0]);
+print(result[1]);
+
+
+# 函数参数默认值
+def fun_two(arg1, arg2=500):
+    print(&quot;1=&quot;, arg1);
+    print(&quot;2=&quot;, arg2);
+    return arg1 + arg2;
+
+
+print(fun_two(1, 2));
+print(fun_two(1));
+
+print(fun_two(arg1=300, arg2=100))
+
+
+# 可变参数  *numbers表示把输入的参数放到一个数组中 元组
+def func(name, *numbers):
+    print(name)
+    print(numbers)
+
+
+func(&apos;Tom&apos;, &quot;;1&quot;, 2, 3, 4)
+
+
+# 可变参数必须在最后
+def func1(*numbers):
+    print(numbers)
+
+
+func1(&apos;Tom&apos;, 1, 2, 3, 4, &quot;leequer&quot;);
+
+
+# 命名关键字参数
+# *用于和普通参数做分割，*后面的参数必须带参数名，*args一样效果
+# def func( a, b, c, *, china, uk):
+#    print(china, uk)
+# func(china = &apos;Beijing&apos;, uk = &apos;London&apos;)  # 必须传入参数名
+# 递归的经典例子！
+def fib(n):
+    if n &lt; 1:
+        raise ValueError
+    elif (n == 1) or (n == 2):
+        return 1
+    else:
+        return fib(n - 1) + fib(n - 2)
+
+
+print(fib(1))
+print(fib(2))
+print(fib(3))
+print(fib(4))
+print(fib(5))
+print(fib(6))
+
+
+# 练习3；自己实现可变参数的函数
+def fun_MyAotuFun(a, b, c):
+    resultArray = [];
+    resultArray.append(a);
+    resultArray.append(b);
+    resultArray.append(c)
+    print(resultArray);
+
+
+fun_MyAotuFun(1, &quot;123&quot;, 0);
+# 练习4：自己解决汉诺塔问题  相传在古印度圣庙中，有一种被称为汉诺塔(Hanoi)的游戏。该游戏是在一块铜板装置上，有三根杆(编号A、B、C)，在A杆自下而上、由大到小按顺序放置64个金盘(如下图)。游戏的目标：把A杆上的金盘全部移到C杆上，并仍保持原有顺序叠好。操作规则：每次只能移动一个盘子，并且在移动过程中三根杆上都始终保持大盘在下，小盘在上，操作过程中盘子可以置于A、B、C任一杆上。
+# 第一步：将n-1个盘子从A柱移动至B柱（借助C柱为过渡柱）
+
+# 第二步：将A柱底下最大的盘子移动至C柱
+
+# 第三步：将B柱的n-1个盘子移至C柱（借助A柱为过渡柱）
+print(&quot;#实现移动的函数#&quot;)
+
+
+# coding:utf-8
+def move(n, source, target, helper):
+    if n == 1:
+        print
+        source + &apos; -&gt; &apos; + target
+    else:
+        move(n - 1, source, helper, target)
+        print
+        source + &apos; -&gt; &apos; + target
+        move(n - 1, helper, target, source)
+
+
+move(3, &apos;A&apos;, &apos;B&apos;, &apos;C&apos;)
+</code></pre>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/21/python-序列化/">python 序列化</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/12/python-property/" class="archive-article-date">
-  <time datetime="2017-06-12T07:20:59.000Z" itemprop="datePublished">Jun 12</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/24/python-字符串/" data-id="cjbxg203y001vj0m62t4z6a8o" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/12/python-property/">python property</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/05/13/python__slots__/" class="archive-article-date">
-  <time datetime="2017-05-13T05:20:59.000Z" itemprop="datePublished">May 13</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/13/python__slots__/">python __slots__</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/11/04/python-包的导入/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          python包的导入
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/人脸识别开发记录/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">android 人脸识别开发记录</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/04/27/python-斐波那契实现/" class="archive-article-date">
-  <time datetime="2017-04-27T03:20:59.000Z" itemprop="datePublished">Apr 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/27/python-斐波那契实现/">python 斐波那契</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/求1000内的素数/" class="archive-article-date">
-  <time datetime="2017-03-21T04:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/求1000内的素数/">python 求1000内的素数</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/python__getitem__ 实现 下标操作/" class="archive-article-date">
-  <time datetime="2017-03-21T01:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/python__getitem__ 实现 下标操作/">python __getitem__ 实现 下标操作</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/02/21/python-文件的读写/" class="archive-article-date">
-  <time datetime="2017-02-20T18:20:59.000Z" itemprop="datePublished">Feb 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/21/python-文件的读写/">python 文件读写</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/10/python-数据集的使用/" class="archive-article-date">
-  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">Jan 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/10/python-数据集的使用/">python 数据集的使用sklearn</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Suivant &raquo;</a>
-  </nav>
 
 </section>
         

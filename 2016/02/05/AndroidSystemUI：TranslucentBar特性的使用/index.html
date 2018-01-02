@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>（转）Translucent System Bar 的最佳实践 | 有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文是转载自 Translucent System Bar 的最佳实践的文章。直接从作者github checkout 有些问题 ，也许是自己本地环境的问题，于是自己建个项目。本地代码下载 效果一样，在5.0系统测试可以达到文章中说的效果，在android4.0系统不能达到效果，文中也说了在android4.4之后起作用。">
+<meta name="keywords" content="AndroidUI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="（转）Translucent System Bar 的最佳实践">
+<meta property="og:url" content="http://yoursite.com/2016/02/05/AndroidSystemUI：TranslucentBar特性的使用/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="本文是转载自 Translucent System Bar 的最佳实践的文章。直接从作者github checkout 有些问题 ，也许是自己本地环境的问题，于是自己建个项目。本地代码下载 效果一样，在5.0系统测试可以达到文章中说的效果，在android4.0系统不能达到效果，文中也说了在android4.4之后起作用。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/838ba61ea8d3fd1fd67f8243374e251f95ca5f50.jpg">
+<meta property="og:image" content="http://yoursite.com/img/9345d688d43f879416be6a57d51b0ef41bd53a01.jpg">
+<meta property="og:image" content="http://yoursite.com/img/0824ab18972bd407f672f1847c899e510fb30915.jpg">
+<meta property="og:image" content="http://yoursite.com/img/7aec54e736d12f2ed836811948c2d56285356893.jpg">
+<meta property="og:image" content="http://yoursite.com/img/63d0f703918fa0ecc0b53174219759ee3d6ddb5d.jpg">
+<meta property="og:image" content="http://yoursite.com/img/5d6034a85edf8db1f9d12c1d0e23dd54574e74cf.jpg">
+<meta property="og:image" content="http://yoursite.com/img/f636afc379310a55c9cd928db04543a9832610d9.jpg">
+<meta property="og:image" content="http://yoursite.com/img/0dd7912397dda1444a4427cbb5b7d0a20cf4867e.jpg">
+<meta property="og:image" content="http://yoursite.com/img/960a304e251f95cae09927cfce177f3e6709525e.jpg">
+<meta property="og:image" content="http://yoursite.com/img/1e30e924b899a901cb46e14f1a950a7b0208f55c.jpg">
+<meta property="og:updated_time" content="2017-02-20T09:26:41.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="（转）Translucent System Bar 的最佳实践">
+<meta name="twitter:description" content="本文是转载自 Translucent System Bar 的最佳实践的文章。直接从作者github checkout 有些问题 ，也许是自己本地环境的问题，于是自己建个项目。本地代码下载 效果一样，在5.0系统测试可以达到文章中说的效果，在android4.0系统不能达到效果，文中也说了在android4.4之后起作用。">
+<meta name="twitter:image" content="http://yoursite.com/img/838ba61ea8d3fd1fd67f8243374e251f95ca5f50.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-AndroidSystemUI：TranslucentBar特性的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/02/05/AndroidSystemUI：TranslucentBar特性的使用/" class="article-date">
+  <time datetime="2016-02-05T03:20:59.000Z" itemprop="datePublished">2016-02-05</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      （转）Translucent System Bar 的最佳实践
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文是转载自 <a href="http://www.jianshu.com/p/0acc12c29c1b" target="_blank" rel="noopener">Translucent System Bar 的最佳实践</a>的文章。直接从作者github checkout 有些问题 ，也许是自己本地环境的问题，于是自己建个项目。<a href="/code/AndroidSystemUiTraining.zip">本地代码下载</a> 效果一样，在5.0系统测试可以达到文章中说的效果，在android4.0系统不能达到效果，文中也说了在android4.4之后起作用。<a id="more"></a></p>
+<p>近几天准备抽空总结Android一些系统UI的实践使用，于是开始动手建了一个库 <a href="https://github.com/D-clock/AndroidSystemUiTraining" target="_blank" rel="noopener">AndroidSystemUiTraining</a> ，边撸代码边写总结</p>
+<p>今天开写第一篇，对 Translucent System Bar 的实践做一些总结。说起 Translucent System Bar 的特性，可能有些朋友还比较陌生，这里做一下简单的介绍。</p>
+<p><img src="/img/838ba61ea8d3fd1fd67f8243374e251f95ca5f50.jpg" alt="Android 4.3豌豆荚"></p>
+<p>看上图，Android 4.4之前，即使我们打开手机app，我们还总是能看到系统顶部那条黑乎乎的通知栏，这样会使得app稍显突兀。于是Android 4.4开始，便引入了Translucent System Bar的系特性，用于弥补系统通知栏突兀之处。（估计也是向ios学习，因为ios一大早就有这个特性）。我们先来看看 Translucent System Bar 新特性引入后，发生了什么样的变化。下面截取了 <strong>中华万年历的天气预报界面</strong> 和 <strong>QQ音乐主界面</strong> 的效果（两个界面的效果实现 Translucent System Bar 的方式有些区别，下文会细讲）</p>
+<p><img src="/img/9345d688d43f879416be6a57d51b0ef41bd53a01.jpg" alt="中华万年历"> <img src="/img/0824ab18972bd407f672f1847c899e510fb30915.jpg" alt="QQ音乐"></p>
+<p>可以看到，系统的通知栏和app界面融为一体，妈妈再也不用面对黑乎乎的通知栏了。有关 Translucent System Bar 的特性就暂且介绍到此。</p>
+<h2 id="工程简介"><a href="#工程简介" class="headerlink" title="工程简介"></a>工程简介</h2><p>先简单介绍一下工程的结构，核心部分已经圈出，待我逐一讲解</p>
+<p><img src="/img/7aec54e736d12f2ed836811948c2d56285356893.jpg" alt="工程结构"></p>
+<ul>
+<li><p>主要的操作都在style.xml 和 AndroidManifest.xml 中，Activity里面没有任何涉及到Translucent System Bar设置的代码，所以可以忽略不看。</p>
+</li>
+<li><p>ColorTranslucentBarActivity 和 ImageTranslucentBarActivity 分别用于展示两种不同实现方式的效果</p>
+</li>
+<li><p>要在Activity中使用 Translucent System Bar 特性，首先需要到AndroidManifest中为指定的Activity设置Theme。但是需要注意的是，我们不能直接在<strong>values/style.xml</strong>直接去自定义 Translucet System Bar 的Theme，因为改特性仅兼容 Android 4.4 开始的平台，所以直接在<strong>values/style.xml</strong>声明引入，工程会报错。有些开发者朋友会在代码中去判断SDK的版本，然后再用代码设置Theme。虽然同样可以实现效果，但个人并不推崇这种做法。我所采取的方法则是建立多个SDK版本的values文件夹，系统会根据SDK的版本选择合适的Theme进行设置。大家可以看到上面我的工程里面有<strong>values</strong>、<strong>values-v19</strong>、<strong>values-v21</strong>。</p>
+</li>
+</ul>
+<h2 id="第一种方式"><a href="#第一种方式" class="headerlink" title="第一种方式"></a>第一种方式</h2><p>第一种方式，需要做下面三步设置</p>
+<p>1、在<strong>values</strong>、<strong>values-v19</strong>、<strong>values-v21</strong>的style.xml都设置一个 Translucent System Bar 风格的Theme</p>
+<p>values/style.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"ImageTranslucentTheme"</span> <span class="attr">parent</span>=<span class="string">"AppTheme"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!--在Android 4.4之前的版本上运行，直接跟随系统主题--&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>values-v19/style.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"ImageTranslucentTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.DarkActionBar"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowTranslucentStatus"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowTranslucentNavigation"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>values-v21/style.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"ImageTranslucentTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.DarkActionBar"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowTranslucentStatus"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowTranslucentNavigation"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="comment">&lt;!--Android 5.x开始需要把颜色设置透明，否则导航栏会呈现系统默认的浅灰色--&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:statusBarColor"</span>&gt;</span>@android:color/transparent<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>上面需要注意的地方是，无论你在哪个SDK版本的values目录下，设置了主题，都应该在最基本的values下设置一个同名的主题。这样才能确保你的app能够正常运行在 Android 4.4 以下的设备。否则，肯定会报找不到Theme的错误。</p>
+<p>2、在AndroidManifest.xml中对指定Activity的theme进行设置</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">activity</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:name</span>=<span class="string">".ui.ImageTranslucentBarActivity"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:label</span>=<span class="string">"@string/image_translucent_bar"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">android:theme</span>=<span class="string">"@style/ImageTranslucentTheme"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<p>3、在Activity的布局文件中设置背景图片，同时，需要把android:fitsSystemWindows设置为true</p>
+<p>activity_image_translucent_bar.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">RelativeLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@mipmap/env_bg"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>到此，第一种实现方式完成，大家可以看看下面的效果</p>
+<p><img src="/img/63d0f703918fa0ecc0b53174219759ee3d6ddb5d.jpg" alt="ImageTranslucentTheme效果"></p>
+<p>就跟中华万年历的天气预报效果界面一样，系统的整个导航栏都融入了app的界面中，背景图片填满了整个屏幕，看起来舒服很多。这里还有一个android:fitsSystemWindows设置需要注意的地方，后面会在细讲。接下来看第二种实现。</p>
+<h2 id="方式二"><a href="#方式二" class="headerlink" title="方式二"></a>方式二</h2><p>相比中华万年历，QQ音乐采用的是另外一种实现的方式，它将app的Tab栏和系统导航栏分开来设置。</p>
+<p><img src="/img/5d6034a85edf8db1f9d12c1d0e23dd54574e74cf.jpg" alt="QQ音乐效果风格"></p>
+<p>由于它的Tab栏是纯色的，所以只要把系统通知栏的颜色设置和Tab栏的颜色一致即可，实现上相比方法一要简单很多。同样要到不同SDK版本的values下，创建一个同名的theme，在values-v21下，需要设置系统导航栏的颜色：</p>
+<p>values-v21/style.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span> <span class="attr">name</span>=<span class="string">"ColorTranslucentTheme"</span> <span class="attr">parent</span>=<span class="string">"Theme.AppCompat.Light.DarkActionBar"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowTranslucentStatus"</span>&gt;</span>false<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:windowTranslucentNavigation"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="xml">	<span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:statusBarColor"</span>&gt;</span>@color/color_31c27c<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span></span><br><span class="line"><span class="undefined"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>再到ColorTranslucentBarActivity的布局文件activity_color_translucent_bar.xml中设置Tab栏的颜色</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</span><br><span class="line"><span class="tag">&lt;<span class="name">LinearLayout</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:fitsSystemWindows</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:orientation</span>=<span class="string">"vertical"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">RelativeLayout</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:layout_height</span>=<span class="string">"55dp"</span></span></span><br><span class="line"><span class="tag">        <span class="attr">android:background</span>=<span class="string">"@color/color_31c27c"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">        <span class="tag">&lt;<span class="name">TextView</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:layout_centerInParent</span>=<span class="string">"true"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:text</span>=<span class="string">"QQ Music"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textColor</span>=<span class="string">"@android:color/white"</span></span></span><br><span class="line"><span class="tag">            <span class="attr">android:textSize</span>=<span class="string">"20sp"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">RelativeLayout</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">LinearLayout</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>到此，我们就可以得到和QQ音乐主界面一样的效果了。</p>
+<p><img src="/img/f636afc379310a55c9cd928db04543a9832610d9.jpg" alt="QQ音乐界面实现效果"></p>
+<p>到此，就大体介绍完了 Translucent System Bar 的两种实现方式了。</p>
+<h2 id="android-fitsSystemWindows的“踩坑”"><a href="#android-fitsSystemWindows的“踩坑”" class="headerlink" title="android:fitsSystemWindows的“踩坑”"></a>android:fitsSystemWindows的“踩坑”</h2><p>通过前面的两种方式，大家估计会留意到一个地方，就是所有实现 Translucent System Bar 效果的Activity，都需要在根布局里设置 android:fitsSystemWindows=”true” 。设置了该属性的作用在于，不会让系统导航栏和我们app的UI重叠，导致交互问题。这样说可能比较抽象，看看下面两个效果图的对比就知道了。</p>
+<p><img src="/img/0dd7912397dda1444a4427cbb5b7d0a20cf4867e.jpg" alt="有fitsSystemWindows设置"> <img src="/img/960a304e251f95cae09927cfce177f3e6709525e.jpg" alt="没有fitsSystemWindows设置"></p>
+<p>注：上面的演示效果，是借助了我的另一个开源项目，详情请戳：<a href="https://github.com/D-clock/AndroidAlbum" target="_blank" rel="noopener">AndroidAlbum</a></p>
+<p>这样的话，如果我有10个Activity要实现这种效果，就要在10个布局文件中做设置，非常麻烦。所以，想到一种方法，在theme中加上如下的android:fitsSystemWindows设置：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">item</span> <span class="attr">name</span>=<span class="string">"android:fitsSystemWindows"</span>&gt;</span>true<span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>发现果真可以了。所有要实现 Translucent System Bar 的Activity，只需要设置了这个theme即可,改起来也很方便。可惜，后来出现了一个BUG，让我还是得老老实实的回去布局文件中设置。</p>
+<p><img src="/img/1e30e924b899a901cb46e14f1a950a7b0208f55c.jpg" alt="Toast文字错位"></p>
+<p>Toast打印出来的文字都往上偏移了。这里也是我疏忽的地方，因为在布局文件中设置是对View生效，而到了theme进行设置则是对Window生效了，两者在实现上就不一样了。所以，最终只能改回原来的方式去实现。</p>
+<h2 id="实践总结"><a href="#实践总结" class="headerlink" title="实践总结"></a>实践总结</h2><p>最后做一下小小的总结：</p>
+<ul>
+<li>方式一适用于app中没有导航栏，且整体的背景是一张图片的界面；</li>
+<li>方式二适用于app中导航栏颜色为纯色的界面；</li>
+<li>android:fitsSystemWindows设置要在布局文件中，不要到theme中设置；</li>
+</ul>
+<p>怎样，介绍到这里，你会使用 Translucent System Bar 了吗？赶快到你的app中引入吧！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/02/05/AndroidSystemUI：TranslucentBar特性的使用/" data-id="cjbxg201k0001j0m6ca2v60pe" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/21/网络请求哪家强/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          Android开源网络框架哪家强
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/30/BehaviorSubject/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Rxjava-5 BehaviorSubject</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

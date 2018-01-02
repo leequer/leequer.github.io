@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives | 有志青年</title>
+  <title>python生成器，集合，字典，切片，迭代器 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="# coding:utf-8  # 字典 print(&amp;quot;###字典###&amp;quot;);  d = {&amp;apos;a&amp;apos;: 1, &amp;apos;b&amp;apos;: 2, 1: &amp;apos;one&amp;apos;, 2: &amp;apos;two&amp;apos;, 3: [1, 2, 3]} print(d)  print(&amp;quot;###list###&amp;quot;); # list mList">
+<meta name="keywords" content="Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="python生成器，集合，字典，切片，迭代器">
+<meta property="og:url" content="http://yoursite.com/2016/12/02/python-生成器/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="# coding:utf-8  # 字典 print(&amp;quot;###字典###&amp;quot;);  d = {&amp;apos;a&amp;apos;: 1, &amp;apos;b&amp;apos;: 2, 1: &amp;apos;one&amp;apos;, 2: &amp;apos;two&amp;apos;, 3: [1, 2, 3]} print(d)  print(&amp;quot;###list###&amp;quot;); # list mList">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-05T02:45:50.589Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="python生成器，集合，字典，切片，迭代器">
+<meta name="twitter:description" content="# coding:utf-8  # 字典 print(&amp;quot;###字典###&amp;quot;);  d = {&amp;apos;a&amp;apos;: 1, &amp;apos;b&amp;apos;: 2, 1: &amp;apos;one&amp;apos;, 2: &amp;apos;two&amp;apos;, 3: [1, 2, 3]} print(d)  print(&amp;quot;###list###&amp;quot;); # list mList">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,216 +65,266 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/11/python-购物车实例代码/" class="archive-article-date">
-  <time datetime="2017-09-10T18:02:59.000Z" itemprop="datePublished">Sep 11</time>
+        <section id="main"><article id="post-python-生成器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/02/python-生成器/" class="article-date">
+  <time datetime="2016-12-01T17:20:59.000Z" itemprop="datePublished">2016-12-02</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+    <h1 class="article-title" itemprop="name">
+      python生成器，集合，字典，切片，迭代器
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/08/21/python-反射/" class="archive-article-date">
-  <time datetime="2017-08-21T04:02:59.000Z" itemprop="datePublished">Aug 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/21/python-反射/">python 反射</a>
-    </h1>
-  
+        <pre><code># coding:utf-8
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/21/python-序列化/" class="archive-article-date">
-  <time datetime="2017-07-20T18:20:59.000Z" itemprop="datePublished">Jul 21</time>
-</a>
+# 字典
+print(&quot;###字典###&quot;);
+
+d = {&apos;a&apos;: 1, &apos;b&apos;: 2, 1: &apos;one&apos;, 2: &apos;two&apos;, 3: [1, 2, 3]}
+print(d)
+
+print(&quot;###list###&quot;);
+# list
+mList = [];
+mList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+print(mList);
+
+&apos;&apos;&apos;
+  这样用乘法生成的对象 三个是同一个对象，
+所以改了一个为100 就全部都改了。这是浅拷贝。
+li_2d = [[0] * 3] * 3
+print(li_2d)
+li_2d[0][0] = 100
+print(li_2d)
+  但是这样一维的修改是不会产生上述问题的。
+li = [1] * 10
+li[3] = 3
+print(li)
+&apos;&apos;&apos;
+
+print(&quot;###set###&quot;);
+# set
+s_b = set([4, 5, 6, 7, 8, 9])
+print(s_b)
+
+print(&quot;###切片###&quot;);
+# 切片 [start:end:steps]  &gt;= start &amp; &lt; end
+li = list(range(10))
+print(li)
+print(type(li));
+
+print(li[2:5])
+print(li[4:5])
+print(li[:4])
+print(li[5:])
+print(li[0:20:3])
+
+&apos;&apos;&apos;
+列表推导意义：
+快速简单的生成一个列表
+对原有的列表进行简单的转换
+
+&apos;&apos;&apos;
+
+print(&quot;____________列表推导______________&quot;);
+
+print(&quot;快速生成一个set&quot;);
+s = {x for x in range(10) if x % 2 == 0};
+print(s);
+print(&quot;快速生成一个字典&quot;);
+d = {x: x % 2 == 0 for x in range(10)}
+print(d)
+
+&apos;&apos;&apos;
+生成器 generator：真正的赋值推迟到使用时。
+避免开辟大的内存，只使用部分内容
+
+如果列表元素可以按照某种算法推算出来，
+那我们是否可以在循环的过程中不断推算出后续的元素呢？
+这样就不必创建完整的list，从而节省大量的空间。
+在Python中，这种一边循环一边计算的机制，称为生成器（Generator）
+通过next 来获得元素
+
+因为要推算出下个是什么，所以 必须从第一个开始遍历
+&apos;&apos;&apos;
+# 先创建一个包含100个数字的集合，然后只取前10个。浪费资源
+square_table = []
+for i in range(100):
+    square_table.append(i * i)
+for i in range(5):
+    print(square_table[i])
+
+# 用生成器避免这种浪费
+# 列表推导时用()替换[]
+square_generator = (x * x for x in range(100))
+print(type(square_generator))
+for i in range(5):
+    print(next(square_generator))
+
+&apos;&apos;&apos;
+迭代器
+  可以直接作用于for循环的对象统称为可迭代对象：Iterable
+  可以被next()函数调用并不断返回下一个值的对象称为迭代器：
+Iterator（表示一个惰性计算的序列）,可以惰性计算的才是迭代器
+  集合数据类型如list、dict、str等是Iterable(可迭代的对象)
+但不是Iterator（迭代器），不过可以通过iter()函数获得一个Iterator对象
+
+
+
+&apos;&apos;&apos;
+
+from collections import Iterable
+from collections import Iterator
+
+print(isinstance([1, 2, 3], Iterable))
+print(isinstance({}, Iterable))
+print(isinstance(123, Iterable))
+print(isinstance(&apos;abc&apos;, Iterable))
+
+print(isinstance([1, 2, 3], Iterator))
+
+g = (x * x for x in range(10))
+print(&quot;g is &quot;, type(g))
+print(&quot;生成器是可迭代的么？&quot;, isinstance(g, Iterable))
+print(&apos;生成器是一个迭代器么？&apos;, isinstance(g, Iterator))
+for i in g:
+    print(i)
+
+
+def consumer(name):
+    print(&quot;%s 准备吃包子啦!&quot; % name)
+    while True:
+        baozi = yield
+
+        print(&quot;包子[%s]来了,被[%s]吃了!&quot; % (baozi, name))
+
+
+c = consumer(&quot;ChenRonghua&quot;)
+c.__next__()  # 唤醒
+
+b1 = &quot;韭菜馅&quot;
+c.send(b1)  # 唤醒 并给yield赋值
+# c.__next__()
+
+&apos;&apos;&apos;
+作业1：螺旋矩阵：给定一个m*n要素的矩阵，按照螺旋顺序，返回
+该矩阵所有要素.
+example:
+
+[[1,2,3],
+ [4,5,6],
+ [7,8,9]]
+
+应该返回[1,2,3,6,9,8,7,4,5]
+
+&apos;&apos;&apos;
+
+_result = [];
+# 计数，一共m*n个元素
+c = 0;
+# 计数，当前是此组的第几个元素
+j = 1;
+
+row = 1;
+
+
+# m 是一个元素的长度，n是一共有几个元素
+def process(origin, m, n):
+    while (c &lt; m * n):
+        _tList = origin[n];
+        if (n == 0):  # 第一行
+            # 从0循环连接字符串
+            i = 0;
+            while (i &lt; m):
+                _result.append(_tList[i]);
+                i = i + 1;
+
+
+        else:
+            # 开始第二行 将第二个和第二个以后的最后一个元素连接
+
+            _tLastCell = _tList[m - j];
+            _result.append(_tLastCell);
+
+            # 当到了最后一个
+            if (n == row - 1):
+                while (m - j &gt;= 0):
+                    _tLastCell = _tList[m - j];
+                    _result.append(_tLastCell);
+                    j = j + 1;
+                    row = n;
+
+                # 现在m=0 n最大 到了最左侧
+
+                # 开始拼接第0个元素
+
+                while (n - 1 &gt;= 1):
+                    _tList[m];
+                    n = n - 1;
+
+        j = j + 1;
+        c = c + 1;
+        n = n + 1;
+
+
+&apos;&apos;&apos;作业2：用栈（list）实现队列：支持push（element），pop（）和top（）方法
+pop和top方法都应该返回第一个元素的值。
+&apos;&apos;&apos;
+
+&apos;&apos;&apos;
+作业3：矩阵转换：给定矩阵a，令矩阵b里每个元素b[i][j]的值等于a[0][0]
+到a[i][j]子矩阵元素的和。
+&apos;&apos;&apos;
+
+import sys
+
+print(sys.path)
+</code></pre>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/21/python-序列化/">python 序列化</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/12/python-property/" class="archive-article-date">
-  <time datetime="2017-06-12T07:20:59.000Z" itemprop="datePublished">Jun 12</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/12/02/python-生成器/" data-id="cjbxg20450023j0m6pdlival3" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/12/python-property/">python property</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/05/13/python__slots__/" class="archive-article-date">
-  <time datetime="2017-05-13T05:20:59.000Z" itemprop="datePublished">May 13</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/13/python__slots__/">python __slots__</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/01/10/python-数据集的使用/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          python 数据集的使用sklearn
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/04/python-包的导入/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">python包的导入</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/04/27/python-斐波那契实现/" class="archive-article-date">
-  <time datetime="2017-04-27T03:20:59.000Z" itemprop="datePublished">Apr 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/27/python-斐波那契实现/">python 斐波那契</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/求1000内的素数/" class="archive-article-date">
-  <time datetime="2017-03-21T04:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/求1000内的素数/">python 求1000内的素数</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/python__getitem__ 实现 下标操作/" class="archive-article-date">
-  <time datetime="2017-03-21T01:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/python__getitem__ 实现 下标操作/">python __getitem__ 实现 下标操作</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/02/21/python-文件的读写/" class="archive-article-date">
-  <time datetime="2017-02-20T18:20:59.000Z" itemprop="datePublished">Feb 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/21/python-文件的读写/">python 文件读写</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/10/python-数据集的使用/" class="archive-article-date">
-  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">Jan 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/10/python-数据集的使用/">python 数据集的使用sklearn</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Suivant &raquo;</a>
-  </nav>
 
 </section>
         

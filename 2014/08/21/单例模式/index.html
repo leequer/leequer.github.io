@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives | 有志青年</title>
+  <title>单例模式 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="LS2-设计模式单例模式饿汉模式private static Singleton instance = new Singleton(); 静态实例，类加载的时候就把实例加载到内存中。线程安全，但消耗大。 懒汉模式class Singleton {      private static Singleton instance = null;            public  static   S">
+<meta name="keywords" content="移动架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="单例模式">
+<meta property="og:url" content="http://yoursite.com/2014/08/21/单例模式/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="LS2-设计模式单例模式饿汉模式private static Singleton instance = new Singleton(); 静态实例，类加载的时候就把实例加载到内存中。线程安全，但消耗大。 懒汉模式class Singleton {      private static Singleton instance = null;            public  static   S">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-02T04:11:16.518Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="单例模式">
+<meta name="twitter:description" content="LS2-设计模式单例模式饿汉模式private static Singleton instance = new Singleton(); 静态实例，类加载的时候就把实例加载到内存中。线程安全，但消耗大。 懒汉模式class Singleton {      private static Singleton instance = null;            public  static   S">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,216 +65,174 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/11/python-购物车实例代码/" class="archive-article-date">
-  <time datetime="2017-09-10T18:02:59.000Z" itemprop="datePublished">Sep 11</time>
+        <section id="main"><article id="post-单例模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/21/单例模式/" class="article-date">
+  <time datetime="2014-08-21T09:55:59.000Z" itemprop="datePublished">2014-08-21</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+    <h1 class="article-title" itemprop="name">
+      单例模式
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/08/21/python-反射/" class="archive-article-date">
-  <time datetime="2017-08-21T04:02:59.000Z" itemprop="datePublished">Aug 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/21/python-反射/">python 反射</a>
-    </h1>
-  
+        <h2 id="LS2-设计模式"><a href="#LS2-设计模式" class="headerlink" title="LS2-设计模式"></a>LS2-设计模式</h2><h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><h4 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a>饿汉模式</h4><pre><code>private static Singleton instance = new Singleton();
+</code></pre><p>静态实例，类加载的时候就把实例加载到内存中。线程安全，但消耗大。</p>
+<h4 id="懒汉模式"><a href="#懒汉模式" class="headerlink" title="懒汉模式"></a>懒汉模式</h4><pre><code>class Singleton {
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/21/python-序列化/" class="archive-article-date">
-  <time datetime="2017-07-20T18:20:59.000Z" itemprop="datePublished">Jul 21</time>
-</a>
+    private static Singleton instance = null;      
+
+    public  static   Singleton instance() {      
+        if (instance == null) {      
+            instance = new Singleton();      
+        }      
+        return instance;     
+    }     
+}
+</code></pre><p>存在线程安全问题。若多个线程，同时访问这个方法，当第一个线程判断到instant==null去new一个实例的时候，另一个线程执行到判断instant是否为空，这是，还没new成功，那第二个线程就得到也是实例为空，就去实例化，这样就会有两个实例。解决这个问题就用线程同步：<br>    class Singleton {</p>
+<pre><code>    private static Singleton instance = null;      
+
+    public synchronized static   Singleton instance() {      
+        if (instance == null) {      
+            instance = new Singleton();      
+        }      
+        return instance;     
+    }     
+}
+</code></pre><p>这里有一个性能问题：多个线程同时访问这个方法时，会因为同步而导致每次只有一个线程运行，影响程序性能。</p>
+<h4 id="DCL-（double-check-Lock）"><a href="#DCL-（double-check-Lock）" class="headerlink" title="DCL （double check Lock）"></a>DCL （double check Lock）</h4><pre><code>class Singleton {   
+
+      private static Singleton instance = null ;   
+
+      public static Singleton instance() {   
+          if (instance == null ) {
+              synchronized (this) {   
+                  if (instance == null)
+                     instance = new Singleton();
+             }
+         }
+         return instance;
+     }
+}
+</code></pre><p>这个解决方法在jdk1.5后，jvm 指令集乱序问题，导致有可能这样也不安全。解决方法是加volatile。使指令集不乱序。 </p>
+<pre><code>class Singleton {   
+
+      private volatile static Singleton instance = null ;   
+
+      public static Singleton instance() {   
+          if (instance == null ) {
+              synchronized (this) {   
+                  if (instance == null)
+                     instance = new Singleton();
+             }
+         }
+         return instance;
+     }
+}
+</code></pre><p>####内部类的实现方式：比较优雅的解决线程同步问题，也是随用随加载</p>
+<pre><code>public class InnnerClassSingle {
+    private InnnerClassSingle()
+    {
+
+    }
+    private static class SingleHodler{
+        private static final InnnerClassSingle instance=new InnnerClassSingle();
+    }
+
+    public static InnnerClassSingle getInstance()
+    {
+        return SingleHodler.instance;
+    }
+}
+</code></pre><p>####枚举实现方式</p>
+<p>枚举的构造方法是私有的。不能自定义。保证每个对象只有一个</p>
+<pre><code>public  enum EnumManager {
+    SDCardManager(10)
+    {
+
+        @Override
+        public EnumManager getSingle() {
+            return SDCardManager;
+        }
+
+
+    }
+    ,
+    HttpManager(1) {
+        @Override
+        public EnumManager getSingle() {
+            return null;
+        }
+    };
+
+    public SdCardImpl getSingleton()
+    {
+        return new SdCardImpl();
+    }
+
+
+    public abstract EnumManager getSingle();
+    private  EnumManager(int type)
+    {
+
+    }
+
+}
+</code></pre><p>##面试题</p>
+<p>Q：引用父类的静态字段会不会初始化子类？</p>
+<p>A:不会，（解释：子类点父类的静态字段，无法获取）</p>
+<p>Q:通过自定义对象数组类型 会不会加载该类型？<br>Class _class [] = {Person.class,Cat.class}<br>这样声明的class数组，数组中的元素Person和Cat类是否会被加载？</p>
+<p>A:不会</p>
+<p>原因：通过new和反射Class.from()可以初始化一个类,其它的都不行。java机制。</p>
+<p>Q:Person{ public static int a=0；。。。} 调用Person.a的时候会初始化Person类么？</p>
+<p>A:no  静态变量是在静态块中的，在class字节码加载的时候就加载到静态块中了。</p>
+<p>##Lsn6_解释器，模板，观察者模式-2016-12-28</p>
+<h3 id="探探软件头像更换拖拽效果解析。主要是事件分发。"><a href="#探探软件头像更换拖拽效果解析。主要是事件分发。" class="headerlink" title="探探软件头像更换拖拽效果解析。主要是事件分发。"></a>探探软件头像更换拖拽效果解析。主要是事件分发。</h3><p>使用的是ViewDragHelper v4包中的类，专门处理拖拽事件。</p>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/21/python-序列化/">python 序列化</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/12/python-property/" class="archive-article-date">
-  <time datetime="2017-06-12T07:20:59.000Z" itemprop="datePublished">Jun 12</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/08/21/单例模式/" data-id="cjbxg204e002dj0m6kr1cm4h4" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/12/python-property/">python property</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/05/13/python__slots__/" class="archive-article-date">
-  <time datetime="2017-05-13T05:20:59.000Z" itemprop="datePublished">May 13</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/13/python__slots__/">python __slots__</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/08/22/工厂模式/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          工厂模式
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/07/20/android高级课程-性能优化--内存泄漏分析－2016-07-20/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">android高级课程-性能优化--内存泄漏分析－2016-07-20</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/04/27/python-斐波那契实现/" class="archive-article-date">
-  <time datetime="2017-04-27T03:20:59.000Z" itemprop="datePublished">Apr 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/27/python-斐波那契实现/">python 斐波那契</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/求1000内的素数/" class="archive-article-date">
-  <time datetime="2017-03-21T04:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/求1000内的素数/">python 求1000内的素数</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/python__getitem__ 实现 下标操作/" class="archive-article-date">
-  <time datetime="2017-03-21T01:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/python__getitem__ 实现 下标操作/">python __getitem__ 实现 下标操作</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/02/21/python-文件的读写/" class="archive-article-date">
-  <time datetime="2017-02-20T18:20:59.000Z" itemprop="datePublished">Feb 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/21/python-文件的读写/">python 文件读写</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/10/python-数据集的使用/" class="archive-article-date">
-  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">Jan 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/10/python-数据集的使用/">python 数据集的使用sklearn</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Suivant &raquo;</a>
-  </nav>
 
 </section>
         

@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives | 有志青年</title>
+  <title>FFMPEG中最关键的结构体之间的关系 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="本文摘自有部分自己的理解和补充 FFMPEG中结构体很多。最关键的结构体可以分成以下几类：为什么会有这些步骤，因为一个播放器把一个视频接到到播放要经历下面的步骤。">
+<meta name="keywords" content="ffmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFMPEG中最关键的结构体之间的关系">
+<meta property="og:url" content="http://yoursite.com/2016/09/20/FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="本文摘自有部分自己的理解和补充 FFMPEG中结构体很多。最关键的结构体可以分成以下几类：为什么会有这些步骤，因为一个播放器把一个视频接到到播放要经历下面的步骤。">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-05T02:15:26.715Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="FFMPEG中最关键的结构体之间的关系">
+<meta name="twitter:description" content="本文摘自有部分自己的理解和补充 FFMPEG中结构体很多。最关键的结构体可以分成以下几类：为什么会有这些步骤，因为一个播放器把一个视频接到到播放要经历下面的步骤。">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,216 +65,74 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/11/python-购物车实例代码/" class="archive-article-date">
-  <time datetime="2017-09-10T18:02:59.000Z" itemprop="datePublished">Sep 11</time>
+        <section id="main"><article id="post-FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/20/FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系/" class="article-date">
+  <time datetime="2016-09-19T16:00:00.000Z" itemprop="datePublished">2016-09-20</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+    <h1 class="article-title" itemprop="name">
+      FFMPEG中最关键的结构体之间的关系
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/08/21/python-反射/" class="archive-article-date">
-  <time datetime="2017-08-21T04:02:59.000Z" itemprop="datePublished">Aug 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/21/python-反射/">python 反射</a>
-    </h1>
-  
+        <p><a href="http://blog.csdn.net/leixiaohua1020/article/details/11693997" target="_blank" rel="noopener"> 本文摘自</a>有部分自己的理解和补充</p>
+<p>FFMPEG中结构体很多。最关键的结构体可以分成以下几类：为什么会有这些步骤，因为一个播放器把一个视频接到到播放要经历下面的步骤。<a id="more"></a></p>
+<p>a)        解协议（http,rtsp,rtmp,mms）</p>
+<p>AVIOContext，URLProtocol，URLContext主要存储视音频使用的协议的类型以及状态。URLProtocol存储输入视音频使用的封装格式。每种协议都对应一个URLProtocol结构。（注意：FFMPEG中文件也被当做一种协议“file”）</p>
+<p>b)        解封装（flv,avi,rmvb,mp4）</p>
+<p>AVFormatContext主要存储视音频封装格式中包含的信息；AVInputFormat存储输入视音频使用的封装格式。每种视音频封装格式都对应一个AVInputFormat 结构。</p>
+<p>c)        解码（h264,mpeg2,aac,mp3）</p>
+<p>每个AVStream存储一个视频/音频流的相关数据；每个AVStream对应一个AVCodecContext，存储该视频/音频流使用解码方式的相关数据；每个AVCodecContext中对应一个AVCodec，包含该视频/音频对应的解码器。每种解码器都对应一个AVCodec结构。</p>
+<p>d) 存数据</p>
+<p>视频的话，每个结构一般是存一帧；音频可能有好几帧</p>
+<p>解码前数据：AVPacket</p>
+<p>解码后数据：AVFrame</p>
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/21/python-序列化/" class="archive-article-date">
-  <time datetime="2017-07-20T18:20:59.000Z" itemprop="datePublished">Jul 21</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/21/python-序列化/">python 序列化</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/12/python-property/" class="archive-article-date">
-  <time datetime="2017-06-12T07:20:59.000Z" itemprop="datePublished">Jun 12</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/20/FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系/" data-id="cjbxg2024000bj0m6a5km6jbf" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/12/python-property/">python property</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/05/13/python__slots__/" class="archive-article-date">
-  <time datetime="2017-05-13T05:20:59.000Z" itemprop="datePublished">May 13</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/13/python__slots__/">python __slots__</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/人脸识别开发记录/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          android 人脸识别开发记录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/09/13/FFMPEG-视频相关知识简介/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">ffmpeg-视频相关知识简介</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/04/27/python-斐波那契实现/" class="archive-article-date">
-  <time datetime="2017-04-27T03:20:59.000Z" itemprop="datePublished">Apr 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/27/python-斐波那契实现/">python 斐波那契</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/求1000内的素数/" class="archive-article-date">
-  <time datetime="2017-03-21T04:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/求1000内的素数/">python 求1000内的素数</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/python__getitem__ 实现 下标操作/" class="archive-article-date">
-  <time datetime="2017-03-21T01:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/python__getitem__ 实现 下标操作/">python __getitem__ 实现 下标操作</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/02/21/python-文件的读写/" class="archive-article-date">
-  <time datetime="2017-02-20T18:20:59.000Z" itemprop="datePublished">Feb 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/21/python-文件的读写/">python 文件读写</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/10/python-数据集的使用/" class="archive-article-date">
-  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">Jan 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/10/python-数据集的使用/">python 数据集的使用sklearn</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Suivant &raquo;</a>
-  </nav>
 
 </section>
         

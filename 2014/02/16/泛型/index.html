@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>泛型 | 有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="1.基本信息  首先泛型的本质便是类型参数化，通俗的说就是用一个变量来表示类型，这个类型可以是String,Integer等等不确定，原理类似如下代码： int pattern; //声明一个变量未赋值，pattern可以看作是泛型 pattern = 4; pattern = 5;//4和5就可以看作是String和Integer  泛型的具体形式 有 泛型类 泛型方法 泛型类： class T">
+<meta name="keywords" content="java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="泛型">
+<meta property="og:url" content="http://yoursite.com/2014/02/16/泛型/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="1.基本信息  首先泛型的本质便是类型参数化，通俗的说就是用一个变量来表示类型，这个类型可以是String,Integer等等不确定，原理类似如下代码： int pattern; //声明一个变量未赋值，pattern可以看作是泛型 pattern = 4; pattern = 5;//4和5就可以看作是String和Integer  泛型的具体形式 有 泛型类 泛型方法 泛型类： class T">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-05T02:06:24.667Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="泛型">
+<meta name="twitter:description" content="1.基本信息  首先泛型的本质便是类型参数化，通俗的说就是用一个变量来表示类型，这个类型可以是String,Integer等等不确定，原理类似如下代码： int pattern; //声明一个变量未赋值，pattern可以看作是泛型 pattern = 4; pattern = 5;//4和5就可以看作是String和Integer  泛型的具体形式 有 泛型类 泛型方法 泛型类： class T">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-泛型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/16/泛型/" class="article-date">
+  <time datetime="2014-02-16T06:38:59.000Z" itemprop="datePublished">2014-02-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      泛型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-基本信息"><a href="#1-基本信息" class="headerlink" title="1.基本信息"></a>1.基本信息</h4><hr>
+<p> 首先泛型的本质便是类型参数化，通俗的说就是用一个变量来表示类型，<br>这个类型可以是String,Integer等等不确定，原理类似如下代码：</p>
+<pre><code>int pattern; //声明一个变量未赋值，pattern可以看作是泛型
+pattern = 4;
+pattern = 5;//4和5就可以看作是String和Integer
+</code></pre><h2 id="泛型的具体形式-有-泛型类-泛型方法"><a href="#泛型的具体形式-有-泛型类-泛型方法" class="headerlink" title=" 泛型的具体形式 有 泛型类 泛型方法"></a> 泛型的具体形式 有 泛型类 泛型方法</h2><p> 泛型类：</p>
+<pre><code>class Test&lt;T&gt;
+{
+    private T t;
+    Test(T t)
+    {
+        this.t = t;
+    }
+    public  T getT()
+    {
+        return t;
+    }
+
+    public void setT(T t)
+    {
+        this.t = t;
+    }
+}
+</code></pre><p> 泛型方法：</p>
+<pre><code>...
+
+public &lt;T&gt; void show()//泛型参数类型声明必须在返回类型之前
+{
+
+    operation about T...
+
+}
+
+...
+</code></pre><h4 id="2-为何要引入泛型"><a href="#2-为何要引入泛型" class="headerlink" title="2.为何要引入泛型"></a>2.为何要引入泛型</h4><hr>
+<p>泛型是java1.5之后引入的。</p>
+<p>比如一个ArrayList 它里面放的内容限定，1.5之前就是这样写</p>
+<pre><code>ArrayList&lt;Object&gt;
+</code></pre><p>有了泛型，就这样写</p>
+<pre><code>ArrayList&lt;T&gt;
+</code></pre><p>Q:由于泛型可以接受多个参数，而Object经过强制类型转换也可以转换为任何类型，既然二者都具有相同的作用，为何还要引进泛型呢？</p>
+<p>A:泛型可以把使用Object的错误提前到编译后，而不是运行后，提升安全性。</p>
+<p><strong>泛型是在编译后就可以知道是否有转换异常。不用等到运行时。</strong></p>
+<h4 id="3-类型擦除和原始类型"><a href="#3-类型擦除和原始类型" class="headerlink" title="3.类型擦除和原始类型"></a>3.类型擦除和原始类型</h4><hr>
+<p>java的泛型是伪泛型</p>
+<p>C#中，泛型是一个占位符，是真实存在的。而java的泛型是在编译的时候就转换成为对应的真实类型了。当运行时，就是用的真实的对象，这就是提示安全性。</p>
+<p><strong>这个真实类型   叫原始类型。</strong></p>
+<p><strong>这个替代的过程 叫做类型擦除。</strong></p>
+<p><strong>在类型擦除过程中，一般使用第一个限定的类型来替换，若无限定则使用Object</strong></p>
+<h2 id="泛型类举栗："><a href="#泛型类举栗：" class="headerlink" title="泛型类举栗："></a>泛型类举栗：</h2><p>不带泛型限制的代码：</p>
+<pre><code>class Test&lt;T&gt;
+{
+    private T t;
+    public void show(T t)
+    {
+
+    }
+}
+</code></pre><p>以上代码编译后java虚拟机会转为：</p>
+<pre><code>class Test
+{
+    //因为没有限定类型，所以用Object
+    private Object t;
+    public void show(Object t)
+    {
+
+    }
+}
+</code></pre><p>带泛型限制的代码：</p>
+<pre><code>class Test&lt;? extends Comparable&gt;
+{
+    private T t;
+    public void show(T t)
+    {
+
+    }
+}
+</code></pre><p>以上代码编译后java虚拟机会转为：</p>
+<pre><code>class Test
+{
+    //因为有了限定，这个泛型必须是Comparable 的子类，所以 转换后是Comparable
+    private Comparable t;
+    public void show(Comparable t)
+    {
+
+    }
+}
+</code></pre><h2 id="泛型方法举例："><a href="#泛型方法举例：" class="headerlink" title="泛型方法举例："></a>泛型方法举例：</h2><pre><code>class Test&lt;T&gt;
+{
+    private T t;
+    public void show(T t)
+    {
+
+    }
+}
+
+class TestDemo extends Test&lt;String&gt;
+{
+    private String t;
+    public void show(String t)
+    {
+
+    }
+}
+</code></pre><p>由于TestDemo继承Test<string>,但是Test在类型擦除后还有一个public void Show(Object t),这和那个show(String t)出现重载，但是本意却是没有show(Object t)的，</string></p>
+<p>因此在虚拟机翻译泛型方法中，引入了桥方法，及在类型擦除后的show(Object t)中调用另一个方法，代码如下：</p>
+<pre><code>public void show(Object t)
+{
+    show((String) t);
+}
+</code></pre><h4 id="4、泛型限定"><a href="#4、泛型限定" class="headerlink" title="4、泛型限定"></a>4、泛型限定</h4><h2 id="单类型限定"><a href="#单类型限定" class="headerlink" title="单类型限定"></a>单类型限定</h2><p>泛型限定是通过？（通配符）来实现的，表示可以接受任意类型。</p>
+<p>那一定有人有疑问，那？和T（二者单独使用时）有啥区别了，其实区别也不是很大，仅仅在对参数类型的使用上。</p>
+<p>例如：</p>
+<pre><code>public void print(ArrayList&lt;?&gt; al)
+{
+    Iterator&lt;?&gt; it = al.iterator();
+    while(it.hasNext())
+    {
+        System.out.println(in.next());
+    }
+
+}
+
+public &lt;T&gt; void print(ArrayList&lt;T&gt; al)
+{
+    Iterator&lt;T&gt; it = al.iterator();
+    while(it.hasNext())
+    {
+        T t = it.next();  //区别就在此处，T可以作为类型来使用,而？仅能作为接收任意类型
+        System.out.println(t);
+    }
+}
+</code></pre><p><strong>？ extends SomeClass  这种限定，说明的是只能接收SomeClass及其子类类型，所谓的“上限”</strong></p>
+<p><strong>？ extends SomeClass  这种限定，不能存，只能取 用于返回值的限定，不能限定参数</strong></p>
+<p>代码：</p>
+<p>Box.java</p>
+<pre><code>public class Box &lt;T&gt;{
+
+    private String mType ;
+
+    public String getmType() {
+        return mType;
+    }
+
+    public void setmType(String mType) {
+        this.mType = mType;
+    }
+
+
+    private T mNumber;
+
+    public T getmNumber() {
+        return mNumber;
+    }
+
+    public void setmNumber(T mNumber) {
+        this.mNumber = mNumber;
+    }
+}
+</code></pre><p>Person.java</p>
+<pre><code>public class Person&lt;T&gt; {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
+}
+</code></pre><p>Student.java</p>
+<pre><code>public class Student extends Person{
+
+
+}
+</code></pre><p>Main.java</p>
+<pre><code>public class Main {
+
+    public static void main (String arg[]){
+
+        Person&lt;Number&gt; _one = new Person&lt;Number&gt;();
+        _one.setName(&quot;leequer&quot;);
+        _one.setAge(2);
+        System.out.println(_one.getName());
+
+        Person&lt;Student&gt; _two = new Person&lt;Student&gt;();
+        _two.setName(&quot;leequerStudent&quot;);
+        _two.setAge(2);
+        System.out.println(_two.getName());
+
+
+        Box&lt;Person&gt; _three = new Box&lt;Person&gt;();
+        _three.setmType(&quot;ren&quot;);
+        Box&lt;Student&gt; _four = new Box&lt;Student&gt;();
+        //Box&lt;Person&gt; _five = new Box&lt;Student&gt;(); //error
+        Box&lt;? extends Person&gt; _five = new Box&lt;Student&gt;();
+        _five.setmType(&quot;xue sheng&quot;);
+//        _five.setmNumber(mNumber); 无法set值，因为不知道什么类型
+        //Box&lt;? super Person&gt; _six = new Box&lt;Student&gt;(); //error
+
+        Box&lt;Student&gt; _Box = new Box&lt;&gt;();
+        _Box.setmNumber(new Student());
+
+
+        Box&lt;? extends Person&gt; _Box1 = new Box&lt;&gt;();
+//        _Box1.setmNumber(new Person()); error
+
+
+    }
+
+
+}
+</code></pre><p>可以发现，</p>
+<pre><code>Box&lt;? extends Person&gt; _five = new Box&lt;Student&gt;();
+_five.setmType(&quot;xue sheng&quot;);
+//_five.setmNumber(mNumber); 无法set值
+</code></pre><p>这样的泛型限定的写法，不能set值，为什么呢？</p>
+<p>因为限定的是Person的子类都可以，那有可能这个子类很多，当子类很多的时候，编译时就不知道应该转为哪个子类了，这也就是为什么Box<person> _three = new Box<person>();  这样可以写入的原因，因为它唯一指定了一个固定的类。</person></person></p>
+<p><strong>? super SomeClass 这种限定，说明只能接收SomeClass及其父类类型，所谓的“下限”</strong></p>
+<p><strong>? super SomeClass 这种限定，能存，但取出来只是Object类型，用于限定参数，不用与限定返回值</strong></p>
+<p>代码：</p>
+<pre><code>Box&lt;? super Student&gt; _box2 = new Box&lt;&gt;();
+_box2.setmNumber(new Student());
+_box2.getmNumber();//可以看到 这个提示中 返回的是Object
+</code></pre><p>因为，set值，最起码是子类，可以强转任何父类，而拿出来的时候，不知道是那个父类，或者父类的子类，所以<br>取出来是Object。</p>
+<p>这也是多态的体现：父类的引用可以指向子类，子类的引用不能指向父类。</p>
+<p><strong>需要读写的时候 直接用一个 ？  不能用 super 或者 extends</strong></p>
+<p>代码：</p>
+<p>这样也是错误的：</p>
+<pre><code> //        Box&lt;? super Student&gt; _box3 = new Box&lt;? super Student&gt;(); error
+
+//        Box&lt;? extends Student&gt; _box4 = new Box&lt;? extends Student&gt;(); error
+</code></pre><p>Java强制在创建对象的时候必须给类型参数制定具体的类型，不能使用通配符，也就是说new ArrayList&lt;? extends A&gt;()，new ArrayList&lt;?&gt;()这种形式的初始化语句是不允许的</p>
+<p>我们来看这个栗子：</p>
+<pre><code>public &lt;T extends Comparable&gt; shwo(T a, T b)
+{
+    int num = a.compareTo(b);
+}
+</code></pre><p>这个泛型方法中，限定了T要extends Comparable,原因是，参数T需要调用compareTo这个比较的方法。只有实现了Comparable接口的compareTo方法，才能使用compareTo方法，这就是为什么要这样写。</p>
+<h2 id="多类型限定："><a href="#多类型限定：" class="headerlink" title="多类型限定："></a>多类型限定：</h2><pre><code>&lt;T extends Comparable &amp; Serializable&gt;
+</code></pre><p>结合上面的例子，这种书写方式为何把comparable写在前边？因为由于类型擦除的问题，原始类型是由Comparable替换的，因此写在前边的是类中存在此类型的泛型方法（指compareTo方法）放在前边，避免调用方法时类型的强制转换，提高效率。</p>
+<pre><code>class Test&lt;T extends Comparable &amp; Serializable&gt;
+{
+    private T lower;
+    private T upper;
+
+    //此处是利用Comparable的compareTo方法，因此把Comparable写在前边，类型擦除后为Comparable，
+    //若为Serializable,还得用强制类型转换，否则不能使用compareTo方法。
+    public Test(T first, T second) 
+    {
+        int a = first.compareTo(second);
+        ...
+    }
+}
+</code></pre><h2 id="关于泛型类型限定的“继承”误区"><a href="#关于泛型类型限定的“继承”误区" class="headerlink" title="关于泛型类型限定的“继承”误区"></a>关于泛型类型限定的“继承”误区</h2><p>总有些人误把类型的限定当作继承</p>
+<p>比如：</p>
+<pre><code>//类型是这样的
+&lt;Student extends Person&gt;
+//然后就这样用
+ArrayList&lt;Person&gt; al = new ArrayList&lt;Student&gt;();
+</code></pre><p>此处的<person>, <student>作为泛型的意思是ArrayList容器的接收类型，用一个简单的例子来说明</student></person></p>
+<p>ArrayList是一个大型养殖场，<person>表明的是他能够接收动物，而上边的new语句生成的是一个只能够接收猪的养殖场(ArrayList<student>),即把一个大型养殖场建造成了一个养猪场，若是继承的大型养殖场肯定是还能接受狗、羊….的，但是现在建造成了养猪场，那还能接受别的动物么？所以这肯定是错误的用法！</student></person></p>
+<p><strong>简而言之，泛型new时两边的类型参数必须一致。</strong></p>
+<p>如果你这么写就没问题：</p>
+<pre><code>ArrayList&lt;？ extends Person&gt; al = new ArrayList&lt;Student&gt;();
+</code></pre><p>这就是上面说的 上限</p>
+<h4 id="5、泛型的一些基本规则约束"><a href="#5、泛型的一些基本规则约束" class="headerlink" title="5、泛型的一些基本规则约束"></a>5、泛型的一些基本规则约束</h4><p><strong>泛型的类型参数必须为类的引用，不能用基本类型（int, short, long, byte, float, double, char, boolean）</strong></p>
+<p><strong>泛型是类型的参数化，在使用时可以用作不同类型</strong></p>
+<p><strong>泛型的类型参数可以有多个</strong></p>
+<p>代码举例如下：</p>
+<pre><code>public &lt;T, E&gt; void show()
+{    
+    coding operation.....    
+}
+</code></pre><p><strong>泛型可以使用extends, super, ?(通配符)来对类型参数进行限定</strong></p>
+<p><strong>由于类型擦除，运行时类型查询只适用于原始类型，比如instanceof、getClass()、强制类型转换，a instanceof (Pair<employe>),在类型擦除后便是 a instanceof Pair,因此以上运行的一些操作在虚拟机中操作都是对原始类型进行操作，无论写的多么虚幻，都逃不出类型擦除，因为在虚拟机种并不存在泛型。</employe></strong> </p>
+<p><strong>不能创建参数化类型的数组</strong></p>
+<p>代码举例如下：</p>
+<pre><code>Pair&lt;String&gt;[] table = new Pair&lt;String&gt;[10]; //ERROR
+//让Object[] t指向table
+Object[] t = table;
+//向t中添加对象
+t[0] = new Pair&lt;Employe&gt;();
+//关键错误之处
+String s = table[0];
+</code></pre><p>由于Object可以接收任何类型，在里边存入 new Pari<employe>时，没有任何问题，但是当取出的时候会出现ClassCastException,因此不能创建参数化类型数组。</employe></p>
+<p><strong>不能实例化类型变量，既一下代码是错误的</strong></p>
+<pre><code>T t = new T();
+//或
+T.Class
+</code></pre><p><strong>不能在静态域或方法中出现参数类型</strong></p>
+<pre><code>class Test&lt;T&gt;
+{
+    private static T example;  //error
+    public static void showExample() //error
+    {
+        action about T...
+    }
+    public static T showExample() //error
+    {
+        action about T....    
+     }
+}
+</code></pre><p>首先方法是一个返回类型为T的普通方法，而非泛型方法，这和在静态方法中使用非静态参数是一样的，静态方法是先于对象而存在内存中的，因此在编译的时候，T的类型无法确定，一定会出现“Cannot make a static reference to a non_static reference”这样类似的错误。</p>
+<p>但是这样的代码就是正确的</p>
+<pre><code>class Test&lt;T&gt;
+{
+    public static &lt;T&gt; T show()
+    {
+        action
+    }
+}    
+</code></pre><p>因为此处的静态方法是泛型方法，可以使用。</p>
+<p><strong>不能抛出或捕获泛型类的实例</strong></p>
+<p><strong>不能抛出不能捕获泛型类对象</strong></p>
+<p><strong>泛型类不能扩展Throwable，注意是类不能继承Throwable，类型参数的限定还是可以的</strong><br>　　　　<br><strong>catch子句不能使用类型变量</strong></p>
+<p>如下代码</p>
+<pre><code>try
+{
+    ....
+}
+catch(T e) //error
+{
+    ...
+}
+</code></pre><p><strong>类型擦除后的冲突注意</strong></p>
+<pre><code>class Pair&lt;T&gt;
+{
+    public boolean equals(T value) //error
+    {
+        ....
+    }
+}
+</code></pre><p>此处的错误的原因不能存在同一个方法，在类型擦除后，Pair的方法为，public boolean equals(Object value),这与从Object.class中继承下来的equals(Object obj)冲突。</p>
+<p><strong>一个类不能成为两个接口类型的子类，而这两个接口是同一接口的不同参数化</strong></p>
+<pre><code>class Calendar implements coparable&lt;Calendar&gt;{}
+
+class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalendar&gt;{} //error
+</code></pre><p>当类型擦除后，Calendar实现的是Comparable,而GregorianCalendar继承了Calendar,又去实现Comparable，必然出错！</p>
+<p>以上内容摘录整理自<a href="http://www.cnblogs.com/fantasy01/p/3963593.html" target="_blank" rel="noopener">关于Java泛型深入理解小总结</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/02/16/泛型/" data-id="cjbxg204t002tj0m6le0js8m4" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          android高级课程-性能优化--内存泄漏分析－2016-06-19
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/02/03/AndroidAnnotations-1概要和简单用法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">AndroidAnnotations-1 概要和简单用法</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

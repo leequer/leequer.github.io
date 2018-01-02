@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我不是胖，只是肉有点多">
+<meta property="og:type" content="website">
+<meta property="og:title" content="有志青年">
+<meta property="og:url" content="http://yoursite.com/page/5/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有志青年">
+<meta name="twitter:description" content="我不是胖，只是肉有点多">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-给现有工程添加NDK支持" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/07/13/给现有工程添加NDK支持/" class="article-date">
+  <time datetime="2014-07-12T16:00:00.000Z" itemprop="datePublished">2014-07-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/07/13/给现有工程添加NDK支持/">给现有工程添加NDK支持</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>###目标</p>
+<p>在现有项目中添加NDK支持。</p>
+<p>###1.创建CMAKEFIle.txt</p>
+<p>在app文件夹下新建一个CMakeLists.txt文件，内容如下</p>
+<pre><code># For more information about using CMake with Android Studio, read the
+# documentation: https://d.android.com/studio/projects/add-native-code.html
+
+# Sets the minimum version of CMake required to build the native library.
+
+cmake_minimum_required(VERSION 3.4.1)
+
+# Creates and names a library, sets it as either STATIC
+# or SHARED, and provides the relative paths to its source code.
+# You can define multiple libraries, and CMake builds them for you.
+# Gradle automatically packages shared libraries with your APK.
+
+#添加怎个目录的思路 指定一个变量 添加的时候使用变量值(my_c_path)
+
+file(GLOB my_c_path src/main/cpp/bzip2/*.c)
+add_library( # Sets the name of the library.这是你java中loadlibrary的名字
+             TimBisPatch
+
+             # Sets the library as a shared library.
+             SHARED
+
+             # Provides a relative path to your source file(s).这是编译需要的c文件
+             ${my_c_path}
+             src/main/cpp/bspatch.c)
+
+# Searches for a specified prebuilt library and stores the path as a
+# variable. Because CMake includes system libraries in the search path by
+# default, you only need to specify the name of the public NDK library
+# you want to add. CMake verifies that the library exists before
+# completing its build.
+
+find_library( # Sets the name of the path variable.
+              log-lib
+
+              # Specifies the name of the NDK library that
+              # you want CMake to locate.
+              log )
+
+# Specifies libraries CMake should link to your target library. You
+# can link multiple libraries, such as libraries you define in this
+# build script, prebuilt third-party libraries, or system libraries.
+
+target_link_libraries( # Specifies the target library.这个和上面相同
+                       TimBisPatch
+
+                       # Links the target library to the log library
+                       # included in the NDK.
+                       ${log-lib} )
+</code></pre><p>###2.在local.properties文件下添加如下代码：</p>
+<pre><code>ndk.dir=D\:\\Android\\android_sdk\\android_sdk\\ndk-bundle
+</code></pre><p>###3.在app的build.gradle 的android{}中添加如下代码</p>
+<pre><code>  externalNativeBuild {
+    cmake {
+        path &quot;CMakeLists.txt&quot;
+    }
+}
+</code></pre><p>###4.在app的build.gradle 的 defaultConfig{}中添加如下代码<br>    externalNativeBuild {<br>            cmake {<br>                cppFlags “-frtti -fexceptions”<br>            }<br>        }<br>    //如果需要限制编译平台 就打开这个 否则要全平台就不需要写这个<br>    ndk {<br>         abiFilters “armeabi”,”x86”<br>        }</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/07/13/给现有工程添加NDK支持/" data-id="cjbxg204u002vj0m6ollfka2z" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NDK/">NDK</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-android高级课程-性能优化--内存泄漏分析－2016-06-19" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" class="article-date">
+  <time datetime="2014-06-19T06:38:59.000Z" itemprop="datePublished">2014-06-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/">android高级课程-性能优化--内存泄漏分析－2016-06-19</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="case1：内部类造成内存泄漏"><a href="#case1：内部类造成内存泄漏" class="headerlink" title="case1：内部类造成内存泄漏"></a>case1：内部类造成内存泄漏</h2><p><img src="/img/690927-20160620172631069-801018470.png" alt="图片备份"></p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><pre><code>public class LeakAct extends Activity {  
+@Override
+protected void onCreate(Bundle savedInstanceState) {    
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.aty_leak);
+    test();
+} 
+//这儿发生泄漏    
+public void test() {    
+    new Thread(new Runnable() {      
+        @Override
+        public void run() {        
+            while (true) {          
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }).start();
+}
+}
+</code></pre><h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><pre><code>public class LeakAct extends Activity {  
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {    
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.aty_leak);
+        test();
+    }  
+    //加上static，变成静态匿名内部类
+    boolean mRun = true；
+    public static void test() {    
+        new Thread(new Runnable() {     
+            @Override
+            public void run() {        
+                while (mRun) {          
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+    public void onDestory{
+        //在业务允许的情况下，当Activity执行onDestory时，结束这些耗时任务;
+        mRun = false；
+    }
+}
+</code></pre><h4 id="mLeak是存储在静态区的静态变量，而Leak是内部类，其持有外部类Activity的引用。这样就导致Activity需要被销毁时，由于被mLeak所持有，所以系统不会对其进行GC，这样就造成了内存泄漏。在Java中，非静态内部类-和-匿名类-都会潜在的引用它们所属的外部类，但是，静态内部类却不会。如果这个非静态内部类实例做了一些耗时的操作，就会造成外围对象不会被回收，从而导致内存泄漏"><a href="#mLeak是存储在静态区的静态变量，而Leak是内部类，其持有外部类Activity的引用。这样就导致Activity需要被销毁时，由于被mLeak所持有，所以系统不会对其进行GC，这样就造成了内存泄漏。在Java中，非静态内部类-和-匿名类-都会潜在的引用它们所属的外部类，但是，静态内部类却不会。如果这个非静态内部类实例做了一些耗时的操作，就会造成外围对象不会被回收，从而导致内存泄漏" class="headerlink" title="mLeak是存储在静态区的静态变量，而Leak是内部类，其持有外部类Activity的引用。这样就导致Activity需要被销毁时，由于被mLeak所持有，所以系统不会对其进行GC，这样就造成了内存泄漏。在Java中，非静态内部类 和 匿名类 都会潜在的引用它们所属的外部类，但是，静态内部类却不会。如果这个非静态内部类实例做了一些耗时的操作，就会造成外围对象不会被回收，从而导致内存泄漏"></a>mLeak是存储在静态区的静态变量，而Leak是内部类，其持有外部类Activity的引用。这样就导致Activity需要被销毁时，由于被mLeak所持有，所以系统不会对其进行GC，这样就造成了内存泄漏。在Java中，非静态内部类 和 匿名类 都会潜在的引用它们所属的外部类，但是，静态内部类却不会。如果这个非静态内部类实例做了一些耗时的操作，就会造成外围对象不会被回收，从而导致内存泄漏</h4><h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><pre><code>1.将内部类变成静态内部类;
+
+2.如果有强引用Activity中的属性，则将该属性的引用方式改为弱引用;
+
+3.在业务允许的情况下，当Activity执行onDestory时，结束这些耗时任务;
+</code></pre><h2 id="case2：Context成内存泄漏"><a href="#case2：Context成内存泄漏" class="headerlink" title="case2：Context成内存泄漏"></a>case2：Context成内存泄漏</h2><p><img src="/img/690927-20160620172701897-2109008457.png" alt="图片备份"></p>
+<pre><code>private static Drawable sBackground;
+    @Override
+    protected void onCreate(Bundle state) {  
+        super.onCreate(state);
+        TextView label = new TextView(this);
+        label.setText(&quot;Leaks are bad&quot;);  
+        if (sBackground == null) {
+            //这里发生泄漏
+            sBackground = getDrawable(R.drawable.large_bitmap);
+            //改为
+            sBackground = getApplicationContext().getDrawable(R.drawable.large_bitmap);
+    }
+    label.setBackgroundDrawable(sBackground);
+    setContentView(label);
+}
+</code></pre><h4 id="如果我们在在调用Singleton的getInstance-方法时传入了Activity。那么当instance没有释放时，这个Activity会一直存在。因此造成内存泄露。"><a href="#如果我们在在调用Singleton的getInstance-方法时传入了Activity。那么当instance没有释放时，这个Activity会一直存在。因此造成内存泄露。" class="headerlink" title="如果我们在在调用Singleton的getInstance()方法时传入了Activity。那么当instance没有释放时，这个Activity会一直存在。因此造成内存泄露。"></a>如果我们在在调用Singleton的getInstance()方法时传入了Activity。那么当instance没有释放时，这个Activity会一直存在。因此造成内存泄露。</h4><h3 id="解决方法：-1"><a href="#解决方法：-1" class="headerlink" title="解决方法："></a>解决方法：</h3><pre><code>1.如果传入Context，使用ApplicationContext;
+
+2.使用ApplicationContext代替ActivityContext，因为ApplicationContext会随着应用程序的存在而存在，而不依赖于activity的生命周期；
+
+3.对Context的引用不要超过它本身的生命周期，慎重的对Context使用“static”关键字。Context里如果有线程，一定要在onDestroy()里及时停掉。
+</code></pre><h2 id="case4：Handler引起的内存泄漏"><a href="#case4：Handler引起的内存泄漏" class="headerlink" title="case4：Handler引起的内存泄漏"></a>case4：Handler引起的内存泄漏</h2><pre><code>当Handler中有延迟的的任务或是等待执行的任务队列过长，由于消息持有对Handler的引用，而Handler又持
+有对其外部类的潜在引用，这条引用关系会一直保持到消息得到处理，而导致了Activity无法被垃圾回收器回收，而导致了内存泄露。
+</code></pre><h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><pre><code>1.可以把Handler类放在单独的类文件中，或者使用静态内部类便可以避免泄露;
+
+2.如果想在Handler内部去调用所在的Activity,那么可以在handler内部使用弱引用的方式去指向所在
+
+3.Activity.使用Static + WeakReference的方式来达到断开Handler与Activity之间存在引用关系的目的。
+</code></pre><h3 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h3><pre><code>@Override
+protected void doOnDestroy() {        
+    super.doOnDestroy();        
+    if (mHandler != null) {
+        mHandler.removeCallbacksAndMessages(null);
+    }
+    mHandler = null;
+    mRenderCallback = null;
+}
+</code></pre><h2 id="case-5-注册监听器的泄漏"><a href="#case-5-注册监听器的泄漏" class="headerlink" title="case 5. 注册监听器的泄漏"></a>case 5. 注册监听器的泄漏</h2><pre><code>系统服务可以通过Context.getSystemService 获取，
+它们负责执行某些后台任务，或者为硬件访问提供接口。
+如果Context 对象想要在服务内部的事件发生时被通知，
+那就需要把自己注册到服务的监听器中。
+
+然而，这会让服务持有Activity 的引用，
+如果在Activity onDestory时没有释放掉引用就会内存泄漏。
+</code></pre><h3 id="使用ApplicationContext代替ActivityContext"><a href="#使用ApplicationContext代替ActivityContext" class="headerlink" title="使用ApplicationContext代替ActivityContext;"></a>使用ApplicationContext代替ActivityContext;</h3><h3 id="Example-："><a href="#Example-：" class="headerlink" title="Example ："></a>Example ：</h3><pre><code>mSensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
+</code></pre><h3 id="solution-1"><a href="#solution-1" class="headerlink" title="solution:"></a>solution:</h3><pre><code>mSensorManager = (SensorManager) getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
+</code></pre><h3 id="在Activity执行onDestory时，调用反注册"><a href="#在Activity执行onDestory时，调用反注册" class="headerlink" title="在Activity执行onDestory时，调用反注册;"></a>在Activity执行onDestory时，调用反注册;</h3><pre><code>protected void onDetachedFromWindow() {        
+    if (this.mActionShell != null) {        this.mActionShell.setOnClickListener((OnAreaClickListener)null);
+    }        
+    if (this.mButtonShell != null) { 
+        this.mButtonShell.setOnClickListener((OnAreaClickListener)null);
+    }        
+    if (this.mCountShell != this.mCountShell) {        this.mCountShell.setOnClickListener((OnAreaClickListener)null);
+    }        
+    super.onDetachedFromWindow();
+}
+</code></pre><h2 id="case6-下面是容易造成内存泄漏的系统服务："><a href="#case6-下面是容易造成内存泄漏的系统服务：" class="headerlink" title="case6:下面是容易造成内存泄漏的系统服务："></a>case6:下面是容易造成内存泄漏的系统服务：</h2><pre><code>InputMethodManager imm = (InputMethodManager) context.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+</code></pre><h2 id="case-7-Cursor，Stream没有close，View没有recyle"><a href="#case-7-Cursor，Stream没有close，View没有recyle" class="headerlink" title="case 7. Cursor，Stream没有close，View没有recyle"></a>case 7. Cursor，Stream没有close，View没有recyle</h2><p>资源性对象比如(Cursor，File文件等)往往都用了一些缓冲，我们在不使用的时候，应该及时关闭它们，以便它们的缓冲及时回收内存。</p>
+<p>它们的缓冲不仅存在于 java虚拟机内，还存在于java虚拟机外。如果我们仅仅是把它的引用设置为null,而不关闭它们，往往会造成内存泄漏。因为有些资源性对象，比如SQLiteCursor(在析构函数finalize(),如果我们没有关闭它，它自己会调close()关闭)，如果我们没有关闭它，系统在回收它时也会关闭它，但是这样的效率太低了。</p>
+<p>因此对于资源性对象在不使用的时候，应该调用它的close()函数，将其关闭掉，然后才置为null. 在我们的程序退出时一定要确保我们的资源性对象已经关闭。</p>
+<h3 id="Solution："><a href="#Solution：" class="headerlink" title="Solution："></a>Solution：</h3><h4 id="调用onRecycled"><a href="#调用onRecycled" class="headerlink" title="调用onRecycled()"></a>调用onRecycled()</h4><pre><code>@Override
+public void onRecycled() {
+    reset();
+    mSinglePicArea.onRecycled();
+}   
+</code></pre><h4 id="在View中调用reset"><a href="#在View中调用reset" class="headerlink" title="在View中调用reset()"></a>在View中调用reset()</h4><pre><code>public void reset() {    if (mHasRecyled) {            
+    return;
+}
+...
+SubAreaShell.recycle(mActionBtnShell);
+mActionBtnShell = null;
+...
+mIsDoingAvatartRedPocketAnim = false;        
+if (mAvatarArea != null) {
+        mAvatarArea.reset();
+}        
+if (mNickNameArea != null) {
+    mNickNameArea.reset();
+}
+}
+</code></pre><h2 id="case-8-集合中对象没清理造成的内存泄漏"><a href="#case-8-集合中对象没清理造成的内存泄漏" class="headerlink" title="case 8. 集合中对象没清理造成的内存泄漏"></a>case 8. 集合中对象没清理造成的内存泄漏</h2><p>我们通常把一些对象的引用加入到了集合容器（比如ArrayList）中，当我们不需要该对象时，并没有把它的引用从集合中清理掉，这样这个集合就会越来越大。如果这个集合是static的话，那情况就更严重了。<br>所以要在退出程序之前，将集合里的东西clear，然后置为null，再退出程序。</p>
+<h2 id="case-9-WebView造成的泄露"><a href="#case-9-WebView造成的泄露" class="headerlink" title="case 9. WebView造成的泄露"></a>case 9. WebView造成的泄露</h2><p>当我们不要使用WebView对象时，应该调用它的destory()函数来销毁它，并释放其占用的内存，否则其占用的内存长期也不能被回收，从而造成内存泄露。</p>
+<h3 id="解决方案：-1"><a href="#解决方案：-1" class="headerlink" title="解决方案："></a>解决方案：</h3><p>为webView开启另外一个进程，通过AIDL与主线程进行通信，WebView所在的进程可以根据业务的需要选择合适的时机进行销毁，从而达到内存的完整释放。</p>
+<h2 id="case-10-构造Adapter时，没有使用缓存的ConvertView"><a href="#case-10-构造Adapter时，没有使用缓存的ConvertView" class="headerlink" title="case 10. 构造Adapter时，没有使用缓存的ConvertView"></a>case 10. 构造Adapter时，没有使用缓存的ConvertView</h2><p>初始时ListView会从Adapter中根据当前的屏幕布局实例化一定数量的View对象，同时ListView会将这些View对象 缓存起来。</p>
+<p>当向上滚动ListView时，原先位于最上面的List Item的View对象会被回收，然后被用来构造新出现的最下面的List Item。</p>
+<p>这个构造过程就是由getView()方法完成的，getView()的第二个形参View ConvertView就是被缓存起来的List Item的View对象(初始化时缓存中没有View对象则ConvertView是null)。</p>
+<p>参考网址：- <a href="/img/Android内存泄露案例分析1.png">Android内存泄露案例分析1</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" data-id="cjbxg20340014j0m64a4yonsj" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-泛型" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/16/泛型/" class="article-date">
+  <time datetime="2014-02-16T06:38:59.000Z" itemprop="datePublished">2014-02-16</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/16/泛型/">泛型</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="1-基本信息"><a href="#1-基本信息" class="headerlink" title="1.基本信息"></a>1.基本信息</h4><hr>
+<p> 首先泛型的本质便是类型参数化，通俗的说就是用一个变量来表示类型，<br>这个类型可以是String,Integer等等不确定，原理类似如下代码：</p>
+<pre><code>int pattern; //声明一个变量未赋值，pattern可以看作是泛型
+pattern = 4;
+pattern = 5;//4和5就可以看作是String和Integer
+</code></pre><h2 id="泛型的具体形式-有-泛型类-泛型方法"><a href="#泛型的具体形式-有-泛型类-泛型方法" class="headerlink" title=" 泛型的具体形式 有 泛型类 泛型方法"></a> 泛型的具体形式 有 泛型类 泛型方法</h2><p> 泛型类：</p>
+<pre><code>class Test&lt;T&gt;
+{
+    private T t;
+    Test(T t)
+    {
+        this.t = t;
+    }
+    public  T getT()
+    {
+        return t;
+    }
+
+    public void setT(T t)
+    {
+        this.t = t;
+    }
+}
+</code></pre><p> 泛型方法：</p>
+<pre><code>...
+
+public &lt;T&gt; void show()//泛型参数类型声明必须在返回类型之前
+{
+
+    operation about T...
+
+}
+
+...
+</code></pre><h4 id="2-为何要引入泛型"><a href="#2-为何要引入泛型" class="headerlink" title="2.为何要引入泛型"></a>2.为何要引入泛型</h4><hr>
+<p>泛型是java1.5之后引入的。</p>
+<p>比如一个ArrayList 它里面放的内容限定，1.5之前就是这样写</p>
+<pre><code>ArrayList&lt;Object&gt;
+</code></pre><p>有了泛型，就这样写</p>
+<pre><code>ArrayList&lt;T&gt;
+</code></pre><p>Q:由于泛型可以接受多个参数，而Object经过强制类型转换也可以转换为任何类型，既然二者都具有相同的作用，为何还要引进泛型呢？</p>
+<p>A:泛型可以把使用Object的错误提前到编译后，而不是运行后，提升安全性。</p>
+<p><strong>泛型是在编译后就可以知道是否有转换异常。不用等到运行时。</strong></p>
+<h4 id="3-类型擦除和原始类型"><a href="#3-类型擦除和原始类型" class="headerlink" title="3.类型擦除和原始类型"></a>3.类型擦除和原始类型</h4><hr>
+<p>java的泛型是伪泛型</p>
+<p>C#中，泛型是一个占位符，是真实存在的。而java的泛型是在编译的时候就转换成为对应的真实类型了。当运行时，就是用的真实的对象，这就是提示安全性。</p>
+<p><strong>这个真实类型   叫原始类型。</strong></p>
+<p><strong>这个替代的过程 叫做类型擦除。</strong></p>
+<p><strong>在类型擦除过程中，一般使用第一个限定的类型来替换，若无限定则使用Object</strong></p>
+<h2 id="泛型类举栗："><a href="#泛型类举栗：" class="headerlink" title="泛型类举栗："></a>泛型类举栗：</h2><p>不带泛型限制的代码：</p>
+<pre><code>class Test&lt;T&gt;
+{
+    private T t;
+    public void show(T t)
+    {
+
+    }
+}
+</code></pre><p>以上代码编译后java虚拟机会转为：</p>
+<pre><code>class Test
+{
+    //因为没有限定类型，所以用Object
+    private Object t;
+    public void show(Object t)
+    {
+
+    }
+}
+</code></pre><p>带泛型限制的代码：</p>
+<pre><code>class Test&lt;? extends Comparable&gt;
+{
+    private T t;
+    public void show(T t)
+    {
+
+    }
+}
+</code></pre><p>以上代码编译后java虚拟机会转为：</p>
+<pre><code>class Test
+{
+    //因为有了限定，这个泛型必须是Comparable 的子类，所以 转换后是Comparable
+    private Comparable t;
+    public void show(Comparable t)
+    {
+
+    }
+}
+</code></pre><h2 id="泛型方法举例："><a href="#泛型方法举例：" class="headerlink" title="泛型方法举例："></a>泛型方法举例：</h2><pre><code>class Test&lt;T&gt;
+{
+    private T t;
+    public void show(T t)
+    {
+
+    }
+}
+
+class TestDemo extends Test&lt;String&gt;
+{
+    private String t;
+    public void show(String t)
+    {
+
+    }
+}
+</code></pre><p>由于TestDemo继承Test<string>,但是Test在类型擦除后还有一个public void Show(Object t),这和那个show(String t)出现重载，但是本意却是没有show(Object t)的，</string></p>
+<p>因此在虚拟机翻译泛型方法中，引入了桥方法，及在类型擦除后的show(Object t)中调用另一个方法，代码如下：</p>
+<pre><code>public void show(Object t)
+{
+    show((String) t);
+}
+</code></pre><h4 id="4、泛型限定"><a href="#4、泛型限定" class="headerlink" title="4、泛型限定"></a>4、泛型限定</h4><h2 id="单类型限定"><a href="#单类型限定" class="headerlink" title="单类型限定"></a>单类型限定</h2><p>泛型限定是通过？（通配符）来实现的，表示可以接受任意类型。</p>
+<p>那一定有人有疑问，那？和T（二者单独使用时）有啥区别了，其实区别也不是很大，仅仅在对参数类型的使用上。</p>
+<p>例如：</p>
+<pre><code>public void print(ArrayList&lt;?&gt; al)
+{
+    Iterator&lt;?&gt; it = al.iterator();
+    while(it.hasNext())
+    {
+        System.out.println(in.next());
+    }
+
+}
+
+public &lt;T&gt; void print(ArrayList&lt;T&gt; al)
+{
+    Iterator&lt;T&gt; it = al.iterator();
+    while(it.hasNext())
+    {
+        T t = it.next();  //区别就在此处，T可以作为类型来使用,而？仅能作为接收任意类型
+        System.out.println(t);
+    }
+}
+</code></pre><p><strong>？ extends SomeClass  这种限定，说明的是只能接收SomeClass及其子类类型，所谓的“上限”</strong></p>
+<p><strong>？ extends SomeClass  这种限定，不能存，只能取 用于返回值的限定，不能限定参数</strong></p>
+<p>代码：</p>
+<p>Box.java</p>
+<pre><code>public class Box &lt;T&gt;{
+
+    private String mType ;
+
+    public String getmType() {
+        return mType;
+    }
+
+    public void setmType(String mType) {
+        this.mType = mType;
+    }
+
+
+    private T mNumber;
+
+    public T getmNumber() {
+        return mNumber;
+    }
+
+    public void setmNumber(T mNumber) {
+        this.mNumber = mNumber;
+    }
+}
+</code></pre><p>Person.java</p>
+<pre><code>public class Person&lt;T&gt; {
+
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    private int age;
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+
+}
+</code></pre><p>Student.java</p>
+<pre><code>public class Student extends Person{
+
+
+}
+</code></pre><p>Main.java</p>
+<pre><code>public class Main {
+
+    public static void main (String arg[]){
+
+        Person&lt;Number&gt; _one = new Person&lt;Number&gt;();
+        _one.setName(&quot;leequer&quot;);
+        _one.setAge(2);
+        System.out.println(_one.getName());
+
+        Person&lt;Student&gt; _two = new Person&lt;Student&gt;();
+        _two.setName(&quot;leequerStudent&quot;);
+        _two.setAge(2);
+        System.out.println(_two.getName());
+
+
+        Box&lt;Person&gt; _three = new Box&lt;Person&gt;();
+        _three.setmType(&quot;ren&quot;);
+        Box&lt;Student&gt; _four = new Box&lt;Student&gt;();
+        //Box&lt;Person&gt; _five = new Box&lt;Student&gt;(); //error
+        Box&lt;? extends Person&gt; _five = new Box&lt;Student&gt;();
+        _five.setmType(&quot;xue sheng&quot;);
+//        _five.setmNumber(mNumber); 无法set值，因为不知道什么类型
+        //Box&lt;? super Person&gt; _six = new Box&lt;Student&gt;(); //error
+
+        Box&lt;Student&gt; _Box = new Box&lt;&gt;();
+        _Box.setmNumber(new Student());
+
+
+        Box&lt;? extends Person&gt; _Box1 = new Box&lt;&gt;();
+//        _Box1.setmNumber(new Person()); error
+
+
+    }
+
+
+}
+</code></pre><p>可以发现，</p>
+<pre><code>Box&lt;? extends Person&gt; _five = new Box&lt;Student&gt;();
+_five.setmType(&quot;xue sheng&quot;);
+//_five.setmNumber(mNumber); 无法set值
+</code></pre><p>这样的泛型限定的写法，不能set值，为什么呢？</p>
+<p>因为限定的是Person的子类都可以，那有可能这个子类很多，当子类很多的时候，编译时就不知道应该转为哪个子类了，这也就是为什么Box<person> _three = new Box<person>();  这样可以写入的原因，因为它唯一指定了一个固定的类。</person></person></p>
+<p><strong>? super SomeClass 这种限定，说明只能接收SomeClass及其父类类型，所谓的“下限”</strong></p>
+<p><strong>? super SomeClass 这种限定，能存，但取出来只是Object类型，用于限定参数，不用与限定返回值</strong></p>
+<p>代码：</p>
+<pre><code>Box&lt;? super Student&gt; _box2 = new Box&lt;&gt;();
+_box2.setmNumber(new Student());
+_box2.getmNumber();//可以看到 这个提示中 返回的是Object
+</code></pre><p>因为，set值，最起码是子类，可以强转任何父类，而拿出来的时候，不知道是那个父类，或者父类的子类，所以<br>取出来是Object。</p>
+<p>这也是多态的体现：父类的引用可以指向子类，子类的引用不能指向父类。</p>
+<p><strong>需要读写的时候 直接用一个 ？  不能用 super 或者 extends</strong></p>
+<p>代码：</p>
+<p>这样也是错误的：</p>
+<pre><code> //        Box&lt;? super Student&gt; _box3 = new Box&lt;? super Student&gt;(); error
+
+//        Box&lt;? extends Student&gt; _box4 = new Box&lt;? extends Student&gt;(); error
+</code></pre><p>Java强制在创建对象的时候必须给类型参数制定具体的类型，不能使用通配符，也就是说new ArrayList&lt;? extends A&gt;()，new ArrayList&lt;?&gt;()这种形式的初始化语句是不允许的</p>
+<p>我们来看这个栗子：</p>
+<pre><code>public &lt;T extends Comparable&gt; shwo(T a, T b)
+{
+    int num = a.compareTo(b);
+}
+</code></pre><p>这个泛型方法中，限定了T要extends Comparable,原因是，参数T需要调用compareTo这个比较的方法。只有实现了Comparable接口的compareTo方法，才能使用compareTo方法，这就是为什么要这样写。</p>
+<h2 id="多类型限定："><a href="#多类型限定：" class="headerlink" title="多类型限定："></a>多类型限定：</h2><pre><code>&lt;T extends Comparable &amp; Serializable&gt;
+</code></pre><p>结合上面的例子，这种书写方式为何把comparable写在前边？因为由于类型擦除的问题，原始类型是由Comparable替换的，因此写在前边的是类中存在此类型的泛型方法（指compareTo方法）放在前边，避免调用方法时类型的强制转换，提高效率。</p>
+<pre><code>class Test&lt;T extends Comparable &amp; Serializable&gt;
+{
+    private T lower;
+    private T upper;
+
+    //此处是利用Comparable的compareTo方法，因此把Comparable写在前边，类型擦除后为Comparable，
+    //若为Serializable,还得用强制类型转换，否则不能使用compareTo方法。
+    public Test(T first, T second) 
+    {
+        int a = first.compareTo(second);
+        ...
+    }
+}
+</code></pre><h2 id="关于泛型类型限定的“继承”误区"><a href="#关于泛型类型限定的“继承”误区" class="headerlink" title="关于泛型类型限定的“继承”误区"></a>关于泛型类型限定的“继承”误区</h2><p>总有些人误把类型的限定当作继承</p>
+<p>比如：</p>
+<pre><code>//类型是这样的
+&lt;Student extends Person&gt;
+//然后就这样用
+ArrayList&lt;Person&gt; al = new ArrayList&lt;Student&gt;();
+</code></pre><p>此处的<person>, <student>作为泛型的意思是ArrayList容器的接收类型，用一个简单的例子来说明</student></person></p>
+<p>ArrayList是一个大型养殖场，<person>表明的是他能够接收动物，而上边的new语句生成的是一个只能够接收猪的养殖场(ArrayList<student>),即把一个大型养殖场建造成了一个养猪场，若是继承的大型养殖场肯定是还能接受狗、羊….的，但是现在建造成了养猪场，那还能接受别的动物么？所以这肯定是错误的用法！</student></person></p>
+<p><strong>简而言之，泛型new时两边的类型参数必须一致。</strong></p>
+<p>如果你这么写就没问题：</p>
+<pre><code>ArrayList&lt;？ extends Person&gt; al = new ArrayList&lt;Student&gt;();
+</code></pre><p>这就是上面说的 上限</p>
+<h4 id="5、泛型的一些基本规则约束"><a href="#5、泛型的一些基本规则约束" class="headerlink" title="5、泛型的一些基本规则约束"></a>5、泛型的一些基本规则约束</h4><p><strong>泛型的类型参数必须为类的引用，不能用基本类型（int, short, long, byte, float, double, char, boolean）</strong></p>
+<p><strong>泛型是类型的参数化，在使用时可以用作不同类型</strong></p>
+<p><strong>泛型的类型参数可以有多个</strong></p>
+<p>代码举例如下：</p>
+<pre><code>public &lt;T, E&gt; void show()
+{    
+    coding operation.....    
+}
+</code></pre><p><strong>泛型可以使用extends, super, ?(通配符)来对类型参数进行限定</strong></p>
+<p><strong>由于类型擦除，运行时类型查询只适用于原始类型，比如instanceof、getClass()、强制类型转换，a instanceof (Pair<employe>),在类型擦除后便是 a instanceof Pair,因此以上运行的一些操作在虚拟机中操作都是对原始类型进行操作，无论写的多么虚幻，都逃不出类型擦除，因为在虚拟机种并不存在泛型。</employe></strong> </p>
+<p><strong>不能创建参数化类型的数组</strong></p>
+<p>代码举例如下：</p>
+<pre><code>Pair&lt;String&gt;[] table = new Pair&lt;String&gt;[10]; //ERROR
+//让Object[] t指向table
+Object[] t = table;
+//向t中添加对象
+t[0] = new Pair&lt;Employe&gt;();
+//关键错误之处
+String s = table[0];
+</code></pre><p>由于Object可以接收任何类型，在里边存入 new Pari<employe>时，没有任何问题，但是当取出的时候会出现ClassCastException,因此不能创建参数化类型数组。</employe></p>
+<p><strong>不能实例化类型变量，既一下代码是错误的</strong></p>
+<pre><code>T t = new T();
+//或
+T.Class
+</code></pre><p><strong>不能在静态域或方法中出现参数类型</strong></p>
+<pre><code>class Test&lt;T&gt;
+{
+    private static T example;  //error
+    public static void showExample() //error
+    {
+        action about T...
+    }
+    public static T showExample() //error
+    {
+        action about T....    
+     }
+}
+</code></pre><p>首先方法是一个返回类型为T的普通方法，而非泛型方法，这和在静态方法中使用非静态参数是一样的，静态方法是先于对象而存在内存中的，因此在编译的时候，T的类型无法确定，一定会出现“Cannot make a static reference to a non_static reference”这样类似的错误。</p>
+<p>但是这样的代码就是正确的</p>
+<pre><code>class Test&lt;T&gt;
+{
+    public static &lt;T&gt; T show()
+    {
+        action
+    }
+}    
+</code></pre><p>因为此处的静态方法是泛型方法，可以使用。</p>
+<p><strong>不能抛出或捕获泛型类的实例</strong></p>
+<p><strong>不能抛出不能捕获泛型类对象</strong></p>
+<p><strong>泛型类不能扩展Throwable，注意是类不能继承Throwable，类型参数的限定还是可以的</strong><br>　　　　<br><strong>catch子句不能使用类型变量</strong></p>
+<p>如下代码</p>
+<pre><code>try
+{
+    ....
+}
+catch(T e) //error
+{
+    ...
+}
+</code></pre><p><strong>类型擦除后的冲突注意</strong></p>
+<pre><code>class Pair&lt;T&gt;
+{
+    public boolean equals(T value) //error
+    {
+        ....
+    }
+}
+</code></pre><p>此处的错误的原因不能存在同一个方法，在类型擦除后，Pair的方法为，public boolean equals(Object value),这与从Object.class中继承下来的equals(Object obj)冲突。</p>
+<p><strong>一个类不能成为两个接口类型的子类，而这两个接口是同一接口的不同参数化</strong></p>
+<pre><code>class Calendar implements coparable&lt;Calendar&gt;{}
+
+class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalendar&gt;{} //error
+</code></pre><p>当类型擦除后，Calendar实现的是Comparable,而GregorianCalendar继承了Calendar,又去实现Comparable，必然出错！</p>
+<p>以上内容摘录整理自<a href="http://www.cnblogs.com/fantasy01/p/3963593.html" target="_blank" rel="noopener">关于Java泛型深入理解小总结</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/02/16/泛型/" data-id="cjbxg204t002tj0m6le0js8m4" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-AndroidAnnotations-1概要和简单用法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/02/03/AndroidAnnotations-1概要和简单用法/" class="article-date">
+  <time datetime="2014-02-03T06:55:59.000Z" itemprop="datePublished">2014-02-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/02/03/AndroidAnnotations-1概要和简单用法/">AndroidAnnotations-1 概要和简单用法</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AndroidAnnotations主要用于简化Android开发，<a href="https://github.com/excilys/androidannotations" target="_blank" rel="noopener">项目地址</a>，最直接的感觉就是不用写太多的findviewbyid了。其实在AFinal中也有类似的功能。
+        
+          <p class="article-more-link">
+            <a href="/2014/02/03/AndroidAnnotations-1概要和简单用法/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/02/03/AndroidAnnotations-1概要和简单用法/" data-id="cjbxg201d0000j0m66raoimzm" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-快速排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/01/25/快速排序/" class="article-date">
+  <time datetime="2013-01-25T12:59:59.000Z" itemprop="datePublished">2013-01-25</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/01/25/快速排序/">快速排序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#前情回顾</p>
+<ul>
+<li><p>上次说的<a href="http://leequer.oschina.io/2016/01/24/冒泡排序/" target="_blank" rel="noopener">冒泡排序</a>解决了<a href="http://leequer.oschina.io/2016/01/23/桶排序简化版/" target="_blank" rel="noopener">桶排序</a>的占用空间的问题。</p>
+</li>
+<li><p>但是冒泡排序带了新问题，他的执行效率很慢，如果一个一秒10亿次的电脑对1亿个数进行排序，桶排序只需要0.1秒，而冒泡排序需要115天。
+        
+          <p class="article-more-link">
+            <a href="/2013/01/25/快速排序/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/01/25/快速排序/" data-id="cjbxg204n002lj0m6jn296ljp" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-冒泡排序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/01/24/冒泡排序/" class="article-date">
+  <time datetime="2013-01-24T06:19:59.000Z" itemprop="datePublished">2013-01-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/01/24/冒泡排序/">冒泡排序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="前情回顾"><a href="#前情回顾" class="headerlink" title="前情回顾"></a>前情回顾</h1><p>在<a href="http://leequer.oschina.io/2016/01/23/桶排序简化版/" target="_blank" rel="noopener">桶排序简化版</a>中说到桶排序。</p>
+<ul>
+<li>如果我们要排序5个数字，1，8，999，23，43，那我们需要建立一个长度是1000的数组。有些浪费。</li>
+<li>不能对小数进行排序。
+        
+          <p class="article-more-link">
+            <a href="/2013/01/24/冒泡排序/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/01/24/冒泡排序/" data-id="cjbxg204h002hj0m6opsenhu4" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-桶排序简化版" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2013/01/23/桶排序简化版/" class="article-date">
+  <time datetime="2013-01-23T02:45:59.000Z" itemprop="datePublished">2013-01-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2013/01/23/桶排序简化版/">桶排序简化版</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>班里有五个同学，满分10分，考试成绩为5,3,5,2,8，请你写个程序，将成绩按照从高到底的顺序排列。
+        
+          <p class="article-more-link">
+            <a href="/2013/01/23/桶排序简化版/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2013/01/23/桶排序简化版/" data-id="cjbxg204r002rj0m6pa8rwjl7" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-产品经理课程--产品经理工作职责" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/08/23/产品经理课程--产品经理工作职责/" class="article-date">
+  <time datetime="2012-08-23T06:55:59.000Z" itemprop="datePublished">2012-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/08/23/产品经理课程--产品经理工作职责/">产品经理课程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><pre><code>1.平庸的产品经理：排期，推进，逼着开发尽快实现！
+2.卓越的产品经理：用户的目标是什么？为什么要提这个需求？是否做？如何实现？
+</code></pre><h1 id="能力1-分清用户需求和用户目标"><a href="#能力1-分清用户需求和用户目标" class="headerlink" title="#能力1.分清用户需求和用户目标"></a>#能力1.分清用户需求和用户目标</h1><pre><code>用户说：我要去外地，想要一个更快的马。于是你找到一匹好马
+</code></pre><blockquote>
+<p>我们说这个并不没有很好的分析用户的目标，用户的目标是更快，而不是马。更快的马是用户认知范围内的一种<br>解决方案，他的目标是更快。而不是一匹马。当他看到有汽车跑的比马更快的时候，他就会抱怨这是什么产品。产品经理需要做典型用户需求分析，找出真正用户的痛点。所有用户的需求都是原始需求，只有当产品经理分析出其中的用户目标才是我们需要解决的问题。飞机，高铁，更快的交通工具发明出来，解决的一个问题就是更快。</p>
+</blockquote>
+<hr>
+<h1 id="分清用户需求和目标的简单区别，“科技再怎么变，人性没有变”，目标不会随着时间改变。"><a href="#分清用户需求和目标的简单区别，“科技再怎么变，人性没有变”，目标不会随着时间改变。" class="headerlink" title="分清用户需求和目标的简单区别，“科技再怎么变，人性没有变”，目标不会随着时间改变。"></a>分清用户需求和目标的简单区别，“科技再怎么变，人性没有变”，目标不会随着时间改变。</h1><h2 id="常见的产品经理的错误："><a href="#常见的产品经理的错误：" class="headerlink" title="##常见的产品经理的错误："></a>##常见的产品经理的错误：</h2><blockquote>
+<p>把细小的需求强加到用户身上，有的产品经理认为粉红色会讨女客户喜欢，而并不是所有女客户都喜欢，这个粉红色就是强加到客户身上的需求。</p>
+</blockquote>
+<hr>
+<blockquote>
+<p>用户都是傻瓜，他们不知道自己要什么，no，用户不是专业人士，他们不知道所有的解决方案，但是每个用户都知道自己要什么样的产品，否则他怎么会选你的产品。</p>
+</blockquote>
+<h1 id="人性的需求是否被满足，通俗的说法就是“抓住了痛点”，这就是要求产品经理抛开现象看本质，通过研究典型用户，模拟典型场景，抛开现有的技术手段，寻找人性中最本质的需求，并通过产品设计，满足用户的人性需求"><a href="#人性的需求是否被满足，通俗的说法就是“抓住了痛点”，这就是要求产品经理抛开现象看本质，通过研究典型用户，模拟典型场景，抛开现有的技术手段，寻找人性中最本质的需求，并通过产品设计，满足用户的人性需求" class="headerlink" title="人性的需求是否被满足，通俗的说法就是“抓住了痛点”，这就是要求产品经理抛开现象看本质，通过研究典型用户，模拟典型场景，抛开现有的技术手段，寻找人性中最本质的需求，并通过产品设计，满足用户的人性需求"></a>人性的需求是否被满足，通俗的说法就是“抓住了痛点”，这就是要求产品经理抛开现象看本质，通过研究典型用户，模拟典型场景，抛开现有的技术手段，寻找人性中最本质的需求，并通过产品设计，满足用户的人性需求</h1><h2 id="马斯洛的人性的需求，从低到高，生理（吃喝玩乐，大众点评，百度外卖），安全，社交（不孤独，不寂寞，微信，qq），尊重，自我实现，越是高级的需求，越不会被用户抛弃，微信在满足大家社交的需求的基础上，向下满足支付，购买，满足人们的生理需求，这样更牢固。你让百度外卖做社交，肯定做不起来。但是让微信做支付，很快有人来用。一个道理。点赞和分享就是往上满足人们的更高需求。"><a href="#马斯洛的人性的需求，从低到高，生理（吃喝玩乐，大众点评，百度外卖），安全，社交（不孤独，不寂寞，微信，qq），尊重，自我实现，越是高级的需求，越不会被用户抛弃，微信在满足大家社交的需求的基础上，向下满足支付，购买，满足人们的生理需求，这样更牢固。你让百度外卖做社交，肯定做不起来。但是让微信做支付，很快有人来用。一个道理。点赞和分享就是往上满足人们的更高需求。" class="headerlink" title="##马斯洛的人性的需求，从低到高，生理（吃喝玩乐，大众点评，百度外卖），安全，社交（不孤独，不寂寞，微信，qq），尊重，自我实现，越是高级的需求，越不会被用户抛弃，微信在满足大家社交的需求的基础上，向下满足支付，购买，满足人们的生理需求，这样更牢固。你让百度外卖做社交，肯定做不起来。但是让微信做支付，很快有人来用。一个道理。点赞和分享就是往上满足人们的更高需求。"></a>##马斯洛的人性的需求，从低到高，生理（吃喝玩乐，大众点评，百度外卖），安全，社交（不孤独，不寂寞，微信，qq），尊重，自我实现，越是高级的需求，越不会被用户抛弃，微信在满足大家社交的需求的基础上，向下满足支付，购买，满足人们的生理需求，这样更牢固。你让百度外卖做社交，肯定做不起来。但是让微信做支付，很快有人来用。一个道理。点赞和分享就是往上满足人们的更高需求。</h2><h1 id="能力要求-2-：重塑和分解需求的能力"><a href="#能力要求-2-：重塑和分解需求的能力" class="headerlink" title="能力要求 2 ：重塑和分解需求的能力"></a>能力要求 2 ：重塑和分解需求的能力</h1><h2 id="产品经理在讲解自己的设计和计划之前，要把这个设计的初衷，就是自己捕获到的客户目标说一下，和增加这项功能的原因和考虑。以得到大家的认同感。否则我们不知道你为什么这么设计，出于什么原因设计。开发听了也一头雾水。"><a href="#产品经理在讲解自己的设计和计划之前，要把这个设计的初衷，就是自己捕获到的客户目标说一下，和增加这项功能的原因和考虑。以得到大家的认同感。否则我们不知道你为什么这么设计，出于什么原因设计。开发听了也一头雾水。" class="headerlink" title="##产品经理在讲解自己的设计和计划之前，要把这个设计的初衷，就是自己捕获到的客户目标说一下，和增加这项功能的原因和考虑。以得到大家的认同感。否则我们不知道你为什么这么设计，出于什么原因设计。开发听了也一头雾水。"></a>##产品经理在讲解自己的设计和计划之前，要把这个设计的初衷，就是自己捕获到的客户目标说一下，和增加这项功能的原因和考虑。以得到大家的认同感。否则我们不知道你为什么这么设计，出于什么原因设计。开发听了也一头雾水。</h2><h1 id="能力要求-3-：收集资料和整理数据的能力"><a href="#能力要求-3-：收集资料和整理数据的能力" class="headerlink" title="#能力要求 3 ：收集资料和整理数据的能力"></a>#能力要求 3 ：收集资料和整理数据的能力</h1><h2 id="用数据说话：避免争吵，增加方案说服力。"><a href="#用数据说话：避免争吵，增加方案说服力。" class="headerlink" title="用数据说话：避免争吵，增加方案说服力。"></a>用数据说话：避免争吵，增加方案说服力。</h2><h2 id="1）掌握硬件、设备、系统、软件新技术的进步以及动向"><a href="#1）掌握硬件、设备、系统、软件新技术的进步以及动向" class="headerlink" title="1）掌握硬件、设备、系统、软件新技术的进步以及动向"></a>1）掌握硬件、设备、系统、软件新技术的进步以及动向</h2><h2 id="2）掌握市场发展和占比等数据的变化"><a href="#2）掌握市场发展和占比等数据的变化" class="headerlink" title="2）掌握市场发展和占比等数据的变化"></a>2）掌握市场发展和占比等数据的变化</h2><h2 id="3）看准产业链的发展趋势和新机会"><a href="#3）看准产业链的发展趋势和新机会" class="headerlink" title="3）看准产业链的发展趋势和新机会"></a>3）看准产业链的发展趋势和新机会</h2><h2 id="4）研究用户喜好和市场热点变化"><a href="#4）研究用户喜好和市场热点变化" class="headerlink" title="4）研究用户喜好和市场热点变化"></a>4）研究用户喜好和市场热点变化</h2><h2 id="5）研究新的交互方式、用户体验设计方式、设计流行趋势"><a href="#5）研究新的交互方式、用户体验设计方式、设计流行趋势" class="headerlink" title="5）研究新的交互方式、用户体验设计方式、设计流行趋势"></a>5）研究新的交互方式、用户体验设计方式、设计流行趋势</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/08/23/产品经理课程--产品经理工作职责/" data-id="cjbxg20490027j0m6a07umqwi" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-CMake语法1-基本使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/06/19/CMake语法1-基本使用/" class="article-date">
+  <time datetime="2012-06-18T16:00:00.000Z" itemprop="datePublished">2012-06-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/06/19/CMake语法1-基本使用/">CMake语法1-基本使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#1.简介</p>
+<p>####CMake是一个跨平台的安装（编译）工具，可以用简单的语句来描述所有平台的安装(编译过程)。他能够输出各种各样的makefile或者project文件，能测试编译器所支持的C++特性,类似UNIX下的automake。只是 CMake 的组态档取名为 CMakeLists.txt。Cmake 并不直接建构出最终的软件，而是产生标准的建构档（如 Unix 的 Makefile 或 Windows Visual C++ 的 projects/workspaces），然后再依一般的建构方式使用。这使得熟悉某个集成开发环境（IDE）的开发者可以用标准的方式建构他的软件，这种可以使用各平台的原生建构系统的能力是 CMake 和 SCons 等其他类似系统的区别之处。</p>
+<p>#2.使用</p>
+<p>##2.1 创建必要的文件夹</p>
+<p>###@build文件夹：编译生成的内容在此文件夹下。</p>
+<p>###@src文件夹：放源文件</p>
+<p>###@include文件夹：放头文件</p>
+<p>##2.2 新建CMakeLists.txt (必须是这个名字)<br>写入内容：</p>
+<pre><code>#支持最小的编译版本号
+cmake_minimum_required(VERSION 2.6)
+#目标：生成myapp
+PROJECT(myapp)
+#导入头文件所在文件夹
+INCLUDE_DIRECTORIES(
+include
+)
+#指定源文件的目录
+AUX_SOURCE_DIRECTORY(src DIR_SRCS)
+#把可执行的文件放大哪个目录下  SET  方法设置变量
+SET(TEST_MATH ${DIR_SRCS})
+ADD_EXECUTABLE(${PROJECT_NAME} ${TEST_MATH})
+</code></pre><p>#3.生成Makefile文件</p>
+<p>进入到build文件夹下 执行cmake .. 生成</p>
+<p>看来cmake作用就是生成Makefile文件</p>
+<p>#4.生成可执行文件</p>
+<p>在build文件夹下执行make命令 生成myapp 然后执行 ./myapp</p>
+<p><a href="/code/cmaketest.rar">cmaketest</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/06/19/CMake语法1-基本使用/" data-id="cjbxg201z0005j0m62dwdiwwe" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMake/">CMake</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Makefile语法2-自定义方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/05/19/Makefile语法2-自定义方法/" class="article-date">
+  <time datetime="2012-05-18T16:00:00.000Z" itemprop="datePublished">2012-05-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/05/19/Makefile语法2-自定义方法/">Makefile语法2-自定义方法，递归式展开</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#<strong>1自定义方法</strong></p>
+<pre><code>#自定义方法myfun 两个参数 
+myfun=$2 $1
+#自定义方法myfun_ret 调用myfun方法 传入第二个参数20 第一个参数10 注意顺序 是反着的
+myfun_ret=$(call myfun,20,10)
+#输出
+test:
+    @echo $(myfun_ret)
+</code></pre><p>###$&gt;执行make test 结果是10 20</p>
+<p>#2递归式展开 是用等号 =</p>
+<p>str2是str1赋值的，递归展开寻找</p>
+<pre><code>str2=$(str1)
+str1=hello
+test:
+    @echo $(str2)
+</code></pre><p>###$&gt;执行make 或者 make test 结果是hello</p>
+<pre><code>str2=$(str1)
+str1=hello
+str1=world
+test:
+    @echo $(str2)
+</code></pre><p>###$&gt;这个会输出什么呢？ 结果是world</p>
+<p>#3直接式展开 是分号等号 ：=</p>
+<pre><code>str1:=android
+str1:=ios
+str2:=$（str1）
+test:
+    @echo $(str2)
+</code></pre><p>###$&gt;输出结果 ios</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/05/19/Makefile语法2-自定义方法/" data-id="cjbxg202c000jj0m687cc6jia" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Makefile/">Makefile</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Suivant &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>ffmpeg-视频相关知识简介 | 有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##1.视频相关知识的简介 1.1封装格式   名称 推出机构 流媒体 支持的视频编码 支持的音频编码 目前使用领域     AVI Microsoft Inc. 不支持 几乎所有格式 几乎所有格式 BT下载影视   MP4 MPEG 支持 MPEG-2, MPEG-4, H.264, H.263等 AAC, MPEG-1 Layers I, II, III, AC-3等 互联网视频网站   TS">
+<meta name="keywords" content="ffmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffmpeg-视频相关知识简介">
+<meta property="og:url" content="http://yoursite.com/2016/09/13/FFMPEG-视频相关知识简介/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="##1.视频相关知识的简介 1.1封装格式   名称 推出机构 流媒体 支持的视频编码 支持的音频编码 目前使用领域     AVI Microsoft Inc. 不支持 几乎所有格式 几乎所有格式 BT下载影视   MP4 MPEG 支持 MPEG-2, MPEG-4, H.264, H.263等 AAC, MPEG-1 Layers I, II, III, AC-3等 互联网视频网站   TS">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-05T02:17:26.443Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ffmpeg-视频相关知识简介">
+<meta name="twitter:description" content="##1.视频相关知识的简介 1.1封装格式   名称 推出机构 流媒体 支持的视频编码 支持的音频编码 目前使用领域     AVI Microsoft Inc. 不支持 几乎所有格式 几乎所有格式 BT下载影视   MP4 MPEG 支持 MPEG-2, MPEG-4, H.264, H.263等 AAC, MPEG-1 Layers I, II, III, AC-3等 互联网视频网站   TS">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-FFMPEG-视频相关知识简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/13/FFMPEG-视频相关知识简介/" class="article-date">
+  <time datetime="2016-09-12T16:00:00.000Z" itemprop="datePublished">2016-09-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ffmpeg-视频相关知识简介
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##1.视频相关知识的简介</p>
+<h3 id="1-1封装格式"><a href="#1-1封装格式" class="headerlink" title="1.1封装格式"></a>1.1封装格式</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">推出机构</th>
+<th style="text-align:center">流媒体</th>
+<th style="text-align:center">支持的视频编码</th>
+<th style="text-align:center">支持的音频编码</th>
+<th style="text-align:center">目前使用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">AVI</td>
+<td style="text-align:center">Microsoft Inc.</td>
+<td style="text-align:center">不支持</td>
+<td style="text-align:center">几乎所有格式</td>
+<td style="text-align:center">几乎所有格式</td>
+<td style="text-align:center">BT下载影视</td>
+</tr>
+<tr>
+<td style="text-align:center">MP4</td>
+<td style="text-align:center">MPEG</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">MPEG-2, MPEG-4, H.264, H.263等</td>
+<td style="text-align:center">AAC, MPEG-1 Layers I, II, III, AC-3等</td>
+<td style="text-align:center">互联网视频网站</td>
+</tr>
+<tr>
+<td style="text-align:center">TS</td>
+<td style="text-align:center">MPEG</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">MPEG-1, MPEG-2, MPEG-4, H.264</td>
+<td style="text-align:center">Layers I, II, III, AAC,</td>
+<td style="text-align:center">IPTV，数字电视</td>
+</tr>
+<tr>
+<td style="text-align:center">FLV</td>
+<td style="text-align:center">Adobe Inc.</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">Sorenson, VP6, H.264    MP3, ADPCM,</td>
+<td style="text-align:center">Linear PCM, AAC等</td>
+<td style="text-align:center">互联网视频网站</td>
+</tr>
+<tr>
+<td style="text-align:center">MKV</td>
+<td style="text-align:center">CoreCodec Inc.</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">几乎所有格式</td>
+<td style="text-align:center">几乎所有格式</td>
+<td style="text-align:center">互联网视频网站</td>
+</tr>
+<tr>
+<td style="text-align:center">RMVB</td>
+<td style="text-align:center">Real Networks Inc.</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">RealVideo 8, 9, 10    AAC</td>
+<td style="text-align:center">Cook Codec, RealAudio,Lossless</td>
+<td style="text-align:center">BT下载影视</td>
+</tr>
+</tbody>
+</table>
+<p>​                 </p>
+<a id="more"></a>
+<p>####@封装格式的主要作用是把视频码流和音频码流按照一定的格式存储在一个文件中</p>
+<p>####@也就是说 一个MP4的封装格式的一个文件，它的视频编码方式可以是MPEG-2, MPEG-4, H.264, H.263其中任意一种</p>
+<h3 id="1-2视频编码的标准："><a href="#1-2视频编码的标准：" class="headerlink" title="1.2视频编码的标准："></a>1.2视频编码的标准：</h3><p>####@rgb, yuv 这些是像素的数据格式，把像素的数据压缩成视频码流的过程就是视频编码。</p>
+<p>####@如果这些像素数据不经过压缩，10秒的数据就有1G。</p>
+<table>
+<thead>
+<tr>
+<th>名称</th>
+<th>推出机构</th>
+<th>推出时间</th>
+<th>目前使用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HEVC(H.265)</td>
+<td>MPEG/ITU-T</td>
+<td>2013</td>
+<td>研发中</td>
+</tr>
+<tr>
+<td>H.264</td>
+<td>MPEG/ITU-T</td>
+<td>2003</td>
+<td>各个领域</td>
+</tr>
+<tr>
+<td>MPEG4</td>
+<td>MPEG</td>
+<td>2001</td>
+<td>不温不火</td>
+</tr>
+<tr>
+<td>MPEG2</td>
+<td>MPEG</td>
+<td>1994</td>
+<td>数字电视</td>
+</tr>
+<tr>
+<td>VP9</td>
+<td>Google</td>
+<td>2013</td>
+<td>研发中</td>
+</tr>
+<tr>
+<td>VP8</td>
+<td>Google</td>
+<td>2008</td>
+<td>不普及</td>
+</tr>
+<tr>
+<td>VC-1</td>
+<td>Microsoft Inc.</td>
+<td>2006</td>
+<td>微软平台</td>
+</tr>
+</tbody>
+</table>
+<h3 id="1-3-视频压缩"><a href="#1-3-视频压缩" class="headerlink" title="1.3 视频压缩"></a>1.3 视频压缩</h3><p>  刚才说了，如果原始视频不经过压缩，就会很大。那压缩从另一个角度分，分有损压缩和无损压缩。常用的是有损压缩，牺牲画面的质量。比如，如果视频一个区域都是红色，那么就不需要在这个区域所有的点都标致为红色，只要把轮廓标致为红色，就可以了。这就是空间压缩。还有时间压缩。视频压缩（对某些信息不敏感就忽略或者不采集很多zhen画面）。</p>
+<h3 id="1-4-视频播放"><a href="#1-4-视频播放" class="headerlink" title="1.4 视频播放"></a>1.4 视频播放</h3><p>  视频播放其实是在解码，刚才上面说的都是视频编码。绝大部分的播放器都是把不同的封装格式的视频转为同一种格式来播放，比如yuv。（而音频都是转成pcm播放）</p>
+<p>  一个视频文件包含视频流和音频流和字幕流。</p>
+<p>##2.ffmpeg 对视频的处理</p>
+<p>###2.1 AVFormatContext 视频文件上下文</p>
+<p>  AVFormatContext是一个贯穿始终的数据结构，很多函数都要用到它作为参数。它是FFMPEG解封装（flv，mp4，rmvb，avi）功能的结构体。下面看几个主要变量的作用（在这里考虑解码的情况）：</p>
+<pre><code>AVIOContext *pb：输入数据的缓存
+unsigned int nb_streams：视音频流的个数
+AVStream **streams：视音频流
+char filename[1024]：文件名
+int64_t duration：时长（单位：微秒us，转换为秒需要除以1000000）
+int bit_rate：比特率（单位bps，转换为kbps需要除以1000）
+AVDictionary *metadata：元数据
+</code></pre><p>以上内容摘自<a href="http://blog.csdn.net/leixiaohua1020/article/details/14214705" target="_blank" rel="noopener">FFMPEG结构体分析：AVFormatContext</a><br>​<br>​<br>​一个音视频文件转为yuv格式<br>    const char <em>inputStr = env-&gt;GetStringUTFChars(inputStr_, 0);<br>    const char </em>outStr = env-&gt;GetStringUTFChars(outStr_, 0);<br>    //注册各大组件<br>    av_register_all();<br>    //获取av的上下文<br>    AVFormatContext *pContext = avformat_alloc_context();</p>
+<pre><code>//根据地址打开文件
+if(avformat_open_input(&amp;pContext, inputStr, NULL, NULL)&lt;0) {
+    LOGE(&quot;打开失败&quot;);
+    return;
+}
+//获取视频信息
+if (avformat_find_stream_info(pContext, NULL) &lt; 0) {
+    LOGE(&quot;获取信息失败&quot;);
+    return;
+}
+
+int vedio_stream_idx=-1;
+//找到视频流pContext-&gt;nb_streams 这里包含所有码流  音频 视频 字幕
+for (int i = 0; i &lt; pContext-&gt;nb_streams; ++i) {
+    LOGE(&quot;循环  %d&quot;, i);
+    //codec 每一个流 对应的解码上下文   codec_type 流的类型
+    if (pContext-&gt;streams[i]-&gt;codec-&gt;codec_type == VMEDIA_TYPE_VIDEO)           {
+        vedio_stream_idx = i;
+    }
+}
+
+//获取到解码器上下文
+AVCodecContext* pCodecCtx=pContext-&gt;streams[vedio_stream_idx]-&gt;codec;
+
+//解码器
+AVCodec *pCodex=avcodec_find_decoder(pCodecCtx-&gt;codec_id);
+//ffempg版本升级
+if (avcodec_open2(pCodecCtx, pCodex, NULL) &lt; 0) {
+    LOGE(&quot;解码失败&quot;);
+    return;
+}
+//    分配内存   malloc  AVPacket   1   2
+AVPacket *packet = (AVPacket *) av_malloc(sizeof(AVPacket));
+//    初始化结构体
+av_init_packet(packet);
+//还是不够
+AVFrame *frame = av_frame_alloc();
+//    声明一个yuvframe
+AVFrame *yuvFrame = av_frame_alloc();
+//    给yuvframe  的缓冲区 初始化
+
+uint8_t  *out_buffer= (uint8_t *)        av_malloc(avpicture_get_size(AV_PIX_FMT_YUV420P, pCodecCtx-&gt;width, pCodecCtx-&gt;height));
+
+int re=avpicture_fill((AVPicture *) yuvFrame, out_buffer, AV_PIX_FMT_YUV420P, pCodecCtx-&gt;width, pCodecCtx-&gt;height);
+LOGE(&quot;宽 %d  高 %d&quot;,pCodecCtx-&gt;width,pCodecCtx-&gt;height);
+//    mp4   的上下文pCodecCtx-&gt;pix_fmt
+SwsContext *swsContext=sws_getContext(pCodecCtx-&gt;width,pCodecCtx-&gt;height,pCodecCtx-&gt;pix_fmt,
+                                      pCodecCtx-&gt;width,pCodecCtx-&gt;height,AV_PIX_FMT_YUV420P
+        ,SWS_BILINEAR,NULL,NULL,NULL
+);
+int frameCount = 0;
+FILE *fp_yuv = fopen(outStr, &quot;wb&quot;);
+
+//packet入参 出参对象  转换上下文
+int got_frame;
+while (av_read_frame(pContext, packet) &gt;= 0) {
+//        节封装
+
+//        根据frame 进行原生绘制    bitmap  window
+    avcodec_decode_video2(pCodecCtx, frame, &amp;got_frame, packet);
+//   frame  的数据拿到   视频像素数据 yuv   三个rgb    r   g  b   数据量大   三个通道
+//        r  g  b  1824年    yuv 1970
+    LOGE(&quot;解码%d  &quot;,frameCount++);
+    if (got_frame &gt; 0) {
+        sws_scale(swsContext, (const uint8_t *const *) frame-&gt;data, frame-&gt;linesize, 0, frame-&gt;height, yuvFrame-&gt;data,
+                  yuvFrame-&gt;linesize
+        );
+        int y_size = pCodecCtx-&gt;width * pCodecCtx-&gt;height;
+//        y 亮度信息写完了
+        fwrite(yuvFrame-&gt;data[0], 1, y_size, fp_yuv);
+        fwrite(yuvFrame-&gt;data[1], 1, y_size/4, fp_yuv);
+        fwrite(yuvFrame-&gt;data[2], 1, y_size/4, fp_yuv);
+    }
+    av_free_packet(packet);
+}
+fclose(fp_yuv);
+av_frame_free(&amp;frame);
+av_frame_free(&amp;yuvFrame);
+avcodec_close(pCodecCtx);
+avformat_free_context(pContext);
+env-&gt;ReleaseStringUTFChars(inputStr_, inputStr);
+env-&gt;ReleaseStringUTFChars(outStr_, outStr);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/13/FFMPEG-视频相关知识简介/" data-id="cjbxg2026000dj0m6fykaj47g" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/09/20/FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          FFMPEG中最关键的结构体之间的关系
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/08/21/图片加载框架哪家强 /" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">图片加载框架哪家强</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

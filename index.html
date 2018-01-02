@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -65,10 +65,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-python-购物车实例代码" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2018/01/02/hello-world/" class="article-date">
-  <time datetime="2018-01-02T09:37:39.815Z" itemprop="datePublished">2018-01-02</time>
+    <a href="/2017/09/11/python-购物车实例代码/" class="article-date">
+  <time datetime="2017-09-10T18:02:59.000Z" itemprop="datePublished">2017-09-11</time>
 </a>
     
   </div>
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/01/02/hello-world/">Hello World</a>
+      <a class="article-title" href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
     </h1>
   
 
@@ -87,22 +87,742 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
+        <pre><code>product_list = [
+    (&apos;Iphone&apos;,5800),
+    (&apos;Mac Pro&apos;,9800),
+    (&apos;Bike&apos;,800),
+    (&apos;Watch&apos;,10600),
+    (&apos;Coffee&apos;,31),
+    (&apos;Alex Python&apos;,120),
+]
+shopping_list = []
+salary = input(&quot;Input your salary:&quot;)
+if salary.isdigit():
+    salary = int(salary)
+    while True:
+        for index,item in enumerate(product_list):
+            #print(product_list.index(item),item)
+            print(index,item)
+        user_choice = input(&quot;选择要买嘛？&gt;&gt;&gt;:&quot;)
+        if user_choice.isdigit():
+            user_choice = int(user_choice)
+            if user_choice &lt; len(product_list) and user_choice &gt;=0:
+                p_item = product_list[user_choice]
+                if p_item[1] &lt;= salary: #买的起
+                    shopping_list.append(p_item)
+                    salary -= p_item[1]
+                    print(&quot;Added %s into shopping cart,your current balance is \033[31;1m%s\033[0m&quot; %(p_item,salary) )
+                else:
+                    print(&quot;\033[41;1m你的余额只剩[%s]啦，还买个毛线\033[0m&quot; % salary)
+            else:
+                print(&quot;product code [%s] is not exist!&quot;% user_choice)
+        elif user_choice == &apos;q&apos;:
+            print(&quot;--------shopping list------&quot;)
+            for p in shopping_list:
+                print(p)
+            print(&quot;Your current balance:&quot;,salary)
+            exit()
+        else:
+            print(&quot;invalid option&quot;)
+</code></pre>
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/01/02/hello-world/" data-id="cjbxfzoyl0000o0m6hp7ncom2" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2017/09/11/python-购物车实例代码/" data-id="cjbxg2041001zj0m6ykd05qo6" class="article-share-link">Partager</a>
       
       
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-反射" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/08/21/python-反射/" class="article-date">
+  <time datetime="2017-08-21T04:02:59.000Z" itemprop="datePublished">2017-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/08/21/python-反射/">python 反射</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>    import inspect
+&apos;&apos;&apos;
+    hasattr(obj,name_str) , 判断一个对象obj里是否有对应的name_str字符串的方法
+    getattr(obj,name_str), 根据字符串去获取obj对象里的对应的方法的内存地址
+    setattr(obj,&apos;y&apos;,z), is equivalent to ``x.y = v&apos;&apos;
+    delattr(obj,name_str)
+&apos;&apos;&apos;
+
+def bulk(self):
+    print(&quot;%s is yelling....&quot; % self.name)
+
+
+class Dog(object):
+    def __init__(self, name):
+        self.name = name
+
+    def eat(self, food):
+        print(&quot;%s is eating...&quot; % self.name, food)
+
+    def talk(self):
+        print(&apos;talk function&apos;)
+
+d = Dog(&quot;NiuHanYang&quot;)
+choice = input(&quot;&gt;&gt;:&quot;).strip()
+
+if hasattr(d, choice):
+    print(&apos;have this attr&apos;)
+    attr = getattr(d, choice)
+    print(type(attr))
+    if(inspect.ismethod(attr)):
+        print(&apos;is method&apos;)
+        attr()
+    else:
+        print(attr)
+else:
+
+    setattr(d, choice, bulk)  # 1 d.talk = bulk
+    func = getattr(d, choice)  # 2
+    func(d)  # 3
+    # 1如果没有输入的属性，就把bulk这个方法作为此属性的值
+    # 2通过getattr方法得到这个属性值，
+    # 3执行这个方法
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/08/21/python-反射/" data-id="cjbxg203l001nj0m6o1wg61wi" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-序列化" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/07/21/python-序列化/" class="article-date">
+  <time datetime="2017-07-20T18:20:59.000Z" itemprop="datePublished">2017-07-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/07/21/python-序列化/">python 序列化</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code># 序列化
+try:
+    import cPickle as pickle
+except ImportError:
+    import pickle
+
+# 此处定义一个dict字典对象
+d = dict(name=&apos;思聪&apos;, age=29, score=80)
+str = pickle.dumps(d)  # 调用pickle的dumps函数进行序列化处理
+print(str)
+# 你可以看看它长什么样子
+
+# 定义和创建一个file文件对象，设定模式为wb
+f = open(&apos;dump.txt&apos;, &apos;wb&apos;)
+# 将内容序列化写入到file文件中
+pickle.dump(d, f)
+f.close()  # 最后关闭掉文件资源
+
+# 从之前序列化的dump.txt文件里边读取内容
+f = open(&apos;dump.txt&apos;, &apos;rb&apos;)  # 设定文件选项模式为rb
+d = pickle.load(f)  # 调用load做反序列处理过程
+f.close()  # 关闭文件资源
+print(d)
+print(&apos;name is %s&apos; % d[&apos;name&apos;])
+
+from functools import reduce
+
+# Py3里，外面需要套个list：
+# 这是为了让里面的值给显示出来，要不然你会得到这是个map函数
+# 而不是里面的值。
+# Py2的童鞋不虚
+l = [1, 2, 3]
+new_list = list(map(lambda i: i + 1, l))
+print(new_list)
+l2 = [4, 5, 6]
+# 我们也可以把两个数组搞成一个单独的数组
+new_list = list(map(lambda x, y: x + y, l, l2))
+print(new_list)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/07/21/python-序列化/" data-id="cjbxg203s001rj0m6nwef0y81" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-property" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/12/python-property/" class="article-date">
+  <time datetime="2017-06-12T07:20:59.000Z" itemprop="datePublished">2017-06-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/06/12/python-property/">python property</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>&apos;&apos;&apos;
+            property
+
+    用@property修饰的属性就是get方法，如果不写@属性.setter，那这个属性就只能读，不能写。
+
+
+    &apos;&apos;&apos;
+
+    class Student:
+        @property
+        def score(self):
+            return self._score
+
+        @score.setter
+        def score(self, value):
+            if not isinstance(value, int):
+                raise ValueError(&apos;not int&apos;)
+
+            elif (value &lt; 0) or (value &gt; 100):
+                raise ValueError(&apos;not between 0 ~ 100&apos;)
+
+            self._score = value
+
+        @property
+        def double_score(self):
+            return self._score * 2
+
+    s = Student()
+    s.score = 75
+    print(s.score)
+    try:
+        s.score = &apos;abc&apos;
+    except ValueError:
+        traceback.print_exc()
+    try:
+        s.score = 101
+    except:
+        traceback.print_exc()
+    print(s.double_score)
+    try:
+        s.double_score = 150
+    except AttributeError:
+        traceback.print_exc()
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/06/12/python-property/" data-id="cjbxg203d001ej0m6yviceeyf" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python__slots__" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/05/13/python__slots__/" class="article-date">
+  <time datetime="2017-05-13T05:20:59.000Z" itemprop="datePublished">2017-05-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/13/python__slots__/">python __slots__</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code># coding:utf-8
+
+import traceback
+
+from types import MethodType
+
+&apos;&apos;&apos;
+__slots__只允许添加固定的方法和属性，使用__slots__限定class实例能添加的属性
+
+
+&apos;&apos;&apos;
+
+
+class MyClass(object):
+    __slots__ = [&apos;name&apos;, &apos;set_name&apos;]
+
+
+def set_name(self, name):
+    self.name = name
+
+
+cls = MyClass()
+cls.name = &apos;Tom&apos;
+cls.set_name = MethodType(set_name, cls)
+cls.set_name(&apos;Jerry&apos;)
+print(cls.name)
+try:
+    cls.age = 30
+except AttributeError:
+    traceback.print_exc()
+
+&apos;&apos;&apos;__slots__仅对当前类实例起作用，对继承的子类是不起作用的&apos;&apos;&apos;
+
+
+class ExtMyClass(MyClass):
+    pass
+
+
+ext_cls = ExtMyClass()
+ext_cls.age = 30
+print(ext_cls.age)
+
+&apos;&apos;&apos;给一个实例绑定的方法，对另一个实例是不起作用的&apos;&apos;&apos;
+
+cls1 = MyClass()
+try:
+    cls.age = 50;  # AttributeError: &apos;MyClass&apos; object has no attribute &apos;age&apos;
+except Exception:
+    pass
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/05/13/python__slots__/" data-id="cjbxg20440021j0m64leka3t4" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-斐波那契实现" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/04/27/python-斐波那契实现/" class="article-date">
+  <time datetime="2017-04-27T03:20:59.000Z" itemprop="datePublished">2017-04-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/04/27/python-斐波那契实现/">python 斐波那契</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>#自己实现的斐波那契
+class Fib100:
+        def __init__(self):
+            self._1 = 1
+
+        def __iter__(self):
+            return self
+
+        def __next__(self):
+            self._1 = self._1 + 1;
+            if (self._1 &gt; 10):
+                raise StopIteration()
+
+            return isPrime(self._1)
+
+
+    for i in Fib100():
+        print(i)
+
+#coding utf-8
+#官方给的斐波那契实现
+class Fib100:
+    def __init__(self):
+        self._1, self._2 = 0, 1
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        # 不需要中间变量的互换 这里很重要
+        self._1, self._2 = self._2, self._1 + self._2
+        #等价于下面三行
+        # self._3=self._1
+        # self._1=self._2
+        # self._2=self._3+self._2
+        if self._1 &gt; 100:
+            raise StopIteration()
+        return self._1
+
+for i in Fib100():
+    print(i)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/04/27/python-斐波那契实现/" data-id="cjbxg203z001xj0m637dn17mi" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-求1000内的素数" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/21/求1000内的素数/" class="article-date">
+  <time datetime="2017-03-21T04:20:59.000Z" itemprop="datePublished">2017-03-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/21/求1000内的素数/">python 求1000内的素数</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code># coding utf-8
+# lesson6 作业 1 ：求1000内的素数
+import math;
+from itertools import count
+
+
+def isPrime(n):
+    if n &lt;= 1:
+        return False
+    i = 2
+    while i * i &lt;= n:
+        if n % i == 0:
+            return &quot;&quot;
+        i += 1
+    return n
+
+
+x=2;
+while(x&lt;=10):
+    print(x)
+     print(&quot;is&quot; ,isPrime(x));
+     x=x+1;
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/21/求1000内的素数/" data-id="cjbxg204w002xj0m6sh9sb7cl" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python__getitem__ 实现 下标操作" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/03/21/python__getitem__ 实现 下标操作/" class="article-date">
+  <time datetime="2017-03-21T01:20:59.000Z" itemprop="datePublished">2017-03-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/03/21/python__getitem__ 实现 下标操作/">python __getitem__ 实现 下标操作</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>class Fib:
+    # 实现下标操作
+    def __getitem__(self, n):
+        r = range(5);
+        print(r)
+        return r[n]
+
+    # def getitem (self, n):
+    #     r = range(5);
+    #     print(r)
+    #     return r[n]
+
+
+f = Fib()
+for x in f[0:3:1]:
+    print(x)
+# 只因为他是__getitem__方法才能传切片 下面这个方法 就不行 都报错
+# f.getitem([0:3:1]):
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/03/21/python__getitem__ 实现 下标操作/" data-id="cjbxg20480025j0m6s5jgt83p" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-文件的读写" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/02/21/python-文件的读写/" class="article-date">
+  <time datetime="2017-02-20T18:20:59.000Z" itemprop="datePublished">2017-02-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/21/python-文件的读写/">python 文件读写</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code># coding:utf-8
+with open(&apos;somefile.txt&apos;, &apos;rb&apos;) as f:
+    data = f.read()
+    print(data);
+
+# loop整个文档
+with open(&apos;somefile.txt&apos;, &apos;rb&apos;) as f:
+    for line in f:
+        print (line);
+
+# 用读二进制文件的方式读取文件，用utf-8的编码来解码显示打印
+f = open(&apos;somefile.txt&apos;, &apos;rb&apos;)
+u = f.read().decode(&apos;utf-8&apos;)
+print (u);
+
+import os
+
+print (os.name);
+print (os.environ);
+
+print (os.path.abspath(&apos;.&apos;));
+dir = os.path.join(&apos;E:\\BaiduYunDownload\\01-python\\workspace&apos;, &apos;code&apos;);
+print (dir);
+try:
+    os.mkdir(dir);
+except FileExistsError:
+    print (&quot;文件以存在，不再创建&quot;)
+# os.rmdir(dir);
+print (&apos;当前目录下的所有文件&apos;, os.path.split(dir));
+
+# 列出当前目录所有的文件和文件夹
+for x in os.listdir(&apos;.&apos;):
+
+    if os.path.isdir(x):
+        print (&quot;这是是文件夹：&quot;, x);
+    else:
+        print (&apos;这是文件&apos;, x);
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/02/21/python-文件的读写/" data-id="cjbxg203u001uj0m6ke5qo5tx" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-数据集的使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/10/python-数据集的使用/" class="article-date">
+  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">2017-01-10</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/01/10/python-数据集的使用/">python 数据集的使用sklearn</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code>from sklearn import svm, datasets
+
+
+class Dataset:
+    # 我们创造一个dataset的类，这个类会帮我们下载相关的数据集，
+    # 并给我们分类好x,y
+    def __init__(self, name):
+        # 告诉类，我们需要哪一个数据集
+        # 我们有两个选择，一个是&apos;iris&apos;一个是&apos;digits&apos;
+        self.name = name
+
+    def download_data(self):
+        # 从sklearn的自带集中下载我们指定的数据集
+        if self.name == &apos;iris&apos;:
+            # 这里是sklearn自带的数据集下载方法，更多信息可以参照官网
+            self.downloaded_data = datasets.load_iris()
+        elif self.name == &apos;digits&apos;:
+            self.downloaded_data = datasets.load_digits()
+        else:
+            # 如果不是我们预想的两种数据集，则报错
+            print(&apos;Dataset Error: No named datasets&apos;)
+
+    def generate_xy(self):
+        # 通过这个过程来把我们的数据集分为原始数据以及他们的label
+        # 我们先把数据下载下来
+        self.download_data()
+        x = self.downloaded_data.data
+        y = self.downloaded_data.target
+        print(&apos;\nOriginal data looks like this: \n&apos;, x)
+        print(&apos;\nLabels looks like this: \n&apos;, y)
+        return x, y
+
+    def get_train_test_set(self, ratio):
+        # 这里，我们把所有的数据分成训练集和测试集
+        # 一个参数要求我们告知，我们以多少的比例来分割训练和测试集
+        # 首先，我们把XY给generate出来：
+        x, y = self.generate_xy()
+
+        # 有个比例，我们首先得知道 一共有多少的数据
+        n_samples = len(x)
+        # 于是我们知道，有多少应该是训练集，多少应该是测试集
+        n_train = int( n_samples * ratio)
+        # 好了，接下来我们分割数据
+        X_train = x[:n_train]
+        y_train = y[:n_train]
+        X_test = x[n_train:]
+        y_test = y[n_train:]
+        # 好，我们得到了所有想要的玩意儿
+        return X_train, y_train, X_test, y_test
+
+    # ====== 我们的dataset类创造完毕=======
+
+    # 比如，我们使用digits数据集
+
+
+data = Dataset(&apos;digits&apos;)
+# 接着，我们可以用0.7的分割率把xy给分割出来
+X_train, y_train, X_test, y_test = data.get_train_test_set(0.7)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2017/01/10/python-数据集的使用/" data-id="cjbxg203r001qj0m6nv63ldgh" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
     </footer>
   </div>
   
@@ -112,6 +832,11 @@
   
 
 
+  <nav id="page-nav">
+    
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Suivant &raquo;</a>
+  </nav>
+
 </section>
         
           <aside id="sidebar">
@@ -120,15 +845,10 @@
 
   
     
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/01/">January 2018</a></li></ul>
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
   </div>
 
@@ -136,12 +856,47 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/01/02/hello-world/">Hello World</a>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
           </li>
         
       </ul>
@@ -157,7 +912,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 leequer<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>android高级课程-性能优化--电量优化 | 有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="##Battery Historian工具的安装和使用###1.工具开源地址： https://github.com/google/battery-historian ###2. 根据gitbub上面介绍，Battery History工具的安装有两种方式：  通过安装Docker环境来安装。  （这种方式很简单，Docker真心好用，太彪悍了！）Docker是一种容器，一般用于云计算和大数据平台">
+<meta name="keywords" content="android高级课程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android高级课程-性能优化--电量优化">
+<meta property="og:url" content="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="##Battery Historian工具的安装和使用###1.工具开源地址： https://github.com/google/battery-historian ###2. 根据gitbub上面介绍，Battery History工具的安装有两种方式：  通过安装Docker环境来安装。  （这种方式很简单，Docker真心好用，太彪悍了！）Docker是一种容器，一般用于云计算和大数据平台">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://i.imgur.com/wXZ9BDx.png">
+<meta property="og:updated_time" content="2017-12-05T01:59:06.362Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android高级课程-性能优化--电量优化">
+<meta name="twitter:description" content="##Battery Historian工具的安装和使用###1.工具开源地址： https://github.com/google/battery-historian ###2. 根据gitbub上面介绍，Battery History工具的安装有两种方式：  通过安装Docker环境来安装。  （这种方式很简单，Docker真心好用，太彪悍了！）Docker是一种容器，一般用于云计算和大数据平台">
+<meta name="twitter:image" content="http://i.imgur.com/wXZ9BDx.png">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-android高级课程-性能优化-电量优化 " class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" class="article-date">
+  <time datetime="2014-11-09T06:55:59.000Z" itemprop="datePublished">2014-11-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android高级课程-性能优化--电量优化
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="Battery-Historian工具的安装和使用"><a href="#Battery-Historian工具的安装和使用" class="headerlink" title="##Battery Historian工具的安装和使用"></a>##Battery Historian工具的安装和使用</h2><p>###1.工具开源地址： <a href="https://github.com/google/battery-historian" target="_blank" rel="noopener">https://github.com/google/battery-historian</a></p>
+<p>###2. 根据gitbub上面介绍，Battery History工具的安装有两种方式：</p>
+<ul>
+<li>通过安装Docker环境来安装。</li>
+</ul>
+<p>（这种方式很简单，Docker真心好用，太彪悍了！）<br>Docker是一种容器，一般用于云计算和大数据平台。提倡的一种思想就是：软件即服务。<br>这句话不是盖的，一句话就可以将别人发布的docker服务环境一次全部copy过来<br>(注意是整个软件环境哦，相当于复制了一台一模一样的主机，连软件都不要安装了，全有了。彪悍吧！)<br>官方指出，只支持win10，mac也不支持虚拟机。</p>
+<p>网上有其它方法：</p>
+<pre><code>DockerToolbox-1.13.0-rc1.exe.装这个。
+</code></pre><p>安装成功后，运行：</p>
+<pre><code>Docker Quickstart Terminal 
+</code></pre><p>这个会直接打开一个命令行，</p>
+<p>然后输入输入命令： </p>
+<pre><code>docker run hello-world
+</code></pre><p>看是否成功</p>
+<p>然后安装Docker镜像：</p>
+<p>默认用户名docker,密码：tcuser<br>运行：</p>
+<pre><code>$ ssh docker@192.168.99.100
+</code></pre><p>弹出输入密码 ：</p>
+<pre><code>docker@192.168.99.100’s password:
+</code></pre><p>输入tcuser</p>
+<p>然后会输出一个鲸鱼，然后最后会显示：</p>
+<pre><code>Boot2Docker version 1.13.0-rc1, build HEAD : f25a075 - Sat Nov 12 00:46:05 UTC 2016
+Docker version 1.13.0-rc1, build 75fd88b
+</code></pre><p>这说明安装成功了</p>
+<p>接下来安装Battery Historian工具</p>
+<pre><code>docker run -p 6666:9999 blystad/battery-historian --port 9999
+</code></pre><p>执行这个命令，</p>
+<p>会等待很长时间</p>
+<pre><code>Unable to find image &apos;blystad/battery-historian:latest&apos; locally
+latest: Pulling from blystad/battery-historian
+0be59000882d: Pull complete
+f20b6f990572: Pull complete
+53662c966c9f: Pull complete
+a3ed95caeb02: Pull complete
+a0043ea1f96d: Pull complete
+1d642fdd9f99: Pull complete
+386a066cd84a: Pull complete
+75ea84187083: Pull complete
+88b459c9f665: Pull complete
+a31e17eb9485: Pull complete
+457559cc1d69: Pull complete
+47fe51a74a06: Pull complete
+08dacccac43c: Pull complete
+7ed1716ca331: Pull complete
+06169880c6ff: Pull complete
+1062278646cc: Pull complete
+Digest: sha256:fa50c501ac62d06c7710b2ae969853796e137d290aa3e1aade9a97db2573728d
+</code></pre><p>下载完毕后 就可以了。</p>
+<p>然后在浏览器访问：</p>
+<pre><code>http://192.168.99.100:9999
+</code></pre><p>就可以看到界面了</p>
+<p><a href="/img/battery-historian.png">图片备份</a></p>
+<ul>
+<li><ol>
+<li>通过编译gitbub上面的源码来安装 我就不喜欢这种 。不写了</li>
+</ol>
+</li>
+</ul>
+<h2 id="battery-historian使用"><a href="#battery-historian使用" class="headerlink" title="##battery-historian使用"></a>##battery-historian使用</h2><h3 id="数据准备"><a href="#数据准备" class="headerlink" title="数据准备"></a>数据准备</h3><p>battery-historian工具需要使用bugreport中的Battery History</p>
+<ol>
+<li><p>先断开adb服务，然后开启adb服务<br>  adb kill-server<br>这一步很重要，因为当我们开发时做电量记录时会打开很多可能造成冲突的东西。为了保险起见我们重启adb。</p>
+<p>  adb devices<br>就会自动连接查找手机。当然也可以</p>
+<p>  adb start-server</p>
+</li>
+<li><p>重置电池数据收集<br>数据，我们在开始的时候需要通过以下命令来打开电池数据的获取以及重置：</p>
+<p>  adb shell dumpsys batterystats –enable full-wake-history</p>
+<p>  adb shell dumpsys batterystats –reset</p>
+</li>
+</ol>
+<p>执行的效果如下：</p>
+<p>上面的操作相当于初始化操作，如果不这么做会有一大堆的干扰的数据，看起来会比较痛苦。</p>
+<p><strong>然后把数据线直接拔掉 这点很重要 否则 每次都是一点信息 坑坑坑</strong>(防止数据线造成充放电数据干扰)，现在做一些测试，手动或者跑一些自动化的case都行，或者一直用到第二天再收集日志。</p>
+<p>经过一段时间后，我们重新连接手机确认adb连上了，运行下面这条命令来将bugreport的信息保存到txt文档中，</p>
+<pre><code>adb bugreport &gt; bugreport.txt
+</code></pre><p>或者用下面的命令也可以（下面这两个方法产生的文件 上传到网络方式无法打开）：</p>
+<pre><code>adb shell dumpsys batterystats &gt; batterystats.txt 
+
+adb shell dumpsys batterystats &gt; com.example.android.sunshine.app &gt;batterystats.txt
+</code></pre><p>加上包名可以限制输出的数据是我们要检测的。<br>但是这个txt的数据可读性不强。接下来我们就要用到这个battery-historian工具了。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="##使用"></a>##使用</h2><p>使用1：将这个导出的文件，在<a href="http://192.168.99.100:9999" target="_blank" rel="noopener">http://192.168.99.100:9999</a> 中 上传这个文件 等它打开就可以了。可气的是第一次装好了可以用，关机第二天就报错。 网上的资料还很少，决定删掉。看来要是是不喜欢的方式了。</p>
+<p>使用2：于是尝试另一种方法，执行命令：（要在 historian.py文件的同级目录，而且有Python环境）</p>
+<pre><code>python historian.py -a bugreport.txt &gt; battery.html
+</code></pre><p>这个可以</p>
+<h2 id="电量分析内容解释"><a href="#电量分析内容解释" class="headerlink" title="##电量分析内容解释"></a>##电量分析内容解释</h2><h4 id="battery——level：电量等级，就是还有多少电。"><a href="#battery——level：电量等级，就是还有多少电。" class="headerlink" title="battery——level：电量等级，就是还有多少电。"></a>battery——level：电量等级，就是还有多少电。</h4><h4 id="plugged：充电情况"><a href="#plugged：充电情况" class="headerlink" title="plugged：充电情况"></a>plugged：充电情况</h4><h4 id="screen：屏幕是否点亮"><a href="#screen：屏幕是否点亮" class="headerlink" title="screen：屏幕是否点亮"></a>screen：屏幕是否点亮</h4><h4 id="top：在屏幕上显示的软件-关键要看"><a href="#top：在屏幕上显示的软件-关键要看" class="headerlink" title="top：在屏幕上显示的软件 关键要看"></a>top：在屏幕上显示的软件 关键要看</h4><h4 id="sync：同步-后台数据同步-关键要看"><a href="#sync：同步-后台数据同步-关键要看" class="headerlink" title="sync：同步 后台数据同步 关键要看"></a>sync：同步 后台数据同步 关键要看</h4><p>使用系统的syncAdapter同步是好习惯 能显示在这里的就是使用syncAdapter的</p>
+<h4 id="wake——lock：cpu唤醒锁-关键要看"><a href="#wake——lock：cpu唤醒锁-关键要看" class="headerlink" title="wake——lock：cpu唤醒锁 关键要看"></a>wake——lock：cpu唤醒锁 关键要看</h4><p><img src="http://i.imgur.com/wXZ9BDx.png" alt="图片备份地址/img/电量优化-wake-lock.png"></p>
+<p>wake-lock显示cpu是长时间处于工作状态，对应的上面的top的内容，可以看出 是有程序在前台一直运行。</p>
+<p>间断的唤醒cpu是不好的操作</p>
+<p>系统为了节省电量，CPU在没有任务忙的时候就会自动进入休眠。<br>有任务需要唤醒CPU高效执行的时候，就会给CPU加wake_lock锁。</p>
+<p>大家经常犯的错误，我们很容易去唤醒CPU来干活，但是很容易忘记释放wake_lock.</p>
+<h4 id="running-：cpu正在运行-关键要看"><a href="#running-：cpu正在运行-关键要看" class="headerlink" title="running ：cpu正在运行 关键要看"></a>running ：cpu正在运行 关键要看</h4><p>一般这个和wake-lock基本一致</p>
+<h3 id="weak-reason-唤醒原因"><a href="#weak-reason-唤醒原因" class="headerlink" title="weak-reason: 唤醒原因"></a>weak-reason: 唤醒原因</h3><h3 id="job-后台服务情况-app开启的服务-关键要看"><a href="#job-后台服务情况-app开启的服务-关键要看" class="headerlink" title="job: 后台服务情况 app开启的服务  关键要看"></a>job: 后台服务情况 app开启的服务  关键要看</h3><h3 id="conn-连接情况-无论是wifi还是蜂窝移动-关键要看"><a href="#conn-连接情况-无论是wifi还是蜂窝移动-关键要看" class="headerlink" title="conn: 连接情况 无论是wifi还是蜂窝移动 关键要看"></a>conn: 连接情况 无论是wifi还是蜂窝移动 关键要看</h3><h3 id="wifi"><a href="#wifi" class="headerlink" title="wifi"></a>wifi</h3><h3 id="wifi——scan"><a href="#wifi——scan" class="headerlink" title="wifi——scan"></a>wifi——scan</h3><h3 id="wifi-running"><a href="#wifi-running" class="headerlink" title="wifi-running"></a>wifi-running</h3><h3 id="wifi-suppl"><a href="#wifi-suppl" class="headerlink" title="wifi-suppl"></a>wifi-suppl</h3><h3 id="wifi-strength：-wifi型号强度"><a href="#wifi-strength：-wifi型号强度" class="headerlink" title="wifi-strength：  wifi型号强度"></a>wifi-strength：  wifi型号强度</h3><h3 id="phone-signal-strength：-电话信号强度"><a href="#phone-signal-strength：-电话信号强度" class="headerlink" title="phone_signal_strength： 电话信号强度"></a>phone_signal_strength： 电话信号强度</h3><h3 id="phone-scanning-：-电话扫描"><a href="#phone-scanning-：-电话扫描" class="headerlink" title="phone_scanning ： 电话扫描"></a>phone_scanning ： 电话扫描</h3><h3 id="audio：音频"><a href="#audio：音频" class="headerlink" title="audio：音频"></a>audio：音频</h3><h3 id="plug：充电-AC交流电-usb"><a href="#plug：充电-AC交流电-usb" class="headerlink" title="plug：充电  AC交流电  usb"></a>plug：充电  AC交流电  usb</h3><h3 id="mobile-radio：蜂窝无线-关键分析"><a href="#mobile-radio：蜂窝无线-关键分析" class="headerlink" title="mobile_radio：蜂窝无线  关键分析"></a>mobile_radio：蜂窝无线  关键分析</h3><pre><code>## 重要的参数：WIFI、WAKE_LOCK、CONN、MOBILE_RATIO(蜂窝信号)
+</code></pre><h2 id="热更新"><a href="#热更新" class="headerlink" title="热更新"></a>热更新</h2><p>老师的例子，只能运行在5.0或者以上的系统上，4.3，4.4都不行。<br>那推荐用那个框架呢？</p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjbxg20390019j0m6w8jfevyo" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/08/23/原型模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">原型模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives | 有志青年</title>
+  <title>ffmpeg 编译和使用 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="#1.简介 ###FFmpeg是一个自由软件，可以运行音频和视频多种格式的录影、转换、流功能">
+<meta name="keywords" content="ffmpeg">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ffmpeg 编译和使用">
+<meta property="og:url" content="http://yoursite.com/2016/08/13/FFMPEG-FFMPEG编译/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="#1.简介 ###FFmpeg是一个自由软件，可以运行音频和视频多种格式的录影、转换、流功能">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-12-05T02:15:21.460Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="ffmpeg 编译和使用">
+<meta name="twitter:description" content="#1.简介 ###FFmpeg是一个自由软件，可以运行音频和视频多种格式的录影、转换、流功能">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,216 +65,214 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/11/python-购物车实例代码/" class="archive-article-date">
-  <time datetime="2017-09-10T18:02:59.000Z" itemprop="datePublished">Sep 11</time>
+        <section id="main"><article id="post-FFMPEG-FFMPEG编译" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/13/FFMPEG-FFMPEG编译/" class="article-date">
+  <time datetime="2016-08-12T16:00:00.000Z" itemprop="datePublished">2016-08-13</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+    <h1 class="article-title" itemprop="name">
+      ffmpeg 编译和使用
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/08/21/python-反射/" class="archive-article-date">
-  <time datetime="2017-08-21T04:02:59.000Z" itemprop="datePublished">Aug 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/21/python-反射/">python 反射</a>
-    </h1>
-  
+        <p>#1.简介</p>
+<p>###FFmpeg是一个自由软件，可以运行音频和视频多种格式的录影、转换、流功能 <a id="more"></a></p>
+<p>#2.FFmpeg Module<br>    【libavutil 】    通用库<br>    【libavcodec】     编解码<br>    【libavformat】    文件格式<br>    【libpostproc】    同步、时间计算的简单算法<br>    【libavfilter】    filter（FileIO、FPS、 DrawText ）<br>    【libavdevice】    硬件采集、加速、显示<br>    【libavresample】    音视频封转编解码格式预设等<br>    【libswscale】    原始视频格式转换<br>    【libswresample】    原始音频格式转码</p>
+<p>#3.编译适合android平台的ffmpeg库</p>
+<p>###@在官网下载稳定版本的ffmpeg 不是最新的 <a href="http://ffmpeg.org/releases/ffmpeg-2.6.9.tar.gz" target="_blank" rel="noopener">ffmpeg2.6.9</a> 下载后解压</p>
+<p>###@解压包下有configure文件，这个文件来生成Makefile文件。</p>
+<p>###@修改configure 这四行注释掉<br>    SLIBNAME_WITH_MAJOR=’$(SLIBNAME).$(LIBMAJOR)’<br>    LIB_INSTALL_EXTRA_CMD=’$$(RANLIB)”$(LIBDIR)/$(LIBNAME)”‘<br>    SLIB_INSTALL_NAME=’$(SLIBNAME_WITH_VERSION)’<br>    SLIB_INSTALL_LINKS=’$(SLIBNAME_WITH_MAJOR)$(SLIBNAME)’<br>改为</p>
+<pre><code>SLIBNAME_WITH_MAJOR=&apos;$(SLIBPREF)$(FULLNAME)-$(LIBMAJOR)$(SLIBSUF)&apos;  
+LIB_INSTALL_EXTRA_CMD=&apos;$$(RANLIB)&quot;$(LIBDIR)/$(LIBNAME)&quot;&apos;  
+SLIB_INSTALL_NAME=&apos;$(SLIBNAME_WITH_MAJOR)&apos;  
+SLIB_INSTALL_LINKS=&apos;$(SLIBNAME)&apos;
+</code></pre><p>这样生成的文件就以so结尾了。</p>
+<p>###@而configure 执行要带很多参数，所以要再写一个文件来执行。新建一个文件名字随便起，输入下面的脚本</p>
+<pre><code>#!/bin/bash
+make clean
+#这是ndk目录的位置，写自己的 mac下TOOLCHAIN 会有差别 注意 
+#ndk就用14b 或者以上 检测一下 SYSROOT TOOLCHAIN是否相同
+export NDK=/ndk_build/android-ndk-r14b
+export SYSROOT=$NDK/platforms/android-9/arch-arm/
+export TOOLCHAIN=$NDK/toolchains/arm-linux-androideabi-4.9/prebuilt/linux-x86_64
+export CPU=arm
+export PREFIX=$(pwd)/android/$CPU
+export ADDI_CFLAGS=&quot;-marm&quot;
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/21/python-序列化/" class="archive-article-date">
-  <time datetime="2017-07-20T18:20:59.000Z" itemprop="datePublished">Jul 21</time>
-</a>
+./configure --target-os=linux \
+--prefix=$PREFIX --arch=arm \
+--disable-doc \
+--enable-shared \
+#如果要编译静态库 就是--able-static
+--disable-static \
+--disable-yasm \
+--disable-symver \
+--enable-gpl \
+--disable-ffmpeg \
+--disable-ffplay \
+--disable-ffprobe \
+--disable-ffserver \
+--disable-doc \
+--disable-symver \
+--cross-prefix=$TOOLCHAIN/bin/arm-linux-androideabi- \
+--enable-cross-compile \
+--sysroot=$SYSROOT \
+--extra-cflags=&quot;-Os -fpic $ADDI_CFLAGS&quot; \
+--extra-ldflags=&quot;$ADDI_LDFLAGS&quot; \
+$ADDITIONAL_CONFIGURE_FLAG
+make clean
+make
+make install
+</code></pre><p>###@执行此脚本，编译完成</p>
+<p>#3.使用</p>
+<p>###@在android文件夹下的就是我们需要的文件、</p>
+<p>###@在android/arm/lib下面 有这样的一些so文件<br>    libavcodec-56.so //这个是大版本号，我们用大版本<br>    libavcodec.so.56.26 //这是小版本号</p>
+<p>###@摘出我们使用的so库<br>    libavcodec-56.so<br>    libavdevice-56.so<br>    libavfilter-5.so<br>    libavformat-56.so<br>    libavutil-54.so<br>    libpostproc-53.so<br>    libswresample-1.so<br>    libswscale-3.so</p>
+<p>###@ as 新建android工程 include c 选上，在app下建libs文件夹，在libs下新建一个armeabi的文件夹，把这些so文件拷贝进去。然后把android/arm/include这个文件夹拷贝到libs下。</p>
+<p>###@修改CMakefile.txt</p>
+<pre><code>cmake_minimum_required(VERSION 3.4.1)
+#导入头文件
+include_directories(libs/include)
+#设置一个变量 名字叫DIR 值是../../../../libs
+set(DIR ../../../../libs)
+add_library( native-lib
+             #表示是动态链接库 不加这个表示添加静态库
+             SHARED
+             #没有生产so库 需要编译cpp
+             src/main/cpp/native-lib.cpp
+              )
+#添加动态库
+add_library(avcodec-56
+            SHARED
+            #表示已经有了so库，只是导入
+            IMPORTED)
+set_target_properties(avcodec-56
+                      PROPERTIES IMPORTED_LOCATION
+                      ${DIR}/armeabi/libavcodec-56.so)
+add_library(avdevice-56
+            SHARED
+            IMPORTED)
+set_target_properties(avdevice-56
+                      PROPERTIES IMPORTED_LOCATION
+                      ${DIR}/armeabi/libavdevice-56.so)
+add_library(avformat-56
+            SHARED
+            IMPORTED)
+set_target_properties(avformat-56
+                      PROPERTIES IMPORTED_LOCATION
+                      ${DIR}/armeabi/libavformat-56.so)
+add_library(avutil-54
+            SHARED
+            IMPORTED)
+set_target_properties(avutil-54
+                      PROPERTIES IMPORTED_LOCATION
+                      ${DIR}/armeabi/libavutil-54.so)
+add_library(postproc-53
+            SHARED
+            IMPORTED)
+set_target_properties(postproc-53
+                      PROPERTIES IMPORTED_LOCATION
+                      ${DIR}/armeabi/libpostproc-53.so)
+ add_library(swresample-1
+             SHARED
+             IMPORTED)
+ set_target_properties(swresample-1
+                       PROPERTIES IMPORTED_LOCATION
+                       ${DIR}/armeabi/libswresample-1.so)
+  add_library(swscale-3
+              SHARED
+              IMPORTED)
+  set_target_properties(swscale-3
+                        PROPERTIES IMPORTED_LOCATION
+                        ${DIR}/armeabi/libswscale-3.so)
+  add_library(avfilter-5
+              SHARED
+              IMPORTED)
+  set_target_properties(avfilter-5
+                        PROPERTIES IMPORTED_LOCATION
+                        ${DIR}/armeabi/libavfilter-5.so)
+
+
+#搜索库 搜索log 作为log-lib使用， 使用时是写log-lib
+find_library(log-lib
+              log )
+#将上面add的so库 链接给最终的文件native-lib
+target_link_libraries( #目标文件
+                       native-lib
+                       avcodec-56
+                       avdevice-56
+                       avformat-56
+                       avutil-54
+                       avfilter-5
+                       postproc-53
+                       swresample-1
+                       swscale-3
+                       ${log-lib} )
+</code></pre><p>###@native-lib.cpp 文件修改</p>
+<pre><code>#include &lt;jni.h&gt;
+#include &lt;string&gt;
+//注意这里--------------begin
+extern &quot;C&quot;{
+#include &quot;libavformat/avformat.h&quot;
+}
+extern &quot;C&quot;
+//注意这里--------------end
+JNIEXPORT jstring JNICALL
+Java_cn_com_fithub_leequerffmpeg_MainActivity_stringFromJNI(
+        JNIEnv *env,
+        jobject /* this */) {
+    std::string hello = &quot;Hello from C++&quot;;
+    av_register_all();
+    return env-&gt;NewStringUTF(hello.c_str());
+}
+</code></pre><p>###@运行工程，显示界面 没有报错 说明ok。</p>
+<p><a href="/code/LeequerFFmpeg.rar">代码</a></p>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/21/python-序列化/">python 序列化</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/12/python-property/" class="archive-article-date">
-  <time datetime="2017-06-12T07:20:59.000Z" itemprop="datePublished">Jun 12</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/08/13/FFMPEG-FFMPEG编译/" data-id="cjbxg20220009j0m6c8i6c4qd" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/12/python-property/">python property</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/05/13/python__slots__/" class="archive-article-date">
-  <time datetime="2017-05-13T05:20:59.000Z" itemprop="datePublished">May 13</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/13/python__slots__/">python __slots__</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/08/21/图片加载框架哪家强 /" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          图片加载框架哪家强
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/07/18/那些简历中提到的框架/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">简历中提到的开源项目</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/04/27/python-斐波那契实现/" class="archive-article-date">
-  <time datetime="2017-04-27T03:20:59.000Z" itemprop="datePublished">Apr 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/27/python-斐波那契实现/">python 斐波那契</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/求1000内的素数/" class="archive-article-date">
-  <time datetime="2017-03-21T04:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/求1000内的素数/">python 求1000内的素数</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/python__getitem__ 实现 下标操作/" class="archive-article-date">
-  <time datetime="2017-03-21T01:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/python__getitem__ 实现 下标操作/">python __getitem__ 实现 下标操作</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/02/21/python-文件的读写/" class="archive-article-date">
-  <time datetime="2017-02-20T18:20:59.000Z" itemprop="datePublished">Feb 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/21/python-文件的读写/">python 文件读写</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/10/python-数据集的使用/" class="archive-article-date">
-  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">Jan 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/10/python-数据集的使用/">python 数据集的使用sklearn</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Suivant &raquo;</a>
-  </nav>
 
 </section>
         

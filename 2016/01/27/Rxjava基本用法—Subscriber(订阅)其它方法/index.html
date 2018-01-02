@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives | 有志青年</title>
+  <title>Rxjava-4 基本用法—Subscriber(订阅)其它方法 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/index.html">
+  <meta name="description" content="正如前面所提到的，Observer 和 Subscriber 具有相同的角色， 而且Observer 在 subscribe() 过程中最终会被转换成 Subscriber 对象， 因此，从这里开始，后面的描述将用 Subscriber 来代替 Observer ，这样更加严谨。  本文介绍的方法是和subscribe(Observer) 和 subscribe(Subscriber)相同功能的方">
+<meta name="keywords" content="Rxjava">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Rxjava-4 基本用法—Subscriber(订阅)其它方法">
+<meta property="og:url" content="http://yoursite.com/2016/01/27/Rxjava基本用法—Subscriber(订阅)其它方法/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="正如前面所提到的，Observer 和 Subscriber 具有相同的角色， 而且Observer 在 subscribe() 过程中最终会被转换成 Subscriber 对象， 因此，从这里开始，后面的描述将用 Subscriber 来代替 Observer ，这样更加严谨。  本文介绍的方法是和subscribe(Observer) 和 subscribe(Subscriber)相同功能的方">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-02-16T08:58:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="Rxjava-4 基本用法—Subscriber(订阅)其它方法">
+<meta name="twitter:description" content="正如前面所提到的，Observer 和 Subscriber 具有相同的角色， 而且Observer 在 subscribe() 过程中最终会被转换成 Subscriber 对象， 因此，从这里开始，后面的描述将用 Subscriber 来代替 Observer ，这样更加严谨。  本文介绍的方法是和subscribe(Observer) 和 subscribe(Subscriber)相同功能的方">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,216 +65,155 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/09/11/python-购物车实例代码/" class="archive-article-date">
-  <time datetime="2017-09-10T18:02:59.000Z" itemprop="datePublished">Sep 11</time>
+        <section id="main"><article id="post-Rxjava基本用法—Subscriber(订阅)其它方法" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/01/27/Rxjava基本用法—Subscriber(订阅)其它方法/" class="article-date">
+  <time datetime="2016-01-27T08:59:59.000Z" itemprop="datePublished">2016-01-27</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+    <h1 class="article-title" itemprop="name">
+      Rxjava-4 基本用法—Subscriber(订阅)其它方法
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/08/21/python-反射/" class="archive-article-date">
-  <time datetime="2017-08-21T04:02:59.000Z" itemprop="datePublished">Aug 21</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/08/21/python-反射/">python 反射</a>
-    </h1>
-  
+        <pre><code>正如前面所提到的，Observer 和 Subscriber 具有相同的角色，
+而且Observer 在 subscribe() 过程中最终会被转换成 Subscriber 对象，
+因此，从这里开始，后面的描述将用 Subscriber 来代替 Observer ，这样更加严谨。
+</code></pre><ul>
+<li>本文介绍的方法是和subscribe(Observer) 和 subscribe(Subscriber)相同功能的方法。也就是订阅这个动作的其它方法。这两个方法是订阅观察者对象。<a id="more"></a></li>
+</ul>
+<ul>
+<li><p>订阅者还可以使用以下不完整的定义回调。</p>
+<pre><code>/**
+*Action0 是 RxJava 的一个接口，它只有一个方法 call()，这个方法是无参无返回值的；
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/07/21/python-序列化/" class="archive-article-date">
-  <time datetime="2017-07-20T18:20:59.000Z" itemprop="datePublished">Jul 21</time>
-</a>
+由于 onCompleted() 方法也是无参无返回值的，因此 Action0 可以被当成一个包装对象，将 onCompleted() 的内容打包起来将自己作为一个参数传入 subscribe() 以实现不完整定义的回调。
+
+这样其实也可以看做将 onCompleted() 方法作为参数传进了 subscribe()，相当于其他某些语言中的『闭包』。 
+
+其实我理解就是Action0就是实现了原来观察者的onCompleted方法。当被观察者发送结束订阅的事件的时候，这个Action0就执行。
+*/
+   Action0 onCompletedAction = new Action0() {
+    //onCompleted();
+    @Override
+    public void call() {
+           System.out.println(&quot;Action0-&gt;call&quot;);
+    }
+};
+</code></pre></li>
+</ul>
+<pre><code>/**
+* 此处实现了原来的// onNext()方法
+*/
+Action1&lt;String&gt; onNextAction = new Action1&lt;String&gt;() {
+
+@Override
+        public void call(String s) {
+            Log.d(tag, s);
+    }
+};
+/**
+*此处实现了原来的额onError方法
+*/
+Action1&lt;Throwable&gt; onErrorAction = new Action1&lt;Throwable&gt;()             {
+    // onError()
+    @Override
+    public void call(Throwable throwable) {
+        // Error handling
+    }    
+};
+</code></pre><ul>
+<li>以上三个对象实现了观察者的三个响应方法</li>
+<li>把被观察者和观察者建立关系。</li>
+</ul>
+<p>// 自动创建 Subscriber ，并使用 onNextAction 来定义 onNext().</p>
+<pre><code>observable.subscribe(onNextAction);
+</code></pre><p>// 自动创建 Subscriber ，并使用 onNextAction 和 onErrorAction 来定义 onNext() 和 onError(),如果没有异常 onErrorAction中的call方法就不会被执行。</p>
+<pre><code>observable.subscribe(onNextAction, onErrorAction);
+</code></pre><p>// 自动创建 Subscriber ，并使用 onNextAction、 onErrorAction 和 onCompletedAction 来定义 onNext()、 onError() 和 onCompleted()，如果没有异常 onErrorAction中的方法就不会执行。在没有异常情况下onCompletedAction方法会执行。</p>
+<pre><code>observable.subscribe(onNextAction,onErrorAction,onCompletedAction);
+</code></pre><p>全部代码：</p>
+<pre><code>public class ActionTest {
+//被观察者发送三个事件给观察者
+Observable observable = Observable.just(&quot;hello&quot;, &quot;hi&quot;, &quot;123&quot;);
+
+Action0 onCompletedAction = new Action0() {
+    //onCompleted();
+    @Override
+    public void call() {
+        System.out.println(&quot;Action0-&gt;call&quot;);
+    }
+};
+
+Action1&lt;String&gt; onNextAction = new Action1&lt;String&gt;() {
+    // onNext()
+    @Override
+    public void call(String s) {
+        System.out.println(&quot;Action1--&gt;call----&gt;&quot;+s);
+    }
+};
+Action1&lt;Throwable&gt; onErrorAction = new Action1&lt;Throwable&gt;() {
+    // onError()
+    @Override
+    public void call(Throwable throwable) {
+        System.out.println(&quot;Action1--&gt;call--&gt;&quot;+throwable.getMessage());
+    }
+};
+
+public static void main (String [] arg)
+{
+    ActionTest _actionTest = new ActionTest();
+    _actionTest.observable.subscribe(_actionTest.onNextAction,_actionTest.onErrorAction,_actionTest.onCompletedAction);
+}
+}    
+</code></pre><ul>
+<li>参考 引用 出自<a href="http://gank.io/post/560e15be2dca930e00da1083#toc_9" target="_blank" rel="noopener">给 Android 开发者的 RxJava 详解</a></li>
+</ul>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/07/21/python-序列化/">python 序列化</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/06/12/python-property/" class="archive-article-date">
-  <time datetime="2017-06-12T07:20:59.000Z" itemprop="datePublished">Jun 12</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/01/27/Rxjava基本用法—Subscriber(订阅)其它方法/" data-id="cjbxg2030000zj0m6kekejbzw" class="article-share-link">Partager</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/06/12/python-property/">python property</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/05/13/python__slots__/" class="archive-article-date">
-  <time datetime="2017-05-13T05:20:59.000Z" itemprop="datePublished">May 13</time>
-</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/05/13/python__slots__/">python __slots__</a>
-    </h1>
-  
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Rxjava/">Rxjava</a></li></ul>
 
-    </header>
+    </footer>
   </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/01/30/BehaviorSubject/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          Rxjava-5 BehaviorSubject
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/01/26/Rxjava基本用法—observable(被观察者)的其它方法/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">Rxjava-3 基本用法—observable(被观察者)的其它方法</div>
+    </a>
+  
+</nav>
+
+  
 </article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/04/27/python-斐波那契实现/" class="archive-article-date">
-  <time datetime="2017-04-27T03:20:59.000Z" itemprop="datePublished">Apr 27</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/04/27/python-斐波那契实现/">python 斐波那契</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/求1000内的素数/" class="archive-article-date">
-  <time datetime="2017-03-21T04:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/求1000内的素数/">python 求1000内的素数</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/03/21/python__getitem__ 实现 下标操作/" class="archive-article-date">
-  <time datetime="2017-03-21T01:20:59.000Z" itemprop="datePublished">Mar 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/03/21/python__getitem__ 实现 下标操作/">python __getitem__ 实现 下标操作</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/02/21/python-文件的读写/" class="archive-article-date">
-  <time datetime="2017-02-20T18:20:59.000Z" itemprop="datePublished">Feb 21</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/02/21/python-文件的读写/">python 文件读写</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2017/01/10/python-数据集的使用/" class="archive-article-date">
-  <time datetime="2017-01-10T02:20:59.000Z" itemprop="datePublished">Jan 10</time>
-</a>
-      
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/10/python-数据集的使用/">python 数据集的使用sklearn</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
-    
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="page-number" href="/archives/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/archives/page/6/">6</a><a class="extend next" rel="next" href="/archives/page/2/">Suivant &raquo;</a>
-  </nav>
 
 </section>
         

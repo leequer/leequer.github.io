@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我不是胖，只是肉有点多">
+<meta property="og:type" content="website">
+<meta property="og:title" content="有志青年">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:locale" content="zh-Hans">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="有志青年">
+<meta name="twitter:description" content="我不是胖，只是肉有点多">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-python-生成器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/12/02/python-生成器/" class="article-date">
+  <time datetime="2016-12-01T17:20:59.000Z" itemprop="datePublished">2016-12-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/12/02/python-生成器/">python生成器，集合，字典，切片，迭代器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code># coding:utf-8
+
+# 字典
+print(&quot;###字典###&quot;);
+
+d = {&apos;a&apos;: 1, &apos;b&apos;: 2, 1: &apos;one&apos;, 2: &apos;two&apos;, 3: [1, 2, 3]}
+print(d)
+
+print(&quot;###list###&quot;);
+# list
+mList = [];
+mList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+print(mList);
+
+&apos;&apos;&apos;
+  这样用乘法生成的对象 三个是同一个对象，
+所以改了一个为100 就全部都改了。这是浅拷贝。
+li_2d = [[0] * 3] * 3
+print(li_2d)
+li_2d[0][0] = 100
+print(li_2d)
+  但是这样一维的修改是不会产生上述问题的。
+li = [1] * 10
+li[3] = 3
+print(li)
+&apos;&apos;&apos;
+
+print(&quot;###set###&quot;);
+# set
+s_b = set([4, 5, 6, 7, 8, 9])
+print(s_b)
+
+print(&quot;###切片###&quot;);
+# 切片 [start:end:steps]  &gt;= start &amp; &lt; end
+li = list(range(10))
+print(li)
+print(type(li));
+
+print(li[2:5])
+print(li[4:5])
+print(li[:4])
+print(li[5:])
+print(li[0:20:3])
+
+&apos;&apos;&apos;
+列表推导意义：
+快速简单的生成一个列表
+对原有的列表进行简单的转换
+
+&apos;&apos;&apos;
+
+print(&quot;____________列表推导______________&quot;);
+
+print(&quot;快速生成一个set&quot;);
+s = {x for x in range(10) if x % 2 == 0};
+print(s);
+print(&quot;快速生成一个字典&quot;);
+d = {x: x % 2 == 0 for x in range(10)}
+print(d)
+
+&apos;&apos;&apos;
+生成器 generator：真正的赋值推迟到使用时。
+避免开辟大的内存，只使用部分内容
+
+如果列表元素可以按照某种算法推算出来，
+那我们是否可以在循环的过程中不断推算出后续的元素呢？
+这样就不必创建完整的list，从而节省大量的空间。
+在Python中，这种一边循环一边计算的机制，称为生成器（Generator）
+通过next 来获得元素
+
+因为要推算出下个是什么，所以 必须从第一个开始遍历
+&apos;&apos;&apos;
+# 先创建一个包含100个数字的集合，然后只取前10个。浪费资源
+square_table = []
+for i in range(100):
+    square_table.append(i * i)
+for i in range(5):
+    print(square_table[i])
+
+# 用生成器避免这种浪费
+# 列表推导时用()替换[]
+square_generator = (x * x for x in range(100))
+print(type(square_generator))
+for i in range(5):
+    print(next(square_generator))
+
+&apos;&apos;&apos;
+迭代器
+  可以直接作用于for循环的对象统称为可迭代对象：Iterable
+  可以被next()函数调用并不断返回下一个值的对象称为迭代器：
+Iterator（表示一个惰性计算的序列）,可以惰性计算的才是迭代器
+  集合数据类型如list、dict、str等是Iterable(可迭代的对象)
+但不是Iterator（迭代器），不过可以通过iter()函数获得一个Iterator对象
+
+
+
+&apos;&apos;&apos;
+
+from collections import Iterable
+from collections import Iterator
+
+print(isinstance([1, 2, 3], Iterable))
+print(isinstance({}, Iterable))
+print(isinstance(123, Iterable))
+print(isinstance(&apos;abc&apos;, Iterable))
+
+print(isinstance([1, 2, 3], Iterator))
+
+g = (x * x for x in range(10))
+print(&quot;g is &quot;, type(g))
+print(&quot;生成器是可迭代的么？&quot;, isinstance(g, Iterable))
+print(&apos;生成器是一个迭代器么？&apos;, isinstance(g, Iterator))
+for i in g:
+    print(i)
+
+
+def consumer(name):
+    print(&quot;%s 准备吃包子啦!&quot; % name)
+    while True:
+        baozi = yield
+
+        print(&quot;包子[%s]来了,被[%s]吃了!&quot; % (baozi, name))
+
+
+c = consumer(&quot;ChenRonghua&quot;)
+c.__next__()  # 唤醒
+
+b1 = &quot;韭菜馅&quot;
+c.send(b1)  # 唤醒 并给yield赋值
+# c.__next__()
+
+&apos;&apos;&apos;
+作业1：螺旋矩阵：给定一个m*n要素的矩阵，按照螺旋顺序，返回
+该矩阵所有要素.
+example:
+
+[[1,2,3],
+ [4,5,6],
+ [7,8,9]]
+
+应该返回[1,2,3,6,9,8,7,4,5]
+
+&apos;&apos;&apos;
+
+_result = [];
+# 计数，一共m*n个元素
+c = 0;
+# 计数，当前是此组的第几个元素
+j = 1;
+
+row = 1;
+
+
+# m 是一个元素的长度，n是一共有几个元素
+def process(origin, m, n):
+    while (c &lt; m * n):
+        _tList = origin[n];
+        if (n == 0):  # 第一行
+            # 从0循环连接字符串
+            i = 0;
+            while (i &lt; m):
+                _result.append(_tList[i]);
+                i = i + 1;
+
+
+        else:
+            # 开始第二行 将第二个和第二个以后的最后一个元素连接
+
+            _tLastCell = _tList[m - j];
+            _result.append(_tLastCell);
+
+            # 当到了最后一个
+            if (n == row - 1):
+                while (m - j &gt;= 0):
+                    _tLastCell = _tList[m - j];
+                    _result.append(_tLastCell);
+                    j = j + 1;
+                    row = n;
+
+                # 现在m=0 n最大 到了最左侧
+
+                # 开始拼接第0个元素
+
+                while (n - 1 &gt;= 1):
+                    _tList[m];
+                    n = n - 1;
+
+        j = j + 1;
+        c = c + 1;
+        n = n + 1;
+
+
+&apos;&apos;&apos;作业2：用栈（list）实现队列：支持push（element），pop（）和top（）方法
+pop和top方法都应该返回第一个元素的值。
+&apos;&apos;&apos;
+
+&apos;&apos;&apos;
+作业3：矩阵转换：给定矩阵a，令矩阵b里每个元素b[i][j]的值等于a[0][0]
+到a[i][j]子矩阵元素的和。
+&apos;&apos;&apos;
+
+import sys
+
+print(sys.path)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/12/02/python-生成器/" data-id="cjbxg20450023j0m6pdlival3" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-包的导入" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/11/04/python-包的导入/" class="article-date">
+  <time datetime="2016-11-04T13:20:59.000Z" itemprop="datePublished">2016-11-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/11/04/python-包的导入/">python包的导入</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <pre><code># 导入包，执行了包下的__init__.py文件
+# import ftp_server.code 
+# import ftp_client
+
+import os,sys,socketserver,time
+mCurrentPath = os.path.dirname(__file__) #当前文件的目录
+# sys.path.insert(0,os.path.dirname(__file__)) #将文件路径添加到环境变量中最前面的位置
+print(mCurrentPath)
+import ftp_server.code.ftp_server as server
+import ftp_client.Client as client
+# print(sys.path.pop(0)) #从环境变量中移除第一个变量
+# sys.path.remove(mCurrentPath)
+# print(sys.path.index(mCurrentPath))
+# print(sys.path)
+</code></pre><p>   <a href="/code/homework.jar">本地代码下载</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/11/04/python-包的导入/" data-id="cjbxg203j001lj0m64kqgimx6" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-python-字符串" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/24/python-字符串/" class="article-date">
+  <time datetime="2016-10-24T03:20:59.000Z" itemprop="datePublished">2016-10-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/24/python-字符串/">python 字符串</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##字符串</p>
+<pre><code># coding:utf-8
+# 字符串
+# 练习1：字符串翻转
+# 1.将字符串转为数组
+# 2.然后倒叙遍历数组，并把倒叙的内容赋值给新数组
+# 3.然后新建字符串拼接新数组
+
+mOrigin = &quot; i love china    &quot;;
+mOriginList = list(mOrigin);
+mSub = mOrigin.split(&quot; &quot;);
+mSubList = list(mSub);
+mZ = len(mSubList);
+mZ = mZ - 1;
+mResult = [];
+while (mZ &gt;= 0):
+    mResult.append(mSubList[mZ]);
+    mZ = mZ - 1;
+
+mR = &quot; &quot;.join(mResult);
+
+print(mR);
+
+# 练习2：打印100000中的素数 素数：只能被1和自己整除的数字 方法：如果m不能被2~√m间任一整数整除，m必定是素数
+import math;
+
+empt = 0;
+i = 3;
+while (i &lt;= 100):
+
+    j = 2;
+    while (j &lt;= math.sqrt(i)):
+        if (i != j):
+            x = i % j;
+            if (x == 0):
+                empt = 0;
+                break;
+            else:
+                j += 1;
+                empt = i;
+                continue;
+    i += 1;
+    if (empt != 0):
+        print(empt);
+
+# 方法定义：
+print(&quot;################################################&quot;);
+
+
+def fun_one(arg1, arg2):
+    print(arg1, arg2);
+    return arg1, arg2;
+
+
+result = fun_one(1, 2);
+print(type(result));  # &lt;type &apos;tuple&apos;&gt; tuple:元组:等价一个不可变数组
+print(result[0]);
+print(result[1]);
+
+
+# 函数参数默认值
+def fun_two(arg1, arg2=500):
+    print(&quot;1=&quot;, arg1);
+    print(&quot;2=&quot;, arg2);
+    return arg1 + arg2;
+
+
+print(fun_two(1, 2));
+print(fun_two(1));
+
+print(fun_two(arg1=300, arg2=100))
+
+
+# 可变参数  *numbers表示把输入的参数放到一个数组中 元组
+def func(name, *numbers):
+    print(name)
+    print(numbers)
+
+
+func(&apos;Tom&apos;, &quot;;1&quot;, 2, 3, 4)
+
+
+# 可变参数必须在最后
+def func1(*numbers):
+    print(numbers)
+
+
+func1(&apos;Tom&apos;, 1, 2, 3, 4, &quot;leequer&quot;);
+
+
+# 命名关键字参数
+# *用于和普通参数做分割，*后面的参数必须带参数名，*args一样效果
+# def func( a, b, c, *, china, uk):
+#    print(china, uk)
+# func(china = &apos;Beijing&apos;, uk = &apos;London&apos;)  # 必须传入参数名
+# 递归的经典例子！
+def fib(n):
+    if n &lt; 1:
+        raise ValueError
+    elif (n == 1) or (n == 2):
+        return 1
+    else:
+        return fib(n - 1) + fib(n - 2)
+
+
+print(fib(1))
+print(fib(2))
+print(fib(3))
+print(fib(4))
+print(fib(5))
+print(fib(6))
+
+
+# 练习3；自己实现可变参数的函数
+def fun_MyAotuFun(a, b, c):
+    resultArray = [];
+    resultArray.append(a);
+    resultArray.append(b);
+    resultArray.append(c)
+    print(resultArray);
+
+
+fun_MyAotuFun(1, &quot;123&quot;, 0);
+# 练习4：自己解决汉诺塔问题  相传在古印度圣庙中，有一种被称为汉诺塔(Hanoi)的游戏。该游戏是在一块铜板装置上，有三根杆(编号A、B、C)，在A杆自下而上、由大到小按顺序放置64个金盘(如下图)。游戏的目标：把A杆上的金盘全部移到C杆上，并仍保持原有顺序叠好。操作规则：每次只能移动一个盘子，并且在移动过程中三根杆上都始终保持大盘在下，小盘在上，操作过程中盘子可以置于A、B、C任一杆上。
+# 第一步：将n-1个盘子从A柱移动至B柱（借助C柱为过渡柱）
+
+# 第二步：将A柱底下最大的盘子移动至C柱
+
+# 第三步：将B柱的n-1个盘子移至C柱（借助A柱为过渡柱）
+print(&quot;#实现移动的函数#&quot;)
+
+
+# coding:utf-8
+def move(n, source, target, helper):
+    if n == 1:
+        print
+        source + &apos; -&gt; &apos; + target
+    else:
+        move(n - 1, source, helper, target)
+        print
+        source + &apos; -&gt; &apos; + target
+        move(n - 1, helper, target, source)
+
+
+move(3, &apos;A&apos;, &apos;B&apos;, &apos;C&apos;)
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/24/python-字符串/" data-id="cjbxg203y001vj0m62t4z6a8o" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/">Python</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-人脸识别开发记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/人脸识别开发记录/" class="article-date">
+  <time datetime="2016-10-09T06:55:59.000Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/人脸识别开发记录/">android 人脸识别开发记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="人脸识别"><a href="#人脸识别" class="headerlink" title="人脸识别"></a>人脸识别</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>人脸识别这个名字其实是比较模糊的。人脸识别包括1.人脸的检测2.人脸的辨别。第一个人脸检测是指，在一个静态的图片中发现有人脸，或者在视频流中的某一帧有人脸。这是人脸检测。发现了人脸，再把这个人脸的图片做人脸辨别是属于某个人。这就需要数据库中提前录入这个人的照片。否则我们无法做对比。
+        
+          <p class="article-more-link">
+            <a href="/2016/10/09/人脸识别开发记录/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/人脸识别开发记录/" data-id="cjbxg204b0029j0m6ynkbrnck" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/人脸识别/">人脸识别</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/20/FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系/" class="article-date">
+  <time datetime="2016-09-19T16:00:00.000Z" itemprop="datePublished">2016-09-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/20/FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系/">FFMPEG中最关键的结构体之间的关系</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://blog.csdn.net/leixiaohua1020/article/details/11693997" target="_blank" rel="noopener"> 本文摘自</a>有部分自己的理解和补充</p>
+<p>FFMPEG中结构体很多。最关键的结构体可以分成以下几类：为什么会有这些步骤，因为一个播放器把一个视频接到到播放要经历下面的步骤。
+        
+          <p class="article-more-link">
+            <a href="/2016/09/20/FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/20/FFMPEG结构体分析- FFMPEG中最关键的结构体之间的关系/" data-id="cjbxg2024000bj0m6a5km6jbf" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-FFMPEG-视频相关知识简介" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/09/13/FFMPEG-视频相关知识简介/" class="article-date">
+  <time datetime="2016-09-12T16:00:00.000Z" itemprop="datePublished">2016-09-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/09/13/FFMPEG-视频相关知识简介/">ffmpeg-视频相关知识简介</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##1.视频相关知识的简介</p>
+<h3 id="1-1封装格式"><a href="#1-1封装格式" class="headerlink" title="1.1封装格式"></a>1.1封装格式</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名称</th>
+<th style="text-align:center">推出机构</th>
+<th style="text-align:center">流媒体</th>
+<th style="text-align:center">支持的视频编码</th>
+<th style="text-align:center">支持的音频编码</th>
+<th style="text-align:center">目前使用领域</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">AVI</td>
+<td style="text-align:center">Microsoft Inc.</td>
+<td style="text-align:center">不支持</td>
+<td style="text-align:center">几乎所有格式</td>
+<td style="text-align:center">几乎所有格式</td>
+<td style="text-align:center">BT下载影视</td>
+</tr>
+<tr>
+<td style="text-align:center">MP4</td>
+<td style="text-align:center">MPEG</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">MPEG-2, MPEG-4, H.264, H.263等</td>
+<td style="text-align:center">AAC, MPEG-1 Layers I, II, III, AC-3等</td>
+<td style="text-align:center">互联网视频网站</td>
+</tr>
+<tr>
+<td style="text-align:center">TS</td>
+<td style="text-align:center">MPEG</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">MPEG-1, MPEG-2, MPEG-4, H.264</td>
+<td style="text-align:center">Layers I, II, III, AAC,</td>
+<td style="text-align:center">IPTV，数字电视</td>
+</tr>
+<tr>
+<td style="text-align:center">FLV</td>
+<td style="text-align:center">Adobe Inc.</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">Sorenson, VP6, H.264    MP3, ADPCM,</td>
+<td style="text-align:center">Linear PCM, AAC等</td>
+<td style="text-align:center">互联网视频网站</td>
+</tr>
+<tr>
+<td style="text-align:center">MKV</td>
+<td style="text-align:center">CoreCodec Inc.</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">几乎所有格式</td>
+<td style="text-align:center">几乎所有格式</td>
+<td style="text-align:center">互联网视频网站</td>
+</tr>
+<tr>
+<td style="text-align:center">RMVB</td>
+<td style="text-align:center">Real Networks Inc.</td>
+<td style="text-align:center">支持</td>
+<td style="text-align:center">RealVideo 8, 9, 10    AAC</td>
+<td style="text-align:center">Cook Codec, RealAudio,Lossless</td>
+<td style="text-align:center">BT下载影视</td>
+</tr>
+</tbody>
+</table>
+<p>​                 </p>
+        
+          <p class="article-more-link">
+            <a href="/2016/09/13/FFMPEG-视频相关知识简介/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/09/13/FFMPEG-视频相关知识简介/" data-id="cjbxg2026000dj0m6fykaj47g" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-图片加载框架哪家强 " class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/21/图片加载框架哪家强 /" class="article-date">
+  <time datetime="2016-08-21T06:55:59.000Z" itemprop="datePublished">2016-08-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/21/图片加载框架哪家强 /">图片加载框架哪家强</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="/img/Android图片加载到底哪家强.png">Android图片加载到底哪家强</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/08/21/图片加载框架哪家强 /" data-id="cjbxg204f002fj0m6kgu7hyie" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-FFMPEG-FFMPEG编译" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/08/13/FFMPEG-FFMPEG编译/" class="article-date">
+  <time datetime="2016-08-12T16:00:00.000Z" itemprop="datePublished">2016-08-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/08/13/FFMPEG-FFMPEG编译/">ffmpeg 编译和使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#1.简介</p>
+<p>###FFmpeg是一个自由软件，可以运行音频和视频多种格式的录影、转换、流功能
+        
+          <p class="article-more-link">
+            <a href="/2016/08/13/FFMPEG-FFMPEG编译/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/08/13/FFMPEG-FFMPEG编译/" data-id="cjbxg20220009j0m6c8i6c4qd" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-那些简历中提到的框架" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/07/18/那些简历中提到的框架/" class="article-date">
+  <time datetime="2016-07-18T06:55:59.000Z" itemprop="datePublished">2016-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/07/18/那些简历中提到的框架/">简历中提到的开源项目</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <blockquote>
+<p>jazzyviewpager</p>
+</blockquote>
+<p>– 可以让viewpager有各种绚丽的动画，而且还可以自由扩展；</p>
+<p>– <a href="https://github.com/jfeinstein10/JazzyViewPager" target="_blank" rel="noopener">https://github.com/jfeinstein10/JazzyViewPager</a></p>
+<blockquote>
+<p>indicator</p>
+</blockquote>
+<p>– 几乎所有的新闻类APP中都有使用</p>
+<p>– <a href="https://github.com/JakeWharton/Android-ViewPagerIndicator" target="_blank" rel="noopener">https://github.com/JakeWharton/Android-ViewPagerIndicator</a></p>
+<blockquote>
+<p>Vitamio</p>
+</blockquote>
+<p>– 免费的Vitamio来打造属于自己的Android万能播放器</p>
+<p>– <a href="http://www.cnblogs.com/over140/category/409230.html" target="_blank" rel="noopener">http://www.cnblogs.com/over140/category/409230.html</a></p>
+<blockquote>
+<p>Depth-LIB-Android</p>
+</blockquote>
+<p>– 效果（应该有声音）<img src="https://camo.githubusercontent.com/b55c62484bb6a7d4b5280988d5cbaf993ca6579f/68747470733a2f2f6431337961637572716a676172612e636c6f756466726f6e742e6e65742f75736572732f3635353434392f73637265656e73686f74732f323137393334322f6d656e755f64726962626c652e676966" alt=""></p>
+<p>– <a href="https://github.com/danielzeller/Depth-LIB-Android-" target="_blank" rel="noopener">gitHub地址</a></p>
+<blockquote>
+<p>Material Desgin 库</p>
+</blockquote>
+<p><a href="https://github.com/rey5137/Material" target="_blank" rel="noopener">https://github.com/rey5137/Material</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/07/18/那些简历中提到的框架/" data-id="cjbxg204z0032j0m631mnr4o6" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android开源项目/">android开源项目</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-网络请求哪家强" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/05/21/网络请求哪家强/" class="article-date">
+  <time datetime="2016-05-21T06:55:59.000Z" itemprop="datePublished">2016-05-21</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/05/21/网络请求哪家强/">Android开源网络框架哪家强</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><img src="/img/网络请求哪家强.png" alt="Android网络请求哪家强"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/05/21/网络请求哪家强/" data-id="cjbxg204x002zj0m6h8y2s5rg" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    
+    <a class="extend prev" rel="prev" href="/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Suivant &raquo;</a>
+  </nav>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

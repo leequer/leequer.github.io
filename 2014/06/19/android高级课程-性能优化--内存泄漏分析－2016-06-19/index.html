@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>android高级课程-性能优化--内存泄漏分析－2016-06-19 | 有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="case1：内部类造成内存泄漏 Examplepublic class LeakAct extends Activity {   @Override protected void onCreate(Bundle savedInstanceState) {         super.onCreate(savedInstanceState);     setContentView(R.layout.">
+<meta name="keywords" content="android高级课程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="android高级课程-性能优化--内存泄漏分析－2016-06-19">
+<meta property="og:url" content="http://yoursite.com/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="case1：内部类造成内存泄漏 Examplepublic class LeakAct extends Activity {   @Override protected void onCreate(Bundle savedInstanceState) {         super.onCreate(savedInstanceState);     setContentView(R.layout.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/690927-20160620172631069-801018470.png">
+<meta property="og:image" content="http://yoursite.com/img/690927-20160620172701897-2109008457.png">
+<meta property="og:updated_time" content="2017-12-05T01:59:04.546Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="android高级课程-性能优化--内存泄漏分析－2016-06-19">
+<meta name="twitter:description" content="case1：内部类造成内存泄漏 Examplepublic class LeakAct extends Activity {   @Override protected void onCreate(Bundle savedInstanceState) {         super.onCreate(savedInstanceState);     setContentView(R.layout.">
+<meta name="twitter:image" content="http://yoursite.com/img/690927-20160620172631069-801018470.png">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-android高级课程-性能优化--内存泄漏分析－2016-06-19" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" class="article-date">
+  <time datetime="2014-06-19T06:38:59.000Z" itemprop="datePublished">2014-06-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      android高级课程-性能优化--内存泄漏分析－2016-06-19
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="case1：内部类造成内存泄漏"><a href="#case1：内部类造成内存泄漏" class="headerlink" title="case1：内部类造成内存泄漏"></a>case1：内部类造成内存泄漏</h2><p><img src="/img/690927-20160620172631069-801018470.png" alt="图片备份"></p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><pre><code>public class LeakAct extends Activity {  
+@Override
+protected void onCreate(Bundle savedInstanceState) {    
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.aty_leak);
+    test();
+} 
+//这儿发生泄漏    
+public void test() {    
+    new Thread(new Runnable() {      
+        @Override
+        public void run() {        
+            while (true) {          
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }).start();
+}
+}
+</code></pre><h4 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h4><pre><code>public class LeakAct extends Activity {  
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {    
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.aty_leak);
+        test();
+    }  
+    //加上static，变成静态匿名内部类
+    boolean mRun = true；
+    public static void test() {    
+        new Thread(new Runnable() {     
+            @Override
+            public void run() {        
+                while (mRun) {          
+                    try {
+                        Thread.sleep(1000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+    public void onDestory{
+        //在业务允许的情况下，当Activity执行onDestory时，结束这些耗时任务;
+        mRun = false；
+    }
+}
+</code></pre><h4 id="mLeak是存储在静态区的静态变量，而Leak是内部类，其持有外部类Activity的引用。这样就导致Activity需要被销毁时，由于被mLeak所持有，所以系统不会对其进行GC，这样就造成了内存泄漏。在Java中，非静态内部类-和-匿名类-都会潜在的引用它们所属的外部类，但是，静态内部类却不会。如果这个非静态内部类实例做了一些耗时的操作，就会造成外围对象不会被回收，从而导致内存泄漏"><a href="#mLeak是存储在静态区的静态变量，而Leak是内部类，其持有外部类Activity的引用。这样就导致Activity需要被销毁时，由于被mLeak所持有，所以系统不会对其进行GC，这样就造成了内存泄漏。在Java中，非静态内部类-和-匿名类-都会潜在的引用它们所属的外部类，但是，静态内部类却不会。如果这个非静态内部类实例做了一些耗时的操作，就会造成外围对象不会被回收，从而导致内存泄漏" class="headerlink" title="mLeak是存储在静态区的静态变量，而Leak是内部类，其持有外部类Activity的引用。这样就导致Activity需要被销毁时，由于被mLeak所持有，所以系统不会对其进行GC，这样就造成了内存泄漏。在Java中，非静态内部类 和 匿名类 都会潜在的引用它们所属的外部类，但是，静态内部类却不会。如果这个非静态内部类实例做了一些耗时的操作，就会造成外围对象不会被回收，从而导致内存泄漏"></a>mLeak是存储在静态区的静态变量，而Leak是内部类，其持有外部类Activity的引用。这样就导致Activity需要被销毁时，由于被mLeak所持有，所以系统不会对其进行GC，这样就造成了内存泄漏。在Java中，非静态内部类 和 匿名类 都会潜在的引用它们所属的外部类，但是，静态内部类却不会。如果这个非静态内部类实例做了一些耗时的操作，就会造成外围对象不会被回收，从而导致内存泄漏</h4><h3 id="解决方法："><a href="#解决方法：" class="headerlink" title="解决方法："></a>解决方法：</h3><pre><code>1.将内部类变成静态内部类;
+
+2.如果有强引用Activity中的属性，则将该属性的引用方式改为弱引用;
+
+3.在业务允许的情况下，当Activity执行onDestory时，结束这些耗时任务;
+</code></pre><h2 id="case2：Context成内存泄漏"><a href="#case2：Context成内存泄漏" class="headerlink" title="case2：Context成内存泄漏"></a>case2：Context成内存泄漏</h2><p><img src="/img/690927-20160620172701897-2109008457.png" alt="图片备份"></p>
+<pre><code>private static Drawable sBackground;
+    @Override
+    protected void onCreate(Bundle state) {  
+        super.onCreate(state);
+        TextView label = new TextView(this);
+        label.setText(&quot;Leaks are bad&quot;);  
+        if (sBackground == null) {
+            //这里发生泄漏
+            sBackground = getDrawable(R.drawable.large_bitmap);
+            //改为
+            sBackground = getApplicationContext().getDrawable(R.drawable.large_bitmap);
+    }
+    label.setBackgroundDrawable(sBackground);
+    setContentView(label);
+}
+</code></pre><h4 id="如果我们在在调用Singleton的getInstance-方法时传入了Activity。那么当instance没有释放时，这个Activity会一直存在。因此造成内存泄露。"><a href="#如果我们在在调用Singleton的getInstance-方法时传入了Activity。那么当instance没有释放时，这个Activity会一直存在。因此造成内存泄露。" class="headerlink" title="如果我们在在调用Singleton的getInstance()方法时传入了Activity。那么当instance没有释放时，这个Activity会一直存在。因此造成内存泄露。"></a>如果我们在在调用Singleton的getInstance()方法时传入了Activity。那么当instance没有释放时，这个Activity会一直存在。因此造成内存泄露。</h4><h3 id="解决方法：-1"><a href="#解决方法：-1" class="headerlink" title="解决方法："></a>解决方法：</h3><pre><code>1.如果传入Context，使用ApplicationContext;
+
+2.使用ApplicationContext代替ActivityContext，因为ApplicationContext会随着应用程序的存在而存在，而不依赖于activity的生命周期；
+
+3.对Context的引用不要超过它本身的生命周期，慎重的对Context使用“static”关键字。Context里如果有线程，一定要在onDestroy()里及时停掉。
+</code></pre><h2 id="case4：Handler引起的内存泄漏"><a href="#case4：Handler引起的内存泄漏" class="headerlink" title="case4：Handler引起的内存泄漏"></a>case4：Handler引起的内存泄漏</h2><pre><code>当Handler中有延迟的的任务或是等待执行的任务队列过长，由于消息持有对Handler的引用，而Handler又持
+有对其外部类的潜在引用，这条引用关系会一直保持到消息得到处理，而导致了Activity无法被垃圾回收器回收，而导致了内存泄露。
+</code></pre><h3 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h3><pre><code>1.可以把Handler类放在单独的类文件中，或者使用静态内部类便可以避免泄露;
+
+2.如果想在Handler内部去调用所在的Activity,那么可以在handler内部使用弱引用的方式去指向所在
+
+3.Activity.使用Static + WeakReference的方式来达到断开Handler与Activity之间存在引用关系的目的。
+</code></pre><h3 id="solution"><a href="#solution" class="headerlink" title="solution"></a>solution</h3><pre><code>@Override
+protected void doOnDestroy() {        
+    super.doOnDestroy();        
+    if (mHandler != null) {
+        mHandler.removeCallbacksAndMessages(null);
+    }
+    mHandler = null;
+    mRenderCallback = null;
+}
+</code></pre><h2 id="case-5-注册监听器的泄漏"><a href="#case-5-注册监听器的泄漏" class="headerlink" title="case 5. 注册监听器的泄漏"></a>case 5. 注册监听器的泄漏</h2><pre><code>系统服务可以通过Context.getSystemService 获取，
+它们负责执行某些后台任务，或者为硬件访问提供接口。
+如果Context 对象想要在服务内部的事件发生时被通知，
+那就需要把自己注册到服务的监听器中。
+
+然而，这会让服务持有Activity 的引用，
+如果在Activity onDestory时没有释放掉引用就会内存泄漏。
+</code></pre><h3 id="使用ApplicationContext代替ActivityContext"><a href="#使用ApplicationContext代替ActivityContext" class="headerlink" title="使用ApplicationContext代替ActivityContext;"></a>使用ApplicationContext代替ActivityContext;</h3><h3 id="Example-："><a href="#Example-：" class="headerlink" title="Example ："></a>Example ：</h3><pre><code>mSensorManager = (SensorManager) this.getSystemService(Context.SENSOR_SERVICE);
+</code></pre><h3 id="solution-1"><a href="#solution-1" class="headerlink" title="solution:"></a>solution:</h3><pre><code>mSensorManager = (SensorManager) getApplicationContext().getSystemService(Context.SENSOR_SERVICE);
+</code></pre><h3 id="在Activity执行onDestory时，调用反注册"><a href="#在Activity执行onDestory时，调用反注册" class="headerlink" title="在Activity执行onDestory时，调用反注册;"></a>在Activity执行onDestory时，调用反注册;</h3><pre><code>protected void onDetachedFromWindow() {        
+    if (this.mActionShell != null) {        this.mActionShell.setOnClickListener((OnAreaClickListener)null);
+    }        
+    if (this.mButtonShell != null) { 
+        this.mButtonShell.setOnClickListener((OnAreaClickListener)null);
+    }        
+    if (this.mCountShell != this.mCountShell) {        this.mCountShell.setOnClickListener((OnAreaClickListener)null);
+    }        
+    super.onDetachedFromWindow();
+}
+</code></pre><h2 id="case6-下面是容易造成内存泄漏的系统服务："><a href="#case6-下面是容易造成内存泄漏的系统服务：" class="headerlink" title="case6:下面是容易造成内存泄漏的系统服务："></a>case6:下面是容易造成内存泄漏的系统服务：</h2><pre><code>InputMethodManager imm = (InputMethodManager) context.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+</code></pre><h2 id="case-7-Cursor，Stream没有close，View没有recyle"><a href="#case-7-Cursor，Stream没有close，View没有recyle" class="headerlink" title="case 7. Cursor，Stream没有close，View没有recyle"></a>case 7. Cursor，Stream没有close，View没有recyle</h2><p>资源性对象比如(Cursor，File文件等)往往都用了一些缓冲，我们在不使用的时候，应该及时关闭它们，以便它们的缓冲及时回收内存。</p>
+<p>它们的缓冲不仅存在于 java虚拟机内，还存在于java虚拟机外。如果我们仅仅是把它的引用设置为null,而不关闭它们，往往会造成内存泄漏。因为有些资源性对象，比如SQLiteCursor(在析构函数finalize(),如果我们没有关闭它，它自己会调close()关闭)，如果我们没有关闭它，系统在回收它时也会关闭它，但是这样的效率太低了。</p>
+<p>因此对于资源性对象在不使用的时候，应该调用它的close()函数，将其关闭掉，然后才置为null. 在我们的程序退出时一定要确保我们的资源性对象已经关闭。</p>
+<h3 id="Solution："><a href="#Solution：" class="headerlink" title="Solution："></a>Solution：</h3><h4 id="调用onRecycled"><a href="#调用onRecycled" class="headerlink" title="调用onRecycled()"></a>调用onRecycled()</h4><pre><code>@Override
+public void onRecycled() {
+    reset();
+    mSinglePicArea.onRecycled();
+}   
+</code></pre><h4 id="在View中调用reset"><a href="#在View中调用reset" class="headerlink" title="在View中调用reset()"></a>在View中调用reset()</h4><pre><code>public void reset() {    if (mHasRecyled) {            
+    return;
+}
+...
+SubAreaShell.recycle(mActionBtnShell);
+mActionBtnShell = null;
+...
+mIsDoingAvatartRedPocketAnim = false;        
+if (mAvatarArea != null) {
+        mAvatarArea.reset();
+}        
+if (mNickNameArea != null) {
+    mNickNameArea.reset();
+}
+}
+</code></pre><h2 id="case-8-集合中对象没清理造成的内存泄漏"><a href="#case-8-集合中对象没清理造成的内存泄漏" class="headerlink" title="case 8. 集合中对象没清理造成的内存泄漏"></a>case 8. 集合中对象没清理造成的内存泄漏</h2><p>我们通常把一些对象的引用加入到了集合容器（比如ArrayList）中，当我们不需要该对象时，并没有把它的引用从集合中清理掉，这样这个集合就会越来越大。如果这个集合是static的话，那情况就更严重了。<br>所以要在退出程序之前，将集合里的东西clear，然后置为null，再退出程序。</p>
+<h2 id="case-9-WebView造成的泄露"><a href="#case-9-WebView造成的泄露" class="headerlink" title="case 9. WebView造成的泄露"></a>case 9. WebView造成的泄露</h2><p>当我们不要使用WebView对象时，应该调用它的destory()函数来销毁它，并释放其占用的内存，否则其占用的内存长期也不能被回收，从而造成内存泄露。</p>
+<h3 id="解决方案：-1"><a href="#解决方案：-1" class="headerlink" title="解决方案："></a>解决方案：</h3><p>为webView开启另外一个进程，通过AIDL与主线程进行通信，WebView所在的进程可以根据业务的需要选择合适的时机进行销毁，从而达到内存的完整释放。</p>
+<h2 id="case-10-构造Adapter时，没有使用缓存的ConvertView"><a href="#case-10-构造Adapter时，没有使用缓存的ConvertView" class="headerlink" title="case 10. 构造Adapter时，没有使用缓存的ConvertView"></a>case 10. 构造Adapter时，没有使用缓存的ConvertView</h2><p>初始时ListView会从Adapter中根据当前的屏幕布局实例化一定数量的View对象，同时ListView会将这些View对象 缓存起来。</p>
+<p>当向上滚动ListView时，原先位于最上面的List Item的View对象会被回收，然后被用来构造新出现的最下面的List Item。</p>
+<p>这个构造过程就是由getView()方法完成的，getView()的第二个形参View ConvertView就是被缓存起来的List Item的View对象(初始化时缓存中没有View对象则ConvertView是null)。</p>
+<p>参考网址：- <a href="/img/Android内存泄露案例分析1.png">Android内存泄露案例分析1</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" data-id="cjbxg20340014j0m64a4yonsj" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/07/13/给现有工程添加NDK支持/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          给现有工程添加NDK支持
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/02/16/泛型/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">泛型</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
