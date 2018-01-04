@@ -96,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjbzup256001bv4m691nklko0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjc0c6v61001k7gm67mlkhcql" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
@@ -136,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjbzup27c002xv4m6d4rck6bk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjc0c6v82003j7gm6qgrauzo1" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li></ul>
@@ -179,7 +179,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjbzup23n000cv4m6puwrybn7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjc0c6v1n00047gm6qknhu6mf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -219,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjbzup25a001dv4m6dspc5uzz" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjc0c6v5z001i7gm6zkejex8p" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -299,7 +299,7 @@ for (int i = 0;i &lt; arr.length;i ++) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjbzup2510016v4m6tfkdvmgi" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjc0c6v6s00287gm6sj9eqnnl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -430,10 +430,240 @@ adb shell dumpsys batterystats &gt; com.example.android.sunshine.app &gt;battery
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjbzup2530019v4m6x8he2rll" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjc0c6v63001n7gm6atm7q2d0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-面向切面编程AOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/26/面向切面编程AOP/" class="article-date">
+  <time datetime="2014-08-26T14:55:59.000Z" itemprop="datePublished">2014-08-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/26/面向切面编程AOP/">面向切面编程AOP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AOP是Aspect-Oriented Progreming的缩写，在OOP设计中有个单一职责原则，在很多时候都不会有问题，但是当很多模块都需要同一个功能的时候，这个时候还用OOP就会很麻烦。那么AOP在Android中的应用就应运而生。使用的工具是aspectJ。</p>
+<p>###需求</p>
+<ul>
+<li><p>计算方法执行的时间</p>
+<p>   public void one(View view) {</p>
+<pre><code>long beagin=System.currentTimeMillis();
+
+//模拟执行业务耗时代码
+{
+    SystemClock.sleep(3000);
+
+    Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+}
+
+Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-beagin)+&quot;ms&quot;);
+}
+</code></pre><p>  如果所有的方法都需要计算消耗时间，那每个方法都需要写同样的代码，一旦需求改动，所有的计算耗时的代码全部需要改动。写到这里，我在想，把计算耗时的封装在一个方法里面，做成工具类不就行了么？于是有了这样的代码：</p>
+<pre><code>public void one(View view) {
+    long begin=System.currentTimeMillis();
+
+    //模拟执行业务耗时代码
+    {
+        SystemClock.sleep(3000);
+
+        Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+    }
+    duration(begin);
+
+}
+public String duration(long begin){
+    Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-begin)+&quot;ms&quot;);
+}
+</code></pre><p>   那这时，需求改了，要判断是那个类输出的日志。那就是要加个类的参数，那我就需要修改这儿duration的方法，添加一个参数，那么所有调用这个方法的地方都需要修改。而且你发现，按个begin的计算，只是为了计算耗时，每个方法里面都要存在。</p>
+</li>
+</ul>
+<p>###考虑使用AOP    </p>
+<ul>
+<li><p>aspectJ:是在编译时就生成代码，而不是运行时，它用的不是javac而是自己的编译工具。但都生成的是.class文件。</p>
+</li>
+<li><p>AndroidStudio配置aspectJ</p>
+</li>
+</ul>
+<p>   1.在app的build.gradle中添加aspectJ的支持</p>
+<pre><code>////////第1步/////////
+
+
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath &apos;org.aspectj:aspectjtools:1.8.9&apos;
+        classpath &apos;org.aspectj:aspectjweaver:1.8.9&apos;
+    }
+}
+////////第1步结束/////////
+
+
+
+apply plugin: &apos;com.android.application&apos;
+
+////////////2///////////////
+repositories {
+    mavenCentral()
+}
+///////////////////////////
+
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId &quot;com.example.liqing.aopdemo&quot;
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName &quot;1.0&quot;
+        testInstrumentationRunner &quot;android.support.test.runner.AndroidJUnitRunner&quot;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;
+        }
+    }
+}
+
+////////////3//////////////////
+final def log = project.logger
+final def variants = project.android.applicationVariants
+
+variants.all { variant -&gt;
+    if (!variant.buildType.isDebuggable()) {
+        log.debug(&quot;Skipping non-debuggable build type &apos;${variant.buildType.name}&apos;.&quot;)
+        return;
+    }
+
+    JavaCompile javaCompile = variant.javaCompile
+    javaCompile.doLast {
+        String[] args = [&quot;-showWeaveInfo&quot;,
+                         &quot;-1.8&quot;,
+                         &quot;-inpath&quot;, javaCompile.destinationDir.toString(),
+                         &quot;-aspectpath&quot;, javaCompile.classpath.asPath,
+                         &quot;-d&quot;, javaCompile.destinationDir.toString(),
+                         &quot;-classpath&quot;, javaCompile.classpath.asPath,
+                         &quot;-bootclasspath&quot;, project.android.bootClasspath.join(File.pathSeparator)]
+        log.debug &quot;ajc args: &quot; + Arrays.toString(args)
+
+        MessageHandler handler = new MessageHandler(true);
+        new Main().run(args, handler);
+        for (IMessage message : handler.getMessages(null, true)) {
+            switch (message.getKind()) {
+                case IMessage.ABORT:
+                case IMessage.ERROR:
+                case IMessage.FAIL:
+                    log.error message.message, message.thrown
+                    break;
+                case IMessage.WARNING:
+                    log.warn message.message, message.thrown
+                    break;
+                case IMessage.INFO:
+                    log.info message.message, message.thrown
+                    break;
+                case IMessage.DEBUG:
+                    log.debug message.message, message.thrown
+                    break;
+            }
+        }
+    }
+}
+///////////////////////////////////////////
+
+
+dependencies {
+    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])
+    implementation &apos;com.android.support:appcompat-v7:26.1.0&apos;
+    implementation &apos;com.android.support.constraint:constraint-layout:1.0.2&apos;
+    testImplementation &apos;junit:junit:4.12&apos;
+    androidTestImplementation &apos;com.android.support.test:runner:1.0.1&apos;
+    androidTestImplementation &apos;com.android.support.test.espresso:espresso-core:3.0.1&apos;
+    ///////////////4////////////////
+    compile files(&apos;libs/aspectjrt.jar&apos;)
+    /////////////////////////////////
+}
+</code></pre><p>  2.设置切点</p>
+<p>我们要计算one这个方法的耗时，那one这个方法就是需要切点的地方。</p>
+<pre><code>@BehaviorTrace(&quot;one&quot;)
+public void one(View view) {
+    long beagin=System.currentTimeMillis();
+
+    //摇一摇的代码逻辑
+    {
+        SystemClock.sleep(3000);
+
+        Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+    }
+
+    Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-beagin)+&quot;ms&quot;);
+}
+</code></pre><p>在one这个方法上方添加注解@BehaviorTrace(“one”)，首先BehaviorTrace这个不是固定的写法，这个是你创建的切点的名字，这里的名字要和切点类名相同，参数one，是对应BehaviorTrace中的 String value();方法，这是固定写法，来看看BehaviorTrace 的代码：</p>
+<pre><code>@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.CLASS)
+public @interface BehaviorTrace {
+
+    String value();
+
+}
+</code></pre><p>3.定义切面</p>
+<pre><code>@Aspect  //--a
+public class BehaviorAspect {
+
+    @Pointcut(&quot;execution(@com.example.liqing.aopdemo.BehaviorTrace  * *(..))&quot;)//--b
+    public void anBehavior(){
+
+    }
+}
+</code></pre><p>a:固定写法，通过这个注解表示这个类是切面。</p>
+<p>b：</p>
+<p>Pointcut注解：</p>
+<pre><code>就是切点，即触发该类的条件。
+</code></pre><p>使用了execution，</p>
+<pre><code>也就是以方法执行时为切点，触发Aspect类。而execution里面的字符串是触发条件，也是具体的切点。
+</code></pre><p>-</p>
+<pre><code>&quot;execution(@com.example.liqing.aopdemo.BehaviorTrace  * *(..))&quot;
+</code></pre><p>这个条件是所有加了BehaviorTrace注解的方法或属性都会是切点，范围比较广。也就是说，执行每一个被BehaviorTrace注解的方法，都会执行此切点的功能。</p>
+<p>“**”表示是任意包名</p>
+<p>“..”表示任意类型任意多个参数</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc0c6v7w003c7gm62a0efdcl" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
 
     </footer>
   </div>
@@ -564,7 +794,7 @@ try {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjbzup2240000v4m6cyd693fo" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjc0c6v0h00017gm6quwjfcr6" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -824,7 +1054,7 @@ public class Book implements Parcelable
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjbzup275002pv4m6lo8zkbrs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjc0c6v7c002q7gm6a06a40fm" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1004,157 +1234,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjbzup284003lv4m6q297xbkf" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-单例模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/08/21/单例模式/" class="article-date">
-  <time datetime="2014-08-21T09:55:59.000Z" itemprop="datePublished">2014-08-21</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/08/21/单例模式/">单例模式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h2 id="LS2-设计模式"><a href="#LS2-设计模式" class="headerlink" title="LS2-设计模式"></a>LS2-设计模式</h2><h2 id="单例模式"><a href="#单例模式" class="headerlink" title="单例模式"></a>单例模式</h2><h4 id="饿汉模式"><a href="#饿汉模式" class="headerlink" title="饿汉模式"></a>饿汉模式</h4><pre><code>private static Singleton instance = new Singleton();
-</code></pre><p>静态实例，类加载的时候就把实例加载到内存中。线程安全，但消耗大。</p>
-<h4 id="懒汉模式"><a href="#懒汉模式" class="headerlink" title="懒汉模式"></a>懒汉模式</h4><pre><code>class Singleton {
-
-    private static Singleton instance = null;      
-
-    public  static   Singleton instance() {      
-        if (instance == null) {      
-            instance = new Singleton();      
-        }      
-        return instance;     
-    }     
-}
-</code></pre><p>存在线程安全问题。若多个线程，同时访问这个方法，当第一个线程判断到instant==null去new一个实例的时候，另一个线程执行到判断instant是否为空，这是，还没new成功，那第二个线程就得到也是实例为空，就去实例化，这样就会有两个实例。解决这个问题就用线程同步：<br>    class Singleton {</p>
-<pre><code>    private static Singleton instance = null;      
-
-    public synchronized static   Singleton instance() {      
-        if (instance == null) {      
-            instance = new Singleton();      
-        }      
-        return instance;     
-    }     
-}
-</code></pre><p>这里有一个性能问题：多个线程同时访问这个方法时，会因为同步而导致每次只有一个线程运行，影响程序性能。</p>
-<h4 id="DCL-（double-check-Lock）"><a href="#DCL-（double-check-Lock）" class="headerlink" title="DCL （double check Lock）"></a>DCL （double check Lock）</h4><pre><code>class Singleton {   
-
-      private static Singleton instance = null ;   
-
-      public static Singleton instance() {   
-          if (instance == null ) {
-              synchronized (this) {   
-                  if (instance == null)
-                     instance = new Singleton();
-             }
-         }
-         return instance;
-     }
-}
-</code></pre><p>这个解决方法在jdk1.5后，jvm 指令集乱序问题，导致有可能这样也不安全。解决方法是加volatile。使指令集不乱序。 </p>
-<pre><code>class Singleton {   
-
-      private volatile static Singleton instance = null ;   
-
-      public static Singleton instance() {   
-          if (instance == null ) {
-              synchronized (this) {   
-                  if (instance == null)
-                     instance = new Singleton();
-             }
-         }
-         return instance;
-     }
-}
-</code></pre><p>####内部类的实现方式：比较优雅的解决线程同步问题，也是随用随加载</p>
-<pre><code>public class InnnerClassSingle {
-    private InnnerClassSingle()
-    {
-
-    }
-    private static class SingleHodler{
-        private static final InnnerClassSingle instance=new InnnerClassSingle();
-    }
-
-    public static InnnerClassSingle getInstance()
-    {
-        return SingleHodler.instance;
-    }
-}
-</code></pre><p>####枚举实现方式</p>
-<p>枚举的构造方法是私有的。不能自定义。保证每个对象只有一个</p>
-<pre><code>public  enum EnumManager {
-    SDCardManager(10)
-    {
-
-        @Override
-        public EnumManager getSingle() {
-            return SDCardManager;
-        }
-
-
-    }
-    ,
-    HttpManager(1) {
-        @Override
-        public EnumManager getSingle() {
-            return null;
-        }
-    };
-
-    public SdCardImpl getSingleton()
-    {
-        return new SdCardImpl();
-    }
-
-
-    public abstract EnumManager getSingle();
-    private  EnumManager(int type)
-    {
-
-    }
-
-}
-</code></pre><p>##面试题</p>
-<p>Q：引用父类的静态字段会不会初始化子类？</p>
-<p>A:不会，（解释：子类点父类的静态字段，无法获取）</p>
-<p>Q:通过自定义对象数组类型 会不会加载该类型？<br>Class _class [] = {Person.class,Cat.class}<br>这样声明的class数组，数组中的元素Person和Cat类是否会被加载？</p>
-<p>A:不会</p>
-<p>原因：通过new和反射Class.from()可以初始化一个类,其它的都不行。java机制。</p>
-<p>Q:Person{ public static int a=0；。。。} 调用Person.a的时候会初始化Person类么？</p>
-<p>A:no  静态变量是在静态块中的，在class字节码加载的时候就加载到静态块中了。</p>
-<p>##Lsn6_解释器，模板，观察者模式-2016-12-28</p>
-<h3 id="探探软件头像更换拖拽效果解析。主要是事件分发。"><a href="#探探软件头像更换拖拽效果解析。主要是事件分发。" class="headerlink" title="探探软件头像更换拖拽效果解析。主要是事件分发。"></a>探探软件头像更换拖拽效果解析。主要是事件分发。</h3><p>使用的是ViewDragHelper v4包中的类，专门处理拖拽事件。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/21/单例模式/" data-id="cjbzup286003nv4m6pa80rfzc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjc0c6v7t00377gm6edxz8ije" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1194,7 +1274,7 @@ _CarFactory.creatBMWCar().drive();
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 16px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 18px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
     </div>
   </div>
 

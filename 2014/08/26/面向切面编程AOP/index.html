@@ -5,20 +5,20 @@
   
 
   
-  <title>性能测试 腾讯GT | 有志青年</title>
+  <title>面向切面编程AOP | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="性能标准：内存占用、cpu占用、流量耗用、电池温度、流畅度等等。   github 地址">
-<meta name="keywords" content="Android测试">
+  <meta name="description" content="AOP是Aspect-Oriented Progreming的缩写，在OOP设计中有个单一职责原则，在很多时候都不会有问题，但是当很多模块都需要同一个功能的时候，这个时候还用OOP就会很麻烦。那么AOP在Android中的应用就应运而生。使用的工具是aspectJ。 ###需求  计算方法执行的时间    public void one(View view) { long beagin=Syste">
+<meta name="keywords" content="移动架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="性能测试 腾讯GT">
-<meta property="og:url" content="http://yoursite.com/2016/01/24/性能测试——腾讯GT/index.html">
+<meta property="og:title" content="面向切面编程AOP">
+<meta property="og:url" content="http://yoursite.com/2014/08/26/面向切面编程AOP/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="性能标准：内存占用、cpu占用、流量耗用、电池温度、流畅度等等。   github 地址">
+<meta property="og:description" content="AOP是Aspect-Oriented Progreming的缩写，在OOP设计中有个单一职责原则，在很多时候都不会有问题，但是当很多模块都需要同一个功能的时候，这个时候还用OOP就会很麻烦。那么AOP在Android中的应用就应运而生。使用的工具是aspectJ。 ###需求  计算方法执行的时间    public void one(View view) { long beagin=Syste">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-02-16T09:29:41.000Z">
+<meta property="og:updated_time" content="2018-01-04T08:17:45.049Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="性能测试 腾讯GT">
-<meta name="twitter:description" content="性能标准：内存占用、cpu占用、流量耗用、电池温度、流畅度等等。   github 地址">
+<meta name="twitter:title" content="面向切面编程AOP">
+<meta name="twitter:description" content="AOP是Aspect-Oriented Progreming的缩写，在OOP设计中有个单一职责原则，在很多时候都不会有问题，但是当很多模块都需要同一个功能的时候，这个时候还用OOP就会很麻烦。那么AOP在Android中的应用就应运而生。使用的工具是aspectJ。 ###需求  计算方法执行的时间    public void one(View view) { long beagin=Syste">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -65,10 +65,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-性能测试——腾讯GT" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-面向切面编程AOP" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/01/24/性能测试——腾讯GT/" class="article-date">
-  <time datetime="2016-01-24T14:37:59.000Z" itemprop="datePublished">2016-01-24</time>
+    <a href="/2014/08/26/面向切面编程AOP/" class="article-date">
+  <time datetime="2014-08-26T14:55:59.000Z" itemprop="datePublished">2014-08-26</time>
 </a>
     
   </div>
@@ -79,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      性能测试 腾讯GT
+      面向切面编程AOP
     </h1>
   
 
@@ -87,20 +87,206 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <ul>
-<li>性能标准：内存占用、cpu占用、流量耗用、电池温度、流畅度等等。</li>
-</ul>
+        <p>AOP是Aspect-Oriented Progreming的缩写，在OOP设计中有个单一职责原则，在很多时候都不会有问题，但是当很多模块都需要同一个功能的时候，这个时候还用OOP就会很麻烦。那么AOP在Android中的应用就应运而生。使用的工具是aspectJ。</p>
+<p>###需求</p>
 <ul>
-<li><a href="http://github.com/TencentOpen/GT" target="_blank" rel="noopener">github 地址</a></li>
+<li><p>计算方法执行的时间</p>
+<p>   public void one(View view) {</p>
+<pre><code>long beagin=System.currentTimeMillis();
+
+//模拟执行业务耗时代码
+{
+    SystemClock.sleep(3000);
+
+    Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+}
+
+Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-beagin)+&quot;ms&quot;);
+}
+</code></pre><p>  如果所有的方法都需要计算消耗时间，那每个方法都需要写同样的代码，一旦需求改动，所有的计算耗时的代码全部需要改动。写到这里，我在想，把计算耗时的封装在一个方法里面，做成工具类不就行了么？于是有了这样的代码：</p>
+<pre><code>public void one(View view) {
+    long begin=System.currentTimeMillis();
+
+    //模拟执行业务耗时代码
+    {
+        SystemClock.sleep(3000);
+
+        Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+    }
+    duration(begin);
+
+}
+public String duration(long begin){
+    Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-begin)+&quot;ms&quot;);
+}
+</code></pre><p>   那这时，需求改了，要判断是那个类输出的日志。那就是要加个类的参数，那我就需要修改这儿duration的方法，添加一个参数，那么所有调用这个方法的地方都需要修改。而且你发现，按个begin的计算，只是为了计算耗时，每个方法里面都要存在。</p>
+</li>
 </ul>
+<p>###考虑使用AOP    </p>
+<ul>
+<li><p>aspectJ:是在编译时就生成代码，而不是运行时，它用的不是javac而是自己的编译工具。但都生成的是.class文件。</p>
+</li>
+<li><p>AndroidStudio配置aspectJ</p>
+</li>
+</ul>
+<p>   1.在app的build.gradle中添加aspectJ的支持</p>
+<pre><code>////////第1步/////////
+
+
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath &apos;org.aspectj:aspectjtools:1.8.9&apos;
+        classpath &apos;org.aspectj:aspectjweaver:1.8.9&apos;
+    }
+}
+////////第1步结束/////////
+
+
+
+apply plugin: &apos;com.android.application&apos;
+
+////////////2///////////////
+repositories {
+    mavenCentral()
+}
+///////////////////////////
+
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId &quot;com.example.liqing.aopdemo&quot;
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName &quot;1.0&quot;
+        testInstrumentationRunner &quot;android.support.test.runner.AndroidJUnitRunner&quot;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;
+        }
+    }
+}
+
+////////////3//////////////////
+final def log = project.logger
+final def variants = project.android.applicationVariants
+
+variants.all { variant -&gt;
+    if (!variant.buildType.isDebuggable()) {
+        log.debug(&quot;Skipping non-debuggable build type &apos;${variant.buildType.name}&apos;.&quot;)
+        return;
+    }
+
+    JavaCompile javaCompile = variant.javaCompile
+    javaCompile.doLast {
+        String[] args = [&quot;-showWeaveInfo&quot;,
+                         &quot;-1.8&quot;,
+                         &quot;-inpath&quot;, javaCompile.destinationDir.toString(),
+                         &quot;-aspectpath&quot;, javaCompile.classpath.asPath,
+                         &quot;-d&quot;, javaCompile.destinationDir.toString(),
+                         &quot;-classpath&quot;, javaCompile.classpath.asPath,
+                         &quot;-bootclasspath&quot;, project.android.bootClasspath.join(File.pathSeparator)]
+        log.debug &quot;ajc args: &quot; + Arrays.toString(args)
+
+        MessageHandler handler = new MessageHandler(true);
+        new Main().run(args, handler);
+        for (IMessage message : handler.getMessages(null, true)) {
+            switch (message.getKind()) {
+                case IMessage.ABORT:
+                case IMessage.ERROR:
+                case IMessage.FAIL:
+                    log.error message.message, message.thrown
+                    break;
+                case IMessage.WARNING:
+                    log.warn message.message, message.thrown
+                    break;
+                case IMessage.INFO:
+                    log.info message.message, message.thrown
+                    break;
+                case IMessage.DEBUG:
+                    log.debug message.message, message.thrown
+                    break;
+            }
+        }
+    }
+}
+///////////////////////////////////////////
+
+
+dependencies {
+    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])
+    implementation &apos;com.android.support:appcompat-v7:26.1.0&apos;
+    implementation &apos;com.android.support.constraint:constraint-layout:1.0.2&apos;
+    testImplementation &apos;junit:junit:4.12&apos;
+    androidTestImplementation &apos;com.android.support.test:runner:1.0.1&apos;
+    androidTestImplementation &apos;com.android.support.test.espresso:espresso-core:3.0.1&apos;
+    ///////////////4////////////////
+    compile files(&apos;libs/aspectjrt.jar&apos;)
+    /////////////////////////////////
+}
+</code></pre><p>  2.设置切点</p>
+<p>我们要计算one这个方法的耗时，那one这个方法就是需要切点的地方。</p>
+<pre><code>@BehaviorTrace(&quot;one&quot;)
+public void one(View view) {
+    long beagin=System.currentTimeMillis();
+
+    //摇一摇的代码逻辑
+    {
+        SystemClock.sleep(3000);
+
+        Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+    }
+
+    Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-beagin)+&quot;ms&quot;);
+}
+</code></pre><p>在one这个方法上方添加注解@BehaviorTrace(“one”)，首先BehaviorTrace这个不是固定的写法，这个是你创建的切点的名字，这里的名字要和切点类名相同，参数one，是对应BehaviorTrace中的 String value();方法，这是固定写法，来看看BehaviorTrace 的代码：</p>
+<pre><code>@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.CLASS)
+public @interface BehaviorTrace {
+
+    String value();
+
+}
+</code></pre><p>3.定义切面</p>
+<pre><code>@Aspect  //--a
+public class BehaviorAspect {
+
+    @Pointcut(&quot;execution(@com.example.liqing.aopdemo.BehaviorTrace  * *(..))&quot;)//--b
+    public void anBehavior(){
+
+    }
+}
+</code></pre><p>a:固定写法，通过这个注解表示这个类是切面。</p>
+<p>b：</p>
+<p>Pointcut注解：</p>
+<pre><code>就是切点，即触发该类的条件。
+</code></pre><p>使用了execution，</p>
+<pre><code>也就是以方法执行时为切点，触发Aspect类。而execution里面的字符串是触发条件，也是具体的切点。
+</code></pre><p>-</p>
+<pre><code>&quot;execution(@com.example.liqing.aopdemo.BehaviorTrace  * *(..))&quot;
+</code></pre><p>这个条件是所有加了BehaviorTrace注解的方法或属性都会是切点，范围比较广。也就是说，执行每一个被BehaviorTrace注解的方法，都会执行此切点的功能。</p>
+<p>“**”表示是任意包名</p>
+<p>“..”表示任意类型任意多个参数</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/01/24/性能测试——腾讯GT/" data-id="cjc0c6v84003l7gm62frlob72" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc0c6v7w003c7gm62a0efdcl" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android测试/">Android测试</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
 
     </footer>
   </div>
@@ -108,19 +294,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/01/25/Android屏幕适配/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          Android屏幕适配资料
+          android高级课程-性能优化--电量优化
         
       </div>
     </a>
   
   
-    <a href="/2015/11/24/Python-升级/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2014/08/24/ActivityThread/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Python 升级</div>
+      <div class="article-nav-title">App启动流程</div>
     </a>
   
 </nav>

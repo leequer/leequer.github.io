@@ -65,6 +65,71 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-CMake语法1-基本使用" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2012/06/19/CMake语法1-基本使用/" class="article-date">
+  <time datetime="2012-06-18T16:00:00.000Z" itemprop="datePublished">2012-06-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2012/06/19/CMake语法1-基本使用/">CMake语法1-基本使用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#1.简介</p>
+<p>####CMake是一个跨平台的安装（编译）工具，可以用简单的语句来描述所有平台的安装(编译过程)。他能够输出各种各样的makefile或者project文件，能测试编译器所支持的C++特性,类似UNIX下的automake。只是 CMake 的组态档取名为 CMakeLists.txt。Cmake 并不直接建构出最终的软件，而是产生标准的建构档（如 Unix 的 Makefile 或 Windows Visual C++ 的 projects/workspaces），然后再依一般的建构方式使用。这使得熟悉某个集成开发环境（IDE）的开发者可以用标准的方式建构他的软件，这种可以使用各平台的原生建构系统的能力是 CMake 和 SCons 等其他类似系统的区别之处。</p>
+<p>#2.使用</p>
+<p>##2.1 创建必要的文件夹</p>
+<p>###@build文件夹：编译生成的内容在此文件夹下。</p>
+<p>###@src文件夹：放源文件</p>
+<p>###@include文件夹：放头文件</p>
+<p>##2.2 新建CMakeLists.txt (必须是这个名字)<br>写入内容：</p>
+<pre><code>#支持最小的编译版本号
+cmake_minimum_required(VERSION 2.6)
+#目标：生成myapp
+PROJECT(myapp)
+#导入头文件所在文件夹
+INCLUDE_DIRECTORIES(
+include
+)
+#指定源文件的目录
+AUX_SOURCE_DIRECTORY(src DIR_SRCS)
+#把可执行的文件放大哪个目录下  SET  方法设置变量
+SET(TEST_MATH ${DIR_SRCS})
+ADD_EXECUTABLE(${PROJECT_NAME} ${TEST_MATH})
+</code></pre><p>#3.生成Makefile文件</p>
+<p>进入到build文件夹下 执行cmake .. 生成</p>
+<p>看来cmake作用就是生成Makefile文件</p>
+<p>#4.生成可执行文件</p>
+<p>在build文件夹下执行make命令 生成myapp 然后执行 ./myapp</p>
+<p><a href="/code/cmaketest.rar">cmaketest</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2012/06/19/CMake语法1-基本使用/" data-id="cjc0c6v3e000f7gm6trzlzsv9" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/CMake/">CMake</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Makefile语法2-自定义方法" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2012/05/19/Makefile语法2-自定义方法/" class="article-date">
@@ -120,7 +185,7 @@ test:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2012/05/19/Makefile语法2-自定义方法/" data-id="cjbzup24f000qv4m6l491hqrs" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2012/05/19/Makefile语法2-自定义方法/" data-id="cjc0c6v5d00117gm6mq8138zb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Makefile/">Makefile</a></li></ul>
@@ -211,7 +276,7 @@ clean:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2012/04/10/Makefile语法1-基本使用/" data-id="cjbzup24d000ov4m6mxx2oi2r" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2012/04/10/Makefile语法1-基本使用/" data-id="cjc0c6v59000y7gm6bpdhxng9" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Makefile/">Makefile</a></li></ul>
@@ -307,7 +372,7 @@ clean:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2012/01/24/密码概要/" data-id="cjbzup27w003cv4m6i6u5kwjh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2012/01/24/密码概要/" data-id="cjc0c6v7u00397gm6awh2hto8" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/密码技术/">密码技术</a></li></ul>
@@ -348,7 +413,7 @@ clean:
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2011/09/09/android知识点纪录/" data-id="cjbzup24o000xv4m6871vrtmr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2011/09/09/android知识点纪录/" data-id="cjc0c6v5r001b7gm6x8xwimlr" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android-记录/">android 记录</a></li></ul>
@@ -401,7 +466,7 @@ private final static float dh = 568f;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2011/03/27/android-屏幕适配终极解决方案/" data-id="cjbzup24k000tv4m6ivmdc677" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2011/03/27/android-屏幕适配终极解决方案/" data-id="cjc0c6v5p00187gm67yswax2s" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li></ul>
@@ -467,7 +532,7 @@ private final static float dh = 568f;
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2011/03/26/android和ios_开发_要几套设计图和切图？/" data-id="cjbzup25s001pv4m6n8t1uwno" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2011/03/26/android和ios_开发_要几套设计图和切图？/" data-id="cjc0c6v5u001d7gm6z2e8ct35" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li></ul>
@@ -507,7 +572,7 @@ private final static float dh = 568f;
   <div class="widget-wrap">
     <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 16px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 18px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
     </div>
   </div>
 
