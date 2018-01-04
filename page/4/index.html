@@ -54,7 +54,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -96,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjc0c92y8001e14m60rd514z5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjc0ci0fn001hxcm60j92woqb" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
@@ -136,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjc0c92zy002u14m67k57olen" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjc0ci0iz0049xcm63eotafbl" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li></ul>
@@ -179,7 +179,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjc0c92wp000314m600iiovjs" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjc0ci0eb0009xcm6hji18a5k" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -219,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjc0c92yf001l14m679kdd26k" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjc0ci0fk001gxcm6jow6buir" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -299,7 +299,7 @@ for (int i = 0;i &lt; arr.length;i ++) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjc0c92y6001b14m6pxvhfirq" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjc0ci0fi001excm6asli0e0q" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -430,7 +430,7 @@ adb shell dumpsys batterystats &gt; com.example.android.sunshine.app &gt;battery
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjc0c92y4001914m6i0dz9i25" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjc0ci0ff001bxcm6mt408k3e" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -618,7 +618,7 @@ dependencies {
 public void one(View view) {
     long beagin=System.currentTimeMillis();
 
-    //摇一摇的代码逻辑
+
     {
         SystemClock.sleep(3000);
 
@@ -645,6 +645,39 @@ public class BehaviorAspect {
 
     }
 }
+
+@Around(&quot;anBehavior()&quot;)
+public Object dealPoint(ProceedingJoinPoint point) throws Throwable {
+    //d
+//        MethodSignature methodSignature= (MethodSignature) point.getSignature();
+//        Method _method = methodSignature.getMethod();
+//        BehaviorTrace  behaviorTrace=_method.getAnnotation(BehaviorTrace.class);
+//
+//        String contentType=behaviorTrace.value();
+//        int type=behaviorTrace.type();
+          String methodName = point.getSignature().getName();
+
+
+
+
+    Log.i(TAG, &quot;使用时间：   &quot; + simpleDateFormat.format(new Date()));
+    long beagin = System.currentTimeMillis();
+    Log.e(TAG,&quot;上下文：&quot;+point.getThis().toString());
+
+    //执行切点的方法 就是one的方法内容 c
+    Object object = null;
+    try {
+        object = point.proceed();
+    } catch (Exception e) {
+
+    }
+    //one方法执行完成 e
+
+
+    Log.i(TAG, &quot;消耗时间：  &quot; + (System.currentTimeMillis() - beagin) + &quot;ms&quot;);
+
+    return object;
+}
 </code></pre><p>a:固定写法，通过这个注解表示这个类是切面。</p>
 <p>b：</p>
 <p>Pointcut注解：</p>
@@ -656,11 +689,23 @@ public class BehaviorAspect {
 </code></pre><p>这个条件是所有加了BehaviorTrace注解的方法或属性都会是切点，范围比较广。也就是说，执行每一个被BehaviorTrace注解的方法，都会执行此切点的功能。</p>
 <p>“**”表示是任意包名</p>
 <p>“..”表示任意类型任意多个参数</p>
+<p>C：从这里开始执行的就是被BehaviorTrace注解的方法的内容，前面的都是先执行的 到e 结束。后面的代码就是执行完被注解的方法后执行的。</p>
+<p>d：这些被注释掉的代码在问题出在</p>
+<pre><code>behaviorTrace=_method.getAnnotation(BehaviorTrace.class);
+</code></pre><p>该getAnnotation()方法在Android 5.0以上是能获取到注解实例的，但是在Android 5.0以下则会返回null。</p>
+<p>这样一个简单的AOP就完成了。</p>
+<ul>
+<li><p>另外除了Pointcut注解还有call get set 等</p>
+</li>
+<li><p>@Around,Around是指JPoint执行前或执行后备触发，而around就替代了原JPoint。除了Around还有其他几种方式。before after 等 </p>
+</li>
+</ul>
+<p>以上用到了可以看看</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc0c9309003714m6ugmcpli8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc0ci0j1004axcm6avtutu9n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -794,7 +839,7 @@ try {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjc0c92wi000114m6pddmfew0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjc0ci0db0000xcm64i5i8x1l" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1054,7 +1099,7 @@ public class Book implements Parcelable
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjc0c92zk002h14m6059v7np9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjc0ci0hi002jxcm6e92h8uai" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1234,7 +1279,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjc0c92zq002m14m6yf4p18dx" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjc0ci0hn002oxcm6n9ux8h6w" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1250,7 +1295,7 @@ _CarFactory.creatBMWCar().drive();
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; zurück</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">weiter &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1281,7 +1326,7 @@ _CarFactory.creatBMWCar().drive();
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
     </div>
@@ -1291,7 +1336,7 @@ _CarFactory.creatBMWCar().drive();
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         

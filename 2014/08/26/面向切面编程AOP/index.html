@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="有志青年">
 <meta property="og:description" content="AOP是Aspect-Oriented Progreming的缩写，在OOP设计中有个单一职责原则，在很多时候都不会有问题，但是当很多模块都需要同一个功能的时候，这个时候还用OOP就会很麻烦。那么AOP在Android中的应用就应运而生。使用的工具是aspectJ。 ###需求  计算方法执行的时间    public void one(View view) { long beagin=Syste">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-01-04T08:17:45.049Z">
+<meta property="og:updated_time" content="2018-01-04T10:29:51.315Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="面向切面编程AOP">
 <meta name="twitter:description" content="AOP是Aspect-Oriented Progreming的缩写，在OOP设计中有个单一职责原则，在很多时候都不会有问题，但是当很多模块都需要同一个功能的时候，这个时候还用OOP就会很麻烦。那么AOP在Android中的应用就应运而生。使用的工具是aspectJ。 ###需求  计算方法执行的时间    public void one(View view) { long beagin=Syste">
@@ -56,7 +56,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -241,7 +241,7 @@ dependencies {
 public void one(View view) {
     long beagin=System.currentTimeMillis();
 
-    //摇一摇的代码逻辑
+
     {
         SystemClock.sleep(3000);
 
@@ -268,6 +268,39 @@ public class BehaviorAspect {
 
     }
 }
+
+@Around(&quot;anBehavior()&quot;)
+public Object dealPoint(ProceedingJoinPoint point) throws Throwable {
+    //d
+//        MethodSignature methodSignature= (MethodSignature) point.getSignature();
+//        Method _method = methodSignature.getMethod();
+//        BehaviorTrace  behaviorTrace=_method.getAnnotation(BehaviorTrace.class);
+//
+//        String contentType=behaviorTrace.value();
+//        int type=behaviorTrace.type();
+          String methodName = point.getSignature().getName();
+
+
+
+
+    Log.i(TAG, &quot;使用时间：   &quot; + simpleDateFormat.format(new Date()));
+    long beagin = System.currentTimeMillis();
+    Log.e(TAG,&quot;上下文：&quot;+point.getThis().toString());
+
+    //执行切点的方法 就是one的方法内容 c
+    Object object = null;
+    try {
+        object = point.proceed();
+    } catch (Exception e) {
+
+    }
+    //one方法执行完成 e
+
+
+    Log.i(TAG, &quot;消耗时间：  &quot; + (System.currentTimeMillis() - beagin) + &quot;ms&quot;);
+
+    return object;
+}
 </code></pre><p>a:固定写法，通过这个注解表示这个类是切面。</p>
 <p>b：</p>
 <p>Pointcut注解：</p>
@@ -279,11 +312,23 @@ public class BehaviorAspect {
 </code></pre><p>这个条件是所有加了BehaviorTrace注解的方法或属性都会是切点，范围比较广。也就是说，执行每一个被BehaviorTrace注解的方法，都会执行此切点的功能。</p>
 <p>“**”表示是任意包名</p>
 <p>“..”表示任意类型任意多个参数</p>
+<p>C：从这里开始执行的就是被BehaviorTrace注解的方法的内容，前面的都是先执行的 到e 结束。后面的代码就是执行完被注解的方法后执行的。</p>
+<p>d：这些被注释掉的代码在问题出在</p>
+<pre><code>behaviorTrace=_method.getAnnotation(BehaviorTrace.class);
+</code></pre><p>该getAnnotation()方法在Android 5.0以上是能获取到注解实例的，但是在Android 5.0以下则会返回null。</p>
+<p>这样一个简单的AOP就完成了。</p>
+<ul>
+<li><p>另外除了Pointcut注解还有call get set 等</p>
+</li>
+<li><p>@Around,Around是指JPoint执行前或执行后备触发，而around就替代了原JPoint。除了Around还有其他几种方式。before after 等 </p>
+</li>
+</ul>
+<p>以上用到了可以看看</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc0c9309003714m6ugmcpli8" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc0ci0j1004axcm6avtutu9n" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -295,7 +340,7 @@ public class BehaviorAspect {
 <nav id="article-nav">
   
     <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Neuer</strong>
+      <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
           android高级课程-性能优化--电量优化
@@ -305,7 +350,7 @@ public class BehaviorAspect {
   
   
     <a href="/2014/08/24/ActivityThread/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Älter</strong>
+      <strong class="article-nav-caption">Older</strong>
       <div class="article-nav-title">App启动流程</div>
     </a>
   
@@ -342,7 +387,7 @@ public class BehaviorAspect {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
     </div>
@@ -352,7 +397,7 @@ public class BehaviorAspect {
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
