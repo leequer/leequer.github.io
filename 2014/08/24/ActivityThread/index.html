@@ -5,20 +5,20 @@
   
 
   
-  <title>插件开发网摘记录 | 有志青年</title>
+  <title>App启动流程 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在 Android 开发中采用基于 ClassLoader 的动态加载技术，可以达到不安装新 APK 就升级 APP 的目的（插件化），也可以用来修复一些紧急 BUG（热修复），此外也可以用动态加载技术来精简 APK 的体积（移除 SO 库、拆分边缘业务模块）以及实现多主题在线下载。本REPO的主要内容是我对 Android 动态加载机制的一些研究、总结文章和 DEMO 项目。 这里提前说明，个人">
-<meta name="keywords" content="Android插件开发">
+  <meta name="description" content="ActivityThread 是应用程序的主线程，消息循环执行者；其中有很多的内部类来完成工作；  。。。 Looper.prepareMainLooper();//A 开启主线程中的循环消息接收  ActivityThread thread = new ActivityThread(); thread.attach(false);//B  if (sMainThreadHandler == n">
+<meta name="keywords" content="移动架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="插件开发网摘记录">
-<meta property="og:url" content="http://yoursite.com/2015/07/21/插件开发网摘记录/index.html">
+<meta property="og:title" content="App启动流程">
+<meta property="og:url" content="http://yoursite.com/2014/08/24/ActivityThread/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="在 Android 开发中采用基于 ClassLoader 的动态加载技术，可以达到不安装新 APK 就升级 APP 的目的（插件化），也可以用来修复一些紧急 BUG（热修复），此外也可以用动态加载技术来精简 APK 的体积（移除 SO 库、拆分边缘业务模块）以及实现多主题在线下载。本REPO的主要内容是我对 Android 动态加载机制的一些研究、总结文章和 DEMO 项目。 这里提前说明，个人">
+<meta property="og:description" content="ActivityThread 是应用程序的主线程，消息循环执行者；其中有很多的内部类来完成工作；  。。。 Looper.prepareMainLooper();//A 开启主线程中的循环消息接收  ActivityThread thread = new ActivityThread(); thread.attach(false);//B  if (sMainThreadHandler == n">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-02-20T10:41:11.000Z">
+<meta property="og:updated_time" content="2018-01-03T10:12:29.071Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="插件开发网摘记录">
-<meta name="twitter:description" content="在 Android 开发中采用基于 ClassLoader 的动态加载技术，可以达到不安装新 APK 就升级 APP 的目的（插件化），也可以用来修复一些紧急 BUG（热修复），此外也可以用动态加载技术来精简 APK 的体积（移除 SO 库、拆分边缘业务模块）以及实现多主题在线下载。本REPO的主要内容是我对 Android 动态加载机制的一些研究、总结文章和 DEMO 项目。 这里提前说明，个人">
+<meta name="twitter:title" content="App启动流程">
+<meta name="twitter:description" content="ActivityThread 是应用程序的主线程，消息循环执行者；其中有很多的内部类来完成工作；  。。。 Looper.prepareMainLooper();//A 开启主线程中的循环消息接收  ActivityThread thread = new ActivityThread(); thread.attach(false);//B  if (sMainThreadHandler == n">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -65,10 +65,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-插件开发网摘记录" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-ActivityThread" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/07/21/插件开发网摘记录/" class="article-date">
-  <time datetime="2015-07-21T09:55:59.000Z" itemprop="datePublished">2015-07-21</time>
+    <a href="/2014/08/24/ActivityThread/" class="article-date">
+  <time datetime="2014-08-24T13:55:59.000Z" itemprop="datePublished">2014-08-24</time>
 </a>
     
   </div>
@@ -79,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      插件开发网摘记录
+      App启动流程
     </h1>
   
 
@@ -87,16 +87,110 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在 Android 开发中采用基于 ClassLoader 的动态加载技术，可以达到不安装新 APK 就升级 APP 的目的（插件化），也可以用来修复一些紧急 BUG（热修复），此外也可以用动态加载技术来精简 APK 的体积（移除 SO 库、拆分边缘业务模块）以及实现多主题在线下载。本REPO的主要内容是我对 Android 动态加载机制的一些研究、总结文章和 DEMO 项目。</p>
-<p>这里提前说明，个人不推荐使用插件化技术来动态发布和升级APP的业务功能，因为这会让 APP 的开发和维护变得十分繁琐、不可控。不过，将插件化技术用于快速修复BUG以及精简APK体积还是挺值得尝试的，此外研究动态加载技术，对于学习Android 框架层的工作机制还是挺有帮助。</p>
+        <ul>
+<li><strong>ActivityThread</strong> 是应用程序的主线程，消息循环执行者；其中有很多的内部类来完成工作；</li>
+</ul>
+<pre><code>。。。
+Looper.prepareMainLooper();//A 开启主线程中的循环消息接收
+
+ActivityThread thread = new ActivityThread();
+thread.attach(false);//B
+
+if (sMainThreadHandler == null) {
+    sMainThreadHandler = thread.getHandler();
+}
+
+if (false) {
+    Looper.myLooper().setMessageLogging(new
+            LogPrinter(Log.DEBUG, &quot;ActivityThread&quot;));
+}
+
+// End of event ActivityThreadMain.
+Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+Looper.loop();
+。。。
+</code></pre><ul>
+<li><p>A: 在ActivityThread中启动了消息队列，这既是为什么只有在子线程中才需要looper.prepare() 和 looper.loop()的原因。</p>
+</li>
+<li><p>B: ActivityThread内部类 </p>
+<pre><code>  ActivityThread thread = new ActivityThread();
+thread.attach(false);
+</code></pre><p>  这个ActivityThread的attach方法，判断如果不是系统调用的，就是程序员开发的app，就走第一个判断：</p>
+<pre><code>private void attach(boolean system) {
+   sCurrentActivityThread = this;
+   mSystemThread = system;
+   if (!system) {
+       非系统调用此方法
+       。。。
+       final IActivityManager mgr = ActivityManagerNative.getDefault();@A
+       。。。
+   }else{
+       系统调用此方法
+       。。。
+   }
+</code></pre><p>  @A：<strong>ActivityManagerNative</strong> 类中的 getDefault（）方法：</p>
+<pre><code>static public IActivityManager getDefault() {
+
+    return gDefault.get();@a
+
+}
+</code></pre><p>  @a:gDefault 这个静态变量：</p>
+<pre><code>private static final Singleton&lt;IActivityManager&gt; gDefault = new Singleton&lt;IActivityManager&gt;() {
+protected IActivityManager create() {
+    IBinder b = ServiceManager.getService(&quot;activity&quot;);@a
+    if (false) {
+        Log.v(&quot;ActivityManager&quot;, &quot;default service binder = &quot; + b);
+    }
+    IActivityManager am = asInterface(b);
+    if (false) {
+        Log.v(&quot;ActivityManager&quot;, &quot;default service = &quot; + am);
+    }
+    return am;
+}
+</code></pre><p>  };</p>
+<p>  singleton 是一个抽象的单例类，这样所有的单例都可以用这个来实例化，不用每个都写一套：</p>
+<pre><code>public abstract class Singleton&lt;T&gt; {
+private T mInstance;
+
+protected abstract T create();
+
+public final T get() {
+        synchronized (this) {
+            if (mInstance == null) {
+                mInstance = create();
+            }
+            return mInstance;
+        }
+    }
+}
+</code></pre><p>  @a：ServiceManager.getService(“activity”);</p>
+<p>  我们想搞清楚这句返回的是那个类。在这个方法中可以看到返回的是IActivityManager接口，那肯定有类实现了它。而且有getServer 那就应该有addserver的地方。那经过查找ActivityManagerNative实现了它，但没有addServer方法，ActivityManagerService继承了ActivityManagerNative，在ActivityManagerService中有addService方法，</p>
+<pre><code>ServiceManager.addService(Context.ACTIVITY_SERVICE, this, true);
+</code></pre><p>  这个常量Context.ACTIVITY_SERVICE 就是ServiceManager.getService(“activity”);中的activity。那我们知道返回的就是<strong>ActivityManagerService</strong>。返回给了ActivityThread.</p>
+</li>
+</ul>
+<h2 id="小结：分析到这里，一共引出了三个类，ActivityThread-ActivityManagerNative-ActivityManagerService-ActivityThread-是应用主线程中启动的类，在main函数中，调用了attach方法，这个方法调用了ActivityManagerNative的getDefault方法，这个方法中使用了单例的gDefault，这个单例中获取了ActivityManagerService这个服务的实例返回给了attach方法。"><a href="#小结：分析到这里，一共引出了三个类，ActivityThread-ActivityManagerNative-ActivityManagerService-ActivityThread-是应用主线程中启动的类，在main函数中，调用了attach方法，这个方法调用了ActivityManagerNative的getDefault方法，这个方法中使用了单例的gDefault，这个单例中获取了ActivityManagerService这个服务的实例返回给了attach方法。" class="headerlink" title="##小结：分析到这里，一共引出了三个类，ActivityThread,ActivityManagerNative,ActivityManagerService.ActivityThread 是应用主线程中启动的类，在main函数中，调用了attach方法，这个方法调用了ActivityManagerNative的getDefault方法，这个方法中使用了单例的gDefault，这个单例中获取了ActivityManagerService这个服务的实例返回给了attach方法。"></a>##小结：分析到这里，一共引出了三个类，ActivityThread,ActivityManagerNative,ActivityManagerService.ActivityThread 是应用主线程中启动的类，在main函数中，调用了attach方法，这个方法调用了ActivityManagerNative的getDefault方法，这个方法中使用了单例的gDefault，这个单例中获取了ActivityManagerService这个服务的实例返回给了attach方法。</h2><ul>
+<li><p>接下来就是attach中的</p>
+<pre><code>final IActivityManager mgr = ActivityManagerNative.getDefault();
+try {
+        mgr.attachApplication(mAppThread);
+    } catch (RemoteException ex) {
+        throw ex.rethrowFromSystemServer();
+    }
+</code></pre><p>  返回的IActivityManager接口的实现是ActivityManagerService。</p>
+</li>
+<li><p>调用ActivityManagerService 的 attachApplication(mAppThread);</p>
+</li>
+</ul>
+<p>###在开发过程中，所有的单例模式应该放在一个hashmap中。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjbzup27c002xv4m6d4rck6bk" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjbzup2240000v4m6cyd693fo" class="article-share-link">Share</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
 
     </footer>
   </div>
@@ -104,19 +198,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/09/14/m3u8解释/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          m3u8 解释
+          android高级课程-性能优化--电量优化
         
       </div>
     </a>
   
   
-    <a href="/2015/04/17/Androidstudio优化/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2014/08/23/原型模式/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">Androidstudio 优化</div>
+      <div class="article-nav-title">原型模式</div>
     </a>
   
 </nav>

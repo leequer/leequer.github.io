@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -96,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjbxg203e001gj0m6mlvsceru" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjbzup256001bv4m691nklko0" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
@@ -136,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjbxg204q002pj0m64nmbdhhk" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjbzup27c002xv4m6d4rck6bk" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li></ul>
@@ -179,7 +179,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjbxg201u0004j0m63jq4nvl2" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjbzup23n000cv4m6puwrybn7" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -219,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjbxg203a001bj0m6enw1rh3f" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjbzup25a001dv4m6dspc5uzz" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -299,7 +299,7 @@ for (int i = 0;i &lt; arr.length;i ++) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjbxg203g001ij0m67daljcfd" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjbzup2510016v4m6tfkdvmgi" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -430,10 +430,144 @@ adb shell dumpsys batterystats &gt; com.example.android.sunshine.app &gt;battery
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjbxg20390019j0m6w8jfevyo" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjbzup2530019v4m6x8he2rll" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ActivityThread" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/24/ActivityThread/" class="article-date">
+  <time datetime="2014-08-24T13:55:59.000Z" itemprop="datePublished">2014-08-24</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/24/ActivityThread/">App启动流程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li><strong>ActivityThread</strong> 是应用程序的主线程，消息循环执行者；其中有很多的内部类来完成工作；</li>
+</ul>
+<pre><code>。。。
+Looper.prepareMainLooper();//A 开启主线程中的循环消息接收
+
+ActivityThread thread = new ActivityThread();
+thread.attach(false);//B
+
+if (sMainThreadHandler == null) {
+    sMainThreadHandler = thread.getHandler();
+}
+
+if (false) {
+    Looper.myLooper().setMessageLogging(new
+            LogPrinter(Log.DEBUG, &quot;ActivityThread&quot;));
+}
+
+// End of event ActivityThreadMain.
+Trace.traceEnd(Trace.TRACE_TAG_ACTIVITY_MANAGER);
+Looper.loop();
+。。。
+</code></pre><ul>
+<li><p>A: 在ActivityThread中启动了消息队列，这既是为什么只有在子线程中才需要looper.prepare() 和 looper.loop()的原因。</p>
+</li>
+<li><p>B: ActivityThread内部类 </p>
+<pre><code>  ActivityThread thread = new ActivityThread();
+thread.attach(false);
+</code></pre><p>  这个ActivityThread的attach方法，判断如果不是系统调用的，就是程序员开发的app，就走第一个判断：</p>
+<pre><code>private void attach(boolean system) {
+   sCurrentActivityThread = this;
+   mSystemThread = system;
+   if (!system) {
+       非系统调用此方法
+       。。。
+       final IActivityManager mgr = ActivityManagerNative.getDefault();@A
+       。。。
+   }else{
+       系统调用此方法
+       。。。
+   }
+</code></pre><p>  @A：<strong>ActivityManagerNative</strong> 类中的 getDefault（）方法：</p>
+<pre><code>static public IActivityManager getDefault() {
+
+    return gDefault.get();@a
+
+}
+</code></pre><p>  @a:gDefault 这个静态变量：</p>
+<pre><code>private static final Singleton&lt;IActivityManager&gt; gDefault = new Singleton&lt;IActivityManager&gt;() {
+protected IActivityManager create() {
+    IBinder b = ServiceManager.getService(&quot;activity&quot;);@a
+    if (false) {
+        Log.v(&quot;ActivityManager&quot;, &quot;default service binder = &quot; + b);
+    }
+    IActivityManager am = asInterface(b);
+    if (false) {
+        Log.v(&quot;ActivityManager&quot;, &quot;default service = &quot; + am);
+    }
+    return am;
+}
+</code></pre><p>  };</p>
+<p>  singleton 是一个抽象的单例类，这样所有的单例都可以用这个来实例化，不用每个都写一套：</p>
+<pre><code>public abstract class Singleton&lt;T&gt; {
+private T mInstance;
+
+protected abstract T create();
+
+public final T get() {
+        synchronized (this) {
+            if (mInstance == null) {
+                mInstance = create();
+            }
+            return mInstance;
+        }
+    }
+}
+</code></pre><p>  @a：ServiceManager.getService(“activity”);</p>
+<p>  我们想搞清楚这句返回的是那个类。在这个方法中可以看到返回的是IActivityManager接口，那肯定有类实现了它。而且有getServer 那就应该有addserver的地方。那经过查找ActivityManagerNative实现了它，但没有addServer方法，ActivityManagerService继承了ActivityManagerNative，在ActivityManagerService中有addService方法，</p>
+<pre><code>ServiceManager.addService(Context.ACTIVITY_SERVICE, this, true);
+</code></pre><p>  这个常量Context.ACTIVITY_SERVICE 就是ServiceManager.getService(“activity”);中的activity。那我们知道返回的就是<strong>ActivityManagerService</strong>。返回给了ActivityThread.</p>
+</li>
+</ul>
+<h2 id="小结：分析到这里，一共引出了三个类，ActivityThread-ActivityManagerNative-ActivityManagerService-ActivityThread-是应用主线程中启动的类，在main函数中，调用了attach方法，这个方法调用了ActivityManagerNative的getDefault方法，这个方法中使用了单例的gDefault，这个单例中获取了ActivityManagerService这个服务的实例返回给了attach方法。"><a href="#小结：分析到这里，一共引出了三个类，ActivityThread-ActivityManagerNative-ActivityManagerService-ActivityThread-是应用主线程中启动的类，在main函数中，调用了attach方法，这个方法调用了ActivityManagerNative的getDefault方法，这个方法中使用了单例的gDefault，这个单例中获取了ActivityManagerService这个服务的实例返回给了attach方法。" class="headerlink" title="##小结：分析到这里，一共引出了三个类，ActivityThread,ActivityManagerNative,ActivityManagerService.ActivityThread 是应用主线程中启动的类，在main函数中，调用了attach方法，这个方法调用了ActivityManagerNative的getDefault方法，这个方法中使用了单例的gDefault，这个单例中获取了ActivityManagerService这个服务的实例返回给了attach方法。"></a>##小结：分析到这里，一共引出了三个类，ActivityThread,ActivityManagerNative,ActivityManagerService.ActivityThread 是应用主线程中启动的类，在main函数中，调用了attach方法，这个方法调用了ActivityManagerNative的getDefault方法，这个方法中使用了单例的gDefault，这个单例中获取了ActivityManagerService这个服务的实例返回给了attach方法。</h2><ul>
+<li><p>接下来就是attach中的</p>
+<pre><code>final IActivityManager mgr = ActivityManagerNative.getDefault();
+try {
+        mgr.attachApplication(mAppThread);
+    } catch (RemoteException ex) {
+        throw ex.rethrowFromSystemServer();
+    }
+</code></pre><p>  返回的IActivityManager接口的实现是ActivityManagerService。</p>
+</li>
+<li><p>调用ActivityManagerService 的 attachApplication(mAppThread);</p>
+</li>
+</ul>
+<p>###在开发过程中，所有的单例模式应该放在一个hashmap中。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjbzup2240000v4m6cyd693fo" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
 
     </footer>
   </div>
@@ -690,7 +824,7 @@ public class Book implements Parcelable
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjbxg204c002bj0m60frx85np" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjbzup275002pv4m6lo8zkbrs" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -870,7 +1004,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjbxg20510034j0m6z5fnw25r" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjbzup284003lv4m6q297xbkf" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1020,50 +1154,10 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/21/单例模式/" data-id="cjbxg204e002dj0m6kr1cm4h4" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2014/08/21/单例模式/" data-id="cjbzup286003nv4m6pa80rfzc" class="article-share-link">Share</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-android高级课程-性能优化--内存泄漏分析－2016-07-20" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/07/20/android高级课程-性能优化--内存泄漏分析－2016-07-20/" class="article-date">
-  <time datetime="2014-07-20T06:38:59.000Z" itemprop="datePublished">2014-07-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/07/20/android高级课程-性能优化--内存泄漏分析－2016-07-20/">android高级课程-性能优化--内存泄漏分析－2016-07-20</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>– <a href="http://blog.csdn.net/ccj659/article/details/53032683" target="_blank" rel="noopener">博客地址</a></p>
-<p>– <a href="/img/深入Android内存泄漏4.png">截图</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/07/20/android高级课程-性能优化--内存泄漏分析－2016-07-20/" data-id="cjbxg20320011j0m6gsu6jgon" class="article-share-link">Partager</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
 
     </footer>
   </div>
@@ -1076,7 +1170,7 @@ _CarFactory.creatBMWCar().drive();
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Précédent</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Suivant &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/3/">&laquo; Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next &raquo;</a>
   </nav>
 
 </section>
@@ -1088,7 +1182,7 @@ _CarFactory.creatBMWCar().drive();
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Mot-clés</h3>
+    <h3 class="widget-title">Tags</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
@@ -1098,9 +1192,9 @@ _CarFactory.creatBMWCar().drive();
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <h3 class="widget-title">Tag Cloud</h3>
     <div class="widget tagcloud">
-      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 14px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 14px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 12px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 12px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 12px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 18px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 12px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 16px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 16px;">移动架构</a> <a href="/tags/算法/" style="font-size: 14px;">算法</a>
     </div>
   </div>
 
@@ -1117,7 +1211,7 @@ _CarFactory.creatBMWCar().drive();
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -1154,7 +1248,7 @@ _CarFactory.creatBMWCar().drive();
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 leequer<br>
-      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
