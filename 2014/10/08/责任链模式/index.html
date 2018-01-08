@@ -5,18 +5,20 @@
   
 
   
-  <title>Archives: 2014/6 | 有志青年</title>
+  <title>责任链模式 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/2014/06/index.html">
+  <meta name="description" content="概念   责任链模式是一种对象的行为模式。在责任链模式里，很多对象由每一个对象对其下家的引用而连接起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。发出这个请求的客户端并不知道链上的哪一个对象最终处理这个请求，这使得系统可以在不影响客户端的情况下动态地重新组织和分配责任。  代码实现   处理请求的抽象类 public abstract class Handler {">
+<meta name="keywords" content="移动架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="责任链模式">
+<meta property="og:url" content="http://yoursite.com/2014/10/08/责任链模式/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="概念   责任链模式是一种对象的行为模式。在责任链模式里，很多对象由每一个对象对其下家的引用而连接起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。发出这个请求的客户端并不知道链上的哪一个对象最终处理这个请求，这使得系统可以在不影响客户端的情况下动态地重新组织和分配责任。  代码实现   处理请求的抽象类 public abstract class Handler {">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-08T08:43:02.326Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="责任链模式">
+<meta name="twitter:description" content="概念   责任链模式是一种对象的行为模式。在责任链模式里，很多对象由每一个对象对其下家的引用而连接起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。发出这个请求的客户端并不知道链上的哪一个对象最终处理这个请求，这使得系统可以在不影响客户端的情况下动态地重新组织和分配责任。  代码实现   处理请求的抽象类 public abstract class Handler {">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,40 +65,177 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2014" class="archive-year">2014</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" class="archive-article-date">
-  <time datetime="2014-06-19T06:38:59.000Z" itemprop="datePublished">Jun 19</time>
+        <section id="main"><article id="post-责任链模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/08/责任链模式/" class="article-date">
+  <time datetime="2014-10-08T13:00:00.000Z" itemprop="datePublished">2014-10-08</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/">android高级课程-性能优化--内存泄漏分析－2016-06-19</a>
+    <h1 class="article-title" itemprop="name">
+      责任链模式
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>概念 </li>
+<li></li>
+<li><p>责任链模式是一种对象的行为模式。在责任链模式里，很多对象由每一个对象对其下家的引用而连接起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。发出这个请求的客户端并不知道链上的哪一个对象最终处理这个请求，这使得系统可以在不影响客户端的情况下动态地重新组织和分配责任。</p>
+</li>
+<li><p>代码实现</p>
+</li>
+<li></li>
+<li><p>处理请求的抽象类</p>
+<pre><code>public abstract class Handler {
+    public Handler nextHandler;
+    public  void handleRequest(AbstractRequest abstractRequest)
+    {
+        if(getHandleLevel()==abstractRequest.getRequestLevel())
+        {
+            handle(abstractRequest);
+        }else {
+            if(nextHandler!=null)
+            {
+                nextHandler.handleRequest(abstractRequest);
+            }else {
+                System.out.println(&quot;----&gt;  所有的处理对象都不能处理它&quot;);
+            }
 
+        }
+    }
+    /**
+     * 每个处理者的对象的具体处理方式
+     * @param abstractRequest
+     */
+    public abstract void handle(AbstractRequest abstractRequest);
+    /**
+     * 返回每个对象能处理请求的级别
+     * @return
+     */
+    public abstract int getHandleLevel();
+}
+</code></pre></li>
+<li><p>处理请求实现类1</p>
+<pre><code>    public class Handler1 extends Handler{
+
+    @Override
+    public void handle(AbstractRequest abstractRequest) {
+        System.out.println(&quot;----handle1  处理请求: &quot;+abstractRequest.getRequestLevel());
+    }
+
+    @Override
+    public int getHandleLevel() {
+        return 1;
+    }
+
+}
+</code></pre></li>
+<li><p>处理请求实现类2</p>
+<pre><code>public class Handler2 extends Handler {
+
+    @Override
+    public void handle(AbstractRequest abstractRequest) {
+        System.out.println(&quot;----handle2  处理请求: &quot;+abstractRequest.getRequestLevel());
+    }
+
+    @Override
+    public int getHandleLevel() {
+        return 2;
+    }
+
+}
+</code></pre></li>
+<li><p>处理请求实现类3</p>
+<pre><code>public class Handler3 extends Handler {
+
+            @Override
+            public void handle(AbstractRequest abstractRequest) {
+                System.out.println(&quot;----handle3  处理请求: &quot;+abstractRequest.getRequestLevel());
+            }
+
+            @Override
+            public int getHandleLevel() {
+                return 3;
+            }
+
+        }
+</code></pre></li>
+<li><p>请求类</p>
+<pre><code>public class Request  extends AbstractRequest{
+
+    public Request(Object object) {
+        super(object);
+    }
+
+    @Override
+    public int getRequestLevel() {
+        return 3;
+    }
+
+}
+</code></pre></li>
+<li><p>调用</p>
+<pre><code>public class Client {
+    public static void main(String[] args) {
+        //确定链式关系
+        Handler handler1=new Handler1();
+        Handler handler2=new Handler2();
+        Handler handler3=new Handler3();
+        handler1.nextHandler=handler2;
+        handler2.nextHandler=handler3;
+
+        AbstractRequest request=new Request(&quot;请求&quot;);
+
+        handler1.handleRequest(request);
+    }
+}
+</code></pre></li>
+</ul>
+<p>执行结果：—-handle3  处理请求: 3</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/08/责任链模式/" data-id="cjc5ymgqu003ahom6s6lnpu1y" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          android高级课程-性能优化--电量优化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/09/08/建造者模式在Android中的使用AlertDialog/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">建造者模式在Android中的使用AlertDialog</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         
