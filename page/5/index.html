@@ -65,6 +65,266 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-原型模式" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/23/原型模式/" class="article-date">
+  <time datetime="2014-08-23T12:55:59.000Z" itemprop="datePublished">2014-08-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/23/原型模式/">原型模式</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#原型模式：</p>
+<ul>
+<li>概念：用于创建重复的对象，同时又能保证性能。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</li>
+</ul>
+<ul>
+<li><p>目的：保护最原始的数据，隐藏复制过程。这种模式是实现了一个原型接口，该接口用于创建当前对象的克隆。当直接创建对象的代价比较大时，则采用这种模式。例如，一个对象需要在一个高代价的数据库操作之后被创建。我们可以缓存该对象，在下一个请求时返回它的克隆，在需要的时候更新数据库，以此来减少数据库调用。</p>
+</li>
+<li><p>意图：用原型的实例指定创建的种类，并通过拷贝这些原型创建新的对象。</p>
+</li>
+<li><p>使用场景： </p>
+</li>
+</ul>
+<ol>
+<li>资源优化场景。 </li>
+<li>类初始化需要消化非常多的资源，这个资源包括数据、硬件资源等。 </li>
+<li>性能和安全要求的场景。 </li>
+<li>通过 new 产生一个对象需要非常繁琐的数据准备或访问权限，则可以使用原型模式。 </li>
+<li>一个对象多个修改者的场景。 </li>
+<li>一个对象需要提供给其他对象访问，而且各个调用者可能都需要修改其值时，可以考虑使用原型模式拷贝多个对象供调用者使用。 </li>
+<li>在实际项目中，原型模式很少单独出现，一般是和工厂方法模式一起出现，通过 clone 的方法创建一个对象，然后由工厂方法提供给调用者。原型模式已经与 Java 融为浑然一体，大家可以随手拿来使用。</li>
+</ol>
+<ul>
+<li>注意事项：与通过对一个类进行实例化来构造新对象不同的是，原型模式是通过拷贝一个现有对象生成新对象的。</li>
+<li>浅拷贝实现 Cloneable，重写.</li>
+<li>深拷贝是通过实现 Serializable 读取二进制流。</li>
+</ul>
+<p>###Android  以下代码摘抄自 <a href="https://www.cnblogs.com/renqingping/archive/2012/10/25/Parcelable.html" target="_blank" rel="noopener">https://www.cnblogs.com/renqingping/archive/2012/10/25/Parcelable.html</a></p>
+<ul>
+<li>在Android中，Intent就是implement了Cloneable，重写了clone方法。将intent的变量保持一份。代码如下：</li>
+</ul>
+<pre><code>public class Intent implements Parcelable, Cloneable {
+    private static final String ATTR_ACTION = &quot;action&quot;;
+    private static final String TAG_CATEGORIES = &quot;categories&quot;;
+    private static final String ATTR_CATEGORY = &quot;category&quot;;
+    private static final String TAG_EXTRA = &quot;extra&quot;;
+    private static final String ATTR_TYPE = &quot;type&quot;;
+    private static final String ATTR_COMPONENT = &quot;component&quot;;
+    private static final String ATTR_DATA = &quot;data&quot;;
+    private static final String ATTR_FLAGS = &quot;flags&quot;;
+
+    。。。。。。。。。。
+
+    @Override
+    public Object clone() {
+        return new Intent(this);
+    }
+
+    private Intent(Intent o, boolean all) {
+        this.mAction = o.mAction;
+        this.mData = o.mData;
+        this.mType = o.mType;
+        this.mPackage = o.mPackage;
+        this.mComponent = o.mComponent;
+        if (o.mCategories != null) {
+            this.mCategories = new ArraySet&lt;String&gt;(o.mCategories);
+        }
+    }
+</code></pre><ul>
+<li><p>Parcelable [pa:cel,able]</p>
+<p>  我们看到intent还实现了parcelabel，那这个是干嘛的？它是实现序列化的。</p>
+<p>  实现Parcelable就是为了进行序列化，那么，为什么要序列化？</p>
+<p>  1）永久性保存对象，保存对象的字节序列到本地文件中；</p>
+<p>  2）通过序列化对象在网络中传递对象；</p>
+<p>  3）通过序列化在进程间传递对象。</p>
+</li>
+<li><p>Android中实现序列化有两个选择：一是实现Serializable接口（是JavaSE本身就支持的），一是实现Parcelable接口（是Android特有功能，效率比实现Serializable接口高效，可用于Intent数据传递，也可以用于进程间通信（IPC））。实现Serializable接口非常简单，声明一下就可以了，而实现Parcelable接口稍微复杂一些，但效率更高，推荐用这种方法提高性能。</p>
+</li>
+<li><p>注：Android中Intent传递对象有两种方法：一是Bundle.putSerializable(Key，Object)，另一种是Bundle.putParcelable(Key，Object)。当然这些Object是有一定的条件的，前者是实现了Serializable接口，而后者是实现了Parcelable接口。</p>
+</li>
+</ul>
+<ul>
+<li><p>选择序列化方法的原则</p>
+<p>  1）在使用内存的时候，Parcelable比Serializable性能高，所以推荐使用Parcelable。</p>
+<p>  2）Serializable在序列化的时候会产生大量的临时变量，从而引起频繁的GC。</p>
+<p>  3）Parcelable不能使用在要将数据存储在磁盘上的情况，因为Parcelable不能很好的保证数据的持续性在外界有变化的情况下。尽管Serializable效率低点，但此时还是建议使用Serializable 。</p>
+</li>
+<li><p>应用场景</p>
+<p>  需要在多个部件(Activity或Service)之间通过Intent传递一些数据，简单类型（如：数字、字符串）的可以直接放入Intent。复杂类型必须实现Parcelable接口。</p>
+</li>
+<li><p>Parcelable接口定义</p>
+</li>
+</ul>
+<pre><code>public interface Parcelable 
+{
+    //内容描述接口，基本不用管
+    public int describeContents();
+    //写入接口函数，打包
+    public void writeToParcel(Parcel dest, int flags);
+    //读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。因为实现类在这里还是不可知的，所以需要用到模板的方式，继承类名通过模板参数传入
+    //为了能够实现模板参数的传入，这里定义Creator嵌入接口,内含两个接口函数分别返回单个和多个继承类实例
+    public interface Creator&lt;T&gt; 
+    {
+           public T createFromParcel(Parcel source);
+           public T[] newArray(int size);
+    }
+}
+</code></pre><ul>
+<li><p>实现Parcelable步骤</p>
+<p>  1）implements Parcelable</p>
+<p>  2）重写writeToParcel方法，将你的对象序列化为一个Parcel对象，即：将类的数据写入外部提供的Parcel中，打包需要传递的数据到Parcel容器保存，以便从 Parcel容器获取数据</p>
+<p>  3）重写describeContents方法，内容接口描述，默认返回0就可以</p>
+<p>  4）实例化静态内部对象CREATOR实现接口Parcelable.Creator</p>
+<p>  public static final Parcelable.Creator<t> CREATOR<br>  注：其中public static final一个都不能少，内部对象CREATOR的名称也不能改变，必须全部大写。需重写本接口中的两个方法：createFromParcel(Parcel in) 实现从Parcel容器中读取传递数据值，封装成Parcelable对象返回逻辑层，newArray(int size) 创建一个类型为T，长度为size的数组，仅一句话即可（return new T[size]），供外部类反序列化本类数组使用。</t></p>
+<p>  简而言之：通过writeToParcel将你的对象映射成Parcel对象，再通过createFromParcel将Parcel对象映射成你的对象。也可以将Parcel看成是一个流，通过writeToParcel把对象写到流里面，在通过createFromParcel从流里读取对象，只不过这个过程需要你来实现，因此写的顺序和读的顺序必须一致。</p>
+</li>
+<li><p>Serializable实现与Parcelabel实现的区别</p>
+<p>  1）Serializable的实现，只需要implements  Serializable 即可。这只是给对象打了一个标记，系统会自动将其序列化。</p>
+<p>  2）Parcelabel的实现，不仅需要implements  Parcelabel，还需要在类中添加一个静态成员变量CREATOR，这个变量需要实现 Parcelable.Creator 接口。</p>
+</li>
+<li><p>两者代码比较：</p>
+</li>
+</ul>
+<pre><code>1）创建Person类，实现Serializable
+
+
+public class Person implements Serializable
+{
+    private static final long serialVersionUID = -7060210544600464481L;
+    private String name;
+    private int age;
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public void setName(String name)
+    {
+        this.name = name;
+    }
+
+    public int getAge()
+    {
+        return age;
+    }
+
+    public void setAge(int age)
+    {
+        this.age = age;
+    }
+}
+
+2）创建Book类，实现Parcelable
+
+
+public class Book implements Parcelable
+{
+    private String bookName;
+    private String author;
+    private int publishDate;
+
+    public Book()
+    {
+
+    }
+
+    public String getBookName()
+    {
+        return bookName;
+    }
+
+    public void setBookName(String bookName)
+    {
+        this.bookName = bookName;
+    }
+
+    public String getAuthor()
+    {
+        return author;
+    }
+
+    public void setAuthor(String author)
+    {
+        this.author = author;
+    }
+
+    public int getPublishDate()
+    {
+        return publishDate;
+    }
+
+    public void setPublishDate(int publishDate)
+    {
+        this.publishDate = publishDate;
+    }
+
+    @Override
+    public int describeContents()
+    {
+        return 0;
+    }
+    //写和读的顺序一致
+    @Override
+    public void writeToParcel(Parcel out, int flags)
+    {
+        out.writeString(bookName);
+        out.writeString(author);
+        out.writeInt(publishDate);
+    }
+
+    public static final Parcelable.Creator&lt;Book&gt; CREATOR = new Creator&lt;Book&gt;()
+    {
+        @Override
+        public Book[] newArray(int size)
+        {
+            return new Book[size];
+        }
+
+        @Override
+        public Book createFromParcel(Parcel in)
+        {
+            return new Book(in);
+        }
+    };
+    //写和读的顺序一致
+    public Book(Parcel in)
+    {
+        bookName = in.readString();
+        author = in.readString();
+        publishDate = in.readInt();
+    }
+}
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjc5vq0ci002ab8m6crccqdi3" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-工厂模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2014/08/22/工厂模式/" class="article-date">
@@ -233,7 +493,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjc5noodr002l2sm6yx16zqb9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjc5vq0cu002kb8m6qhr76z7v" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -383,7 +643,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/21/单例模式/" data-id="cjc5noodi002f2sm6jbuopj2v" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/21/单例模式/" data-id="cjc5vq0ck002cb8m6t05hkzgo" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -423,7 +683,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/07/20/android高级课程-性能优化--内存泄漏分析－2016-07-20/" data-id="cjc5nooc100192sm6609wzlco" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/07/20/android高级课程-性能优化--内存泄漏分析－2016-07-20/" data-id="cjc5vq0b80016b8m60nja8cfe" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -522,7 +782,7 @@ target_link_libraries( # Specifies the target library.这个和上面相同
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/07/13/给现有工程添加NDK支持/" data-id="cjc5nooe700352sm6rn3lc01y" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/07/13/给现有工程添加NDK支持/" data-id="cjc5vq0db0035b8m6wdfwb870" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NDK/">NDK</a></li></ul>
@@ -704,7 +964,7 @@ if (mNickNameArea != null) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" data-id="cjc5noobz00162sm6anin2hrc" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" data-id="cjc5vq0b20011b8m6yxszdl1s" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -1096,7 +1356,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/02/16/泛型/" data-id="cjc5nooe500332sm6fsz4byjh" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/02/16/泛型/" data-id="cjc5vq0d80030b8m6q3hka6pg" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
@@ -1139,7 +1399,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/02/03/AndroidAnnotations-1概要和简单用法/" data-id="cjc5nooab00012sm6grxviqn1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/02/03/AndroidAnnotations-1概要和简单用法/" data-id="cjc5vq0a40005b8m66boecqwg" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li></ul>
@@ -1186,7 +1446,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2013/01/25/快速排序/" data-id="cjc5nooe0002v2sm6js44alw4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2013/01/25/快速排序/" data-id="cjc5vq0cy002pb8m6qhjuw2z3" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
@@ -1232,50 +1492,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2013/01/24/冒泡排序/" data-id="cjc5noodf002b2sm6fkpz4evk" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-桶排序简化版" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2013/01/23/桶排序简化版/" class="article-date">
-  <time datetime="2013-01-23T02:45:59.000Z" itemprop="datePublished">2013-01-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/01/23/桶排序简化版/">桶排序简化版</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>班里有五个同学，满分10分，考试成绩为5,3,5,2,8，请你写个程序，将成绩按照从高到底的顺序排列。
-        
-          <p class="article-more-link">
-            <a href="/2013/01/23/桶排序简化版/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2013/01/23/桶排序简化版/" data-id="cjc5nooe2002y2sm6sfc76ng0" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2013/01/24/冒泡排序/" data-id="cjc5vq0cm002fb8m6brm9enfw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>

@@ -5,18 +5,20 @@
   
 
   
-  <title>Archiv: 2014 | 有志青年</title>
+  <title>建造者模式在Android中的使用AlertDialog | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我不是胖，只是肉有点多">
-<meta property="og:type" content="website">
-<meta property="og:title" content="有志青年">
-<meta property="og:url" content="http://yoursite.com/archives/2014/page/2/index.html">
+  <meta name="description" content="AlertDialog 使用  new AlertDialog.Builder(Context context).setTitle(&amp;quot;注意&amp;quot;).show();  Builder调用的是 AlertController类中的AlertDialog的： public Builder(Context context) {          this(context, resolve">
+<meta name="keywords" content="移动架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="建造者模式在Android中的使用AlertDialog">
+<meta property="og:url" content="http://yoursite.com/2014/09/08/建造者模式在Android中的使用AlertDialog/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="我不是胖，只是肉有点多">
+<meta property="og:description" content="AlertDialog 使用  new AlertDialog.Builder(Context context).setTitle(&amp;quot;注意&amp;quot;).show();  Builder调用的是 AlertController类中的AlertDialog的： public Builder(Context context) {          this(context, resolve">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-08T07:21:52.208Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="有志青年">
-<meta name="twitter:description" content="我不是胖，只是肉有点多">
+<meta name="twitter:title" content="建造者模式在Android中的使用AlertDialog">
+<meta name="twitter:description" content="AlertDialog 使用  new AlertDialog.Builder(Context context).setTitle(&amp;quot;注意&amp;quot;).show();  Builder调用的是 AlertController类中的AlertDialog的： public Builder(Context context) {          this(context, resolve">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -63,102 +65,128 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2014" class="archive-year">2014</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/07/13/给现有工程添加NDK支持/" class="archive-article-date">
-  <time datetime="2014-07-12T16:00:00.000Z" itemprop="datePublished">Jul 13</time>
+        <section id="main"><article id="post-建造者模式在Android中的使用AlertDialog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/09/08/建造者模式在Android中的使用AlertDialog/" class="article-date">
+  <time datetime="2014-09-08T13:05:59.000Z" itemprop="datePublished">2014-09-08</time>
 </a>
-      
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/07/13/给现有工程添加NDK支持/">给现有工程添加NDK支持</a>
+    <h1 class="article-title" itemprop="name">
+      建造者模式在Android中的使用AlertDialog
     </h1>
   
 
-    </header>
-  </div>
-</article>
-  
+      </header>
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" class="archive-article-date">
-  <time datetime="2014-06-19T06:38:59.000Z" itemprop="datePublished">Jun 19</time>
-</a>
+    <div class="article-entry" itemprop="articleBody">
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/">android高级课程-性能优化--内存泄漏分析－2016-06-19</a>
-    </h1>
-  
+        <ul>
+<li>AlertDialog 使用</li>
+</ul>
+<pre><code>new AlertDialog.Builder(Context context).setTitle(&quot;注意&quot;).show();
+</code></pre><ul>
+<li><p>Builder调用的是 AlertController类中的AlertDialog的：</p>
+<pre><code>public Builder(Context context) {
+         this(context, resolveDialogTheme(context, 0));
+     }
+</code></pre></li>
+<li><p>这个this（context, resolveDialogTheme(context, 0));方法：</p>
+<pre><code>public Builder(Context context, int themeResId) {
+       P = new AlertController.AlertParams(new ContextThemeWrapper(
+               context, resolveDialogTheme(context, themeResId)));
+   }
+</code></pre></li>
+<li><p>AlertParams 是不是和建造者模式中的内部类很像。看看源码：</p>
+<pre><code>public static class AlertParams {
+    public final Context mContext;
+    public final LayoutInflater mInflater;
 
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/02/16/泛型/" class="archive-article-date">
-  <time datetime="2014-02-16T06:38:59.000Z" itemprop="datePublished">Feb 16</time>
-</a>
+    public int mIconId = 0;
+    public Drawable mIcon;
+    public int mIconAttrId = 0;
+    public CharSequence mTitle;
+    public View mCustomTitleView;
+    public CharSequence mMessage;
+    public CharSequence mPositiveButtonText;
+    public DialogInterface.OnClickListener mPositiveButtonListener;
+    public CharSequence mNegativeButtonText;
+    public DialogInterface.OnClickListener mNegativeButtonListener;
+    public CharSequence mNeutralButtonText;
+    public DialogInterface.OnClickListener mNeutralButtonListener;
+    public boolean mCancelable;
+    public DialogInterface.OnCancelListener mOnCancelListener;
+    public DialogInterface.OnDismissListener
+    ...
+</code></pre><p> 这个类包含了很多属性，和建造者模式中的具体建设者中的内部类一样。</p>
+<ul>
+<li><p>show（）方法：</p>
+<pre><code>public AlertDialog show() {
+     final AlertDialog dialog = create();
+     dialog.show();
+     return dialog;
+ }
+</code></pre></li>
+</ul>
+<p>show方法中调用了create（）方法，来看看create方法：</p>
+<pre><code>public AlertDialog create() {
+            // Context has already been wrapped with the appropriate theme.
+            final AlertDialog dialog = new AlertDialog(P.mContext, 0, false);
+            P.apply(dialog.mAlert);
+            dialog.setCancelable(P.mCancelable);
+            if (P.mCancelable) {
+                dialog.setCanceledOnTouchOutside(true);
+            }
+            dialog.setOnCancelListener(P.mOnCancelListener);
+            dialog.setOnDismissListener(P.mOnDismissListener);
+            if (P.mOnKeyListener != null) {
+                dialog.setOnKeyListener(P.mOnKeyListener);
+            }
+            return dialog;
+        }
+</code></pre><p>P.apply(dialog.mAlert);是不是很眼熟，在建造者模式中的产品中的apply方法，用来赋值的。</p>
+</li>
+</ul>
+
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/02/16/泛型/">泛型</a>
-    </h1>
-  
-
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2014/02/03/AndroidAnnotations-1概要和简单用法/" class="archive-article-date">
-  <time datetime="2014-02-03T06:55:59.000Z" itemprop="datePublished">Feb 3</time>
-</a>
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/09/08/建造者模式在Android中的使用AlertDialog/" data-id="cjc5vq0d4002vb8m6khyrif0k" class="article-share-link">Teilen</a>
       
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2014/02/03/AndroidAnnotations-1概要和简单用法/">AndroidAnnotations-1 概要和简单用法</a>
-    </h1>
-  
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
 
-    </header>
+    </footer>
   </div>
-</article>
   
-  
-    </div></section>
-  
-
-
-  <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/archives/2014/">&laquo; zurück</a><a class="page-number" href="/archives/2014/">1</a><span class="page-number current">2</span>
-  </nav>
+<nav id="article-nav">
+  
+    <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Neuer</strong>
+      <div class="article-nav-title">
+        
+          android高级课程-性能优化--电量优化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/09/07/建造者模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">建造者模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
 
 </section>
         

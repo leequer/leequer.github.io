@@ -96,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjc5nooca001h2sm6pb31wpry" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjc5vq0bf001db8m6jhnhrzwa" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
@@ -136,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjc5noody002t2sm62d85v9vl" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjc5vq0d5002xb8m6rl0i73c1" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li></ul>
@@ -179,7 +179,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjc5nooau00082sm6xdi041n6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjc5vq09w0003b8m6io1j8o41" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -219,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjc5nooc8001g2sm60s7zos42" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjc5vq0bk001hb8m61lojlpto" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -299,7 +299,7 @@ for (int i = 0;i &lt; arr.length;i ++) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjc5nooc5001d2sm60z0aqkxm" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjc5vq0bd001bb8m6nofv85qx" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -430,10 +430,114 @@ adb shell dumpsys batterystats &gt; com.example.android.sunshine.app &gt;battery
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjc5nooc3001b2sm6ovmtghmo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjc5vq0b90018b8m65gi93340" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-建造者模式在Android中的使用AlertDialog" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/09/08/建造者模式在Android中的使用AlertDialog/" class="article-date">
+  <time datetime="2014-09-08T13:05:59.000Z" itemprop="datePublished">2014-09-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/09/08/建造者模式在Android中的使用AlertDialog/">建造者模式在Android中的使用AlertDialog</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <ul>
+<li>AlertDialog 使用</li>
+</ul>
+<pre><code>new AlertDialog.Builder(Context context).setTitle(&quot;注意&quot;).show();
+</code></pre><ul>
+<li><p>Builder调用的是 AlertController类中的AlertDialog的：</p>
+<pre><code>public Builder(Context context) {
+         this(context, resolveDialogTheme(context, 0));
+     }
+</code></pre></li>
+<li><p>这个this（context, resolveDialogTheme(context, 0));方法：</p>
+<pre><code>public Builder(Context context, int themeResId) {
+       P = new AlertController.AlertParams(new ContextThemeWrapper(
+               context, resolveDialogTheme(context, themeResId)));
+   }
+</code></pre></li>
+<li><p>AlertParams 是不是和建造者模式中的内部类很像。看看源码：</p>
+<pre><code>public static class AlertParams {
+    public final Context mContext;
+    public final LayoutInflater mInflater;
+
+    public int mIconId = 0;
+    public Drawable mIcon;
+    public int mIconAttrId = 0;
+    public CharSequence mTitle;
+    public View mCustomTitleView;
+    public CharSequence mMessage;
+    public CharSequence mPositiveButtonText;
+    public DialogInterface.OnClickListener mPositiveButtonListener;
+    public CharSequence mNegativeButtonText;
+    public DialogInterface.OnClickListener mNegativeButtonListener;
+    public CharSequence mNeutralButtonText;
+    public DialogInterface.OnClickListener mNeutralButtonListener;
+    public boolean mCancelable;
+    public DialogInterface.OnCancelListener mOnCancelListener;
+    public DialogInterface.OnDismissListener
+    ...
+</code></pre><p> 这个类包含了很多属性，和建造者模式中的具体建设者中的内部类一样。</p>
+<ul>
+<li><p>show（）方法：</p>
+<pre><code>public AlertDialog show() {
+     final AlertDialog dialog = create();
+     dialog.show();
+     return dialog;
+ }
+</code></pre></li>
+</ul>
+<p>show方法中调用了create（）方法，来看看create方法：</p>
+<pre><code>public AlertDialog create() {
+            // Context has already been wrapped with the appropriate theme.
+            final AlertDialog dialog = new AlertDialog(P.mContext, 0, false);
+            P.apply(dialog.mAlert);
+            dialog.setCancelable(P.mCancelable);
+            if (P.mCancelable) {
+                dialog.setCanceledOnTouchOutside(true);
+            }
+            dialog.setOnCancelListener(P.mOnCancelListener);
+            dialog.setOnDismissListener(P.mOnDismissListener);
+            if (P.mOnKeyListener != null) {
+                dialog.setOnKeyListener(P.mOnKeyListener);
+            }
+            return dialog;
+        }
+</code></pre><p>P.apply(dialog.mAlert);是不是很眼熟，在建造者模式中的产品中的apply方法，用来赋值的。</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/09/08/建造者模式在Android中的使用AlertDialog/" data-id="cjc5vq0d4002vb8m6khyrif0k" class="article-share-link">Teilen</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
 
     </footer>
   </div>
@@ -689,7 +793,7 @@ public String toString() {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/09/07/建造者模式/" data-id="cjc5noodw002q2sm6ldkwn36i" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/09/07/建造者模式/" data-id="cjc5vq0d0002rb8m68pp2a69o" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -965,7 +1069,7 @@ public Object dealPoint(ProceedingJoinPoint point) throws Throwable {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc5nooec003c2sm6ocvd78g9" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc5vq0df0039b8m6ggxv7suu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1099,267 +1203,7 @@ try {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjc5nooa400002sm6lqwpl3tv" class="article-share-link">Teilen</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-原型模式" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2014/08/23/原型模式/" class="article-date">
-  <time datetime="2014-08-23T12:55:59.000Z" itemprop="datePublished">2014-08-23</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2014/08/23/原型模式/">原型模式</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#原型模式：</p>
-<ul>
-<li>概念：用于创建重复的对象，同时又能保证性能。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。</li>
-</ul>
-<ul>
-<li><p>目的：保护最原始的数据，隐藏复制过程。这种模式是实现了一个原型接口，该接口用于创建当前对象的克隆。当直接创建对象的代价比较大时，则采用这种模式。例如，一个对象需要在一个高代价的数据库操作之后被创建。我们可以缓存该对象，在下一个请求时返回它的克隆，在需要的时候更新数据库，以此来减少数据库调用。</p>
-</li>
-<li><p>意图：用原型的实例指定创建的种类，并通过拷贝这些原型创建新的对象。</p>
-</li>
-<li><p>使用场景： </p>
-</li>
-</ul>
-<ol>
-<li>资源优化场景。 </li>
-<li>类初始化需要消化非常多的资源，这个资源包括数据、硬件资源等。 </li>
-<li>性能和安全要求的场景。 </li>
-<li>通过 new 产生一个对象需要非常繁琐的数据准备或访问权限，则可以使用原型模式。 </li>
-<li>一个对象多个修改者的场景。 </li>
-<li>一个对象需要提供给其他对象访问，而且各个调用者可能都需要修改其值时，可以考虑使用原型模式拷贝多个对象供调用者使用。 </li>
-<li>在实际项目中，原型模式很少单独出现，一般是和工厂方法模式一起出现，通过 clone 的方法创建一个对象，然后由工厂方法提供给调用者。原型模式已经与 Java 融为浑然一体，大家可以随手拿来使用。</li>
-</ol>
-<ul>
-<li>注意事项：与通过对一个类进行实例化来构造新对象不同的是，原型模式是通过拷贝一个现有对象生成新对象的。</li>
-<li>浅拷贝实现 Cloneable，重写.</li>
-<li>深拷贝是通过实现 Serializable 读取二进制流。</li>
-</ul>
-<p>###Android  以下代码摘抄自 <a href="https://www.cnblogs.com/renqingping/archive/2012/10/25/Parcelable.html" target="_blank" rel="noopener">https://www.cnblogs.com/renqingping/archive/2012/10/25/Parcelable.html</a></p>
-<ul>
-<li>在Android中，Intent就是implement了Cloneable，重写了clone方法。将intent的变量保持一份。代码如下：</li>
-</ul>
-<pre><code>public class Intent implements Parcelable, Cloneable {
-    private static final String ATTR_ACTION = &quot;action&quot;;
-    private static final String TAG_CATEGORIES = &quot;categories&quot;;
-    private static final String ATTR_CATEGORY = &quot;category&quot;;
-    private static final String TAG_EXTRA = &quot;extra&quot;;
-    private static final String ATTR_TYPE = &quot;type&quot;;
-    private static final String ATTR_COMPONENT = &quot;component&quot;;
-    private static final String ATTR_DATA = &quot;data&quot;;
-    private static final String ATTR_FLAGS = &quot;flags&quot;;
-
-    。。。。。。。。。。
-
-    @Override
-    public Object clone() {
-        return new Intent(this);
-    }
-
-    private Intent(Intent o, boolean all) {
-        this.mAction = o.mAction;
-        this.mData = o.mData;
-        this.mType = o.mType;
-        this.mPackage = o.mPackage;
-        this.mComponent = o.mComponent;
-        if (o.mCategories != null) {
-            this.mCategories = new ArraySet&lt;String&gt;(o.mCategories);
-        }
-    }
-</code></pre><ul>
-<li><p>Parcelable [pa:cel,able]</p>
-<p>  我们看到intent还实现了parcelabel，那这个是干嘛的？它是实现序列化的。</p>
-<p>  实现Parcelable就是为了进行序列化，那么，为什么要序列化？</p>
-<p>  1）永久性保存对象，保存对象的字节序列到本地文件中；</p>
-<p>  2）通过序列化对象在网络中传递对象；</p>
-<p>  3）通过序列化在进程间传递对象。</p>
-</li>
-<li><p>Android中实现序列化有两个选择：一是实现Serializable接口（是JavaSE本身就支持的），一是实现Parcelable接口（是Android特有功能，效率比实现Serializable接口高效，可用于Intent数据传递，也可以用于进程间通信（IPC））。实现Serializable接口非常简单，声明一下就可以了，而实现Parcelable接口稍微复杂一些，但效率更高，推荐用这种方法提高性能。</p>
-</li>
-<li><p>注：Android中Intent传递对象有两种方法：一是Bundle.putSerializable(Key，Object)，另一种是Bundle.putParcelable(Key，Object)。当然这些Object是有一定的条件的，前者是实现了Serializable接口，而后者是实现了Parcelable接口。</p>
-</li>
-</ul>
-<ul>
-<li><p>选择序列化方法的原则</p>
-<p>  1）在使用内存的时候，Parcelable比Serializable性能高，所以推荐使用Parcelable。</p>
-<p>  2）Serializable在序列化的时候会产生大量的临时变量，从而引起频繁的GC。</p>
-<p>  3）Parcelable不能使用在要将数据存储在磁盘上的情况，因为Parcelable不能很好的保证数据的持续性在外界有变化的情况下。尽管Serializable效率低点，但此时还是建议使用Serializable 。</p>
-</li>
-<li><p>应用场景</p>
-<p>  需要在多个部件(Activity或Service)之间通过Intent传递一些数据，简单类型（如：数字、字符串）的可以直接放入Intent。复杂类型必须实现Parcelable接口。</p>
-</li>
-<li><p>Parcelable接口定义</p>
-</li>
-</ul>
-<pre><code>public interface Parcelable 
-{
-    //内容描述接口，基本不用管
-    public int describeContents();
-    //写入接口函数，打包
-    public void writeToParcel(Parcel dest, int flags);
-    //读取接口，目的是要从Parcel中构造一个实现了Parcelable的类的实例处理。因为实现类在这里还是不可知的，所以需要用到模板的方式，继承类名通过模板参数传入
-    //为了能够实现模板参数的传入，这里定义Creator嵌入接口,内含两个接口函数分别返回单个和多个继承类实例
-    public interface Creator&lt;T&gt; 
-    {
-           public T createFromParcel(Parcel source);
-           public T[] newArray(int size);
-    }
-}
-</code></pre><ul>
-<li><p>实现Parcelable步骤</p>
-<p>  1）implements Parcelable</p>
-<p>  2）重写writeToParcel方法，将你的对象序列化为一个Parcel对象，即：将类的数据写入外部提供的Parcel中，打包需要传递的数据到Parcel容器保存，以便从 Parcel容器获取数据</p>
-<p>  3）重写describeContents方法，内容接口描述，默认返回0就可以</p>
-<p>  4）实例化静态内部对象CREATOR实现接口Parcelable.Creator</p>
-<p>  public static final Parcelable.Creator<t> CREATOR<br>  注：其中public static final一个都不能少，内部对象CREATOR的名称也不能改变，必须全部大写。需重写本接口中的两个方法：createFromParcel(Parcel in) 实现从Parcel容器中读取传递数据值，封装成Parcelable对象返回逻辑层，newArray(int size) 创建一个类型为T，长度为size的数组，仅一句话即可（return new T[size]），供外部类反序列化本类数组使用。</t></p>
-<p>  简而言之：通过writeToParcel将你的对象映射成Parcel对象，再通过createFromParcel将Parcel对象映射成你的对象。也可以将Parcel看成是一个流，通过writeToParcel把对象写到流里面，在通过createFromParcel从流里读取对象，只不过这个过程需要你来实现，因此写的顺序和读的顺序必须一致。</p>
-</li>
-<li><p>Serializable实现与Parcelabel实现的区别</p>
-<p>  1）Serializable的实现，只需要implements  Serializable 即可。这只是给对象打了一个标记，系统会自动将其序列化。</p>
-<p>  2）Parcelabel的实现，不仅需要implements  Parcelabel，还需要在类中添加一个静态成员变量CREATOR，这个变量需要实现 Parcelable.Creator 接口。</p>
-</li>
-<li><p>两者代码比较：</p>
-</li>
-</ul>
-<pre><code>1）创建Person类，实现Serializable
-
-
-public class Person implements Serializable
-{
-    private static final long serialVersionUID = -7060210544600464481L;
-    private String name;
-    private int age;
-
-    public String getName()
-    {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public int getAge()
-    {
-        return age;
-    }
-
-    public void setAge(int age)
-    {
-        this.age = age;
-    }
-}
-
-2）创建Book类，实现Parcelable
-
-
-public class Book implements Parcelable
-{
-    private String bookName;
-    private String author;
-    private int publishDate;
-
-    public Book()
-    {
-
-    }
-
-    public String getBookName()
-    {
-        return bookName;
-    }
-
-    public void setBookName(String bookName)
-    {
-        this.bookName = bookName;
-    }
-
-    public String getAuthor()
-    {
-        return author;
-    }
-
-    public void setAuthor(String author)
-    {
-        this.author = author;
-    }
-
-    public int getPublishDate()
-    {
-        return publishDate;
-    }
-
-    public void setPublishDate(int publishDate)
-    {
-        this.publishDate = publishDate;
-    }
-
-    @Override
-    public int describeContents()
-    {
-        return 0;
-    }
-    //写和读的顺序一致
-    @Override
-    public void writeToParcel(Parcel out, int flags)
-    {
-        out.writeString(bookName);
-        out.writeString(author);
-        out.writeInt(publishDate);
-    }
-
-    public static final Parcelable.Creator&lt;Book&gt; CREATOR = new Creator&lt;Book&gt;()
-    {
-        @Override
-        public Book[] newArray(int size)
-        {
-            return new Book[size];
-        }
-
-        @Override
-        public Book createFromParcel(Parcel in)
-        {
-            return new Book(in);
-        }
-    };
-    //写和读的顺序一致
-    public Book(Parcel in)
-    {
-        bookName = in.readString();
-        author = in.readString();
-        publishDate = in.readInt();
-    }
-}
-</code></pre>
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjc5noodu002o2sm6uqjszai6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjc5vq09i0000b8m6ah98bflb" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
