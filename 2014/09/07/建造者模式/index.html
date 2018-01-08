@@ -5,23 +5,20 @@
   
 
   
-  <title>gradle编译错误解决 1 | 有志青年</title>
+  <title>建造者模式 | 有志青年</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="问题 解决方法把gradle版本修改：">
-<meta name="keywords" content="androidstudio">
+  <meta name="description" content="###标准构建者模式  定义    将一个复杂的构建与他的表示分离，使得同样的构建过程可以创建不同的表示。  角色  抽象建造者  具体建造者  设计者  产品    eg：比如要建一个房子，房子就是产品，设计者就是设计房子的，具体建造者就是工人，而工人按照先打地基，后垒墙，最后封顶的顺序，这个顺序就是抽象建造者。  抽象建造者    public interface IBuild {     v">
+<meta name="keywords" content="移动架构">
 <meta property="og:type" content="article">
-<meta property="og:title" content="gradle编译错误解决 1">
-<meta property="og:url" content="http://yoursite.com/2015/02/03/gradle编译错误解决-1/index.html">
+<meta property="og:title" content="建造者模式">
+<meta property="og:url" content="http://yoursite.com/2014/09/07/建造者模式/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="问题 解决方法把gradle版本修改：">
+<meta property="og:description" content="###标准构建者模式  定义    将一个复杂的构建与他的表示分离，使得同样的构建过程可以创建不同的表示。  角色  抽象建造者  具体建造者  设计者  产品    eg：比如要建一个房子，房子就是产品，设计者就是设计房子的，具体建造者就是工人，而工人按照先打地基，后垒墙，最后封顶的顺序，这个顺序就是抽象建造者。  抽象建造者    public interface IBuild {     v">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/img/androidstudio-gradle-error1.png">
-<meta property="og:image" content="http://yoursite.com/img/androidstudio-error1-fixed.png">
-<meta property="og:updated_time" content="2017-02-20T08:44:52.000Z">
+<meta property="og:updated_time" content="2018-01-08T03:33:39.152Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="gradle编译错误解决 1">
-<meta name="twitter:description" content="问题 解决方法把gradle版本修改：">
-<meta name="twitter:image" content="http://yoursite.com/img/androidstudio-gradle-error1.png">
+<meta name="twitter:title" content="建造者模式">
+<meta name="twitter:description" content="###标准构建者模式  定义    将一个复杂的构建与他的表示分离，使得同样的构建过程可以创建不同的表示。  角色  抽象建造者  具体建造者  设计者  产品    eg：比如要建一个房子，房子就是产品，设计者就是设计房子的，具体建造者就是工人，而工人按照先打地基，后垒墙，最后封顶的顺序，这个顺序就是抽象建造者。  抽象建造者    public interface IBuild {     v">
   
     <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
   
@@ -68,10 +65,10 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main"><article id="post-gradle编译错误解决-1" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-建造者模式" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2015/02/03/gradle编译错误解决-1/" class="article-date">
-  <time datetime="2015-02-03T03:20:59.000Z" itemprop="datePublished">2015-02-03</time>
+    <a href="/2014/09/07/建造者模式/" class="article-date">
+  <time datetime="2014-09-07T12:55:59.000Z" itemprop="datePublished">2014-09-07</time>
 </a>
     
   </div>
@@ -82,7 +79,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      gradle编译错误解决 1
+      建造者模式
     </h1>
   
 
@@ -90,16 +87,235 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p><img src="/img/androidstudio-gradle-error1.png" alt=""></p>
-<h1 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h1><p>把gradle版本修改：<br><img src="/img/androidstudio-error1-fixed.png" alt=""></p>
+        <p>###标准构建者模式</p>
+<ul>
+<li>定义</li>
+</ul>
+<p>  将一个复杂的构建与他的表示分离，使得同样的构建过程可以创建不同的表示。</p>
+<ul>
+<li><p>角色</p>
+<ul>
+<li><p>抽象建造者</p>
+</li>
+<li><p>具体建造者</p>
+</li>
+<li><p>设计者</p>
+</li>
+<li><p>产品 </p>
+</li>
+</ul>
+<p>eg：比如要建一个房子，房子就是产品，设计者就是设计房子的，具体建造者就是工人，而工人按照先打地基，后垒墙，最后封顶的顺序，这个顺序就是抽象建造者。</p>
+<ul>
+<li>抽象建造者</li>
+</ul>
+</li>
+</ul>
+<pre><code>public interface IBuild {
+    void makeRoot();
+    void makeWall();
+    void makeTop();
+    void makeWindows();
+    Room build();
+}
+</code></pre><ul>
+<li>具体建造者,持有對產品的引用.具体的建造者持有对产品的引用，这个原则很重要，咋一看没什么，其实写代码中就会发现，在具体建造者中要有产品的对象实例。 </li>
+</ul>
+<pre><code>public class LeequerRoomBuild implements IBuild {
+    Room mRoom = new LeequerRoom();
+
+    @Override
+    public void makeRoot() {
+        System.out.println(&quot;正在打地基&quot;);
+        mRoom.setRoot(&quot;地基&quot;);
+    }
+
+    @Override
+    public void makeWall() {
+        System.out.println(&quot;正在建墙面&quot;);
+        mRoom.setWall(&quot;墙&quot;);
+    }
+
+    @Override
+    public void makeTop() {
+        System.out.println(&quot;正在建房顶&quot;);
+        mRoom.setTop(&quot;房顶&quot;);
+    }
+
+    @Override
+    public Room build() {
+        makeRoot();
+        makeWall();
+        makeTop();
+        return mRoom;
+    }
+
+    @Override
+    public void makeWindows() {
+        System.out.println(&quot;正在建窗戶&quot;);
+
+    }
+
+
+}
+</code></pre><ul>
+<li><p>设计者</p>
+<pre><code>public class Designer {
+public Room buildRoom(IBuild pBuild) {
+
+        return pBuild.build();
+    }
+}
+</code></pre></li>
+<li><p>产品</p>
+<pre><code> public class Room {
+    private String root;
+    private String top;
+    private String wall;
+
+    public String getRoot() {
+        return root;
+    }
+
+    public void setRoot(String root) {
+        this.root = root;
+    }
+
+    public String getTop() {
+        return top;
+    }
+
+    public void setTop(String top) {
+        this.top = top;
+    }
+
+    public String getWall() {
+        return wall;
+    }
+
+    public void setWall(String wall) {
+        this.wall = wall;
+    }
+}
+</code></pre></li>
+<li><p>产品子类</p>
+<pre><code>public class LeequerRoom extends Room{
+
+@Override
+public String toString() {
+    return &quot;leequer 房子：\\n&quot;+getRoot()+&quot;:&quot;+getWall()+&quot;:&quot;+getTop();
+}
+}
+</code></pre></li>
+<li><p>主函数</p>
+</li>
+</ul>
+<pre><code>public class ActivityMain {
+
+    public static void main(String[] args) {
+
+
+        Designer _designer = new Designer();
+        LeequerRoomBuild _leequerRoomBuild = new LeequerRoomBuild();
+        Room _room = _designer.buildRoom(_leequerRoomBuild);
+        System.out.println(_room.toString());
+
+
+    }
+    }
+</code></pre><p>以上是标准的建造者模式，在编写的过程中，发现，在具体构建者中build方法和设计者中的buildRoom方法可以去掉这记者的这个方法，而设计者去掉这个方法，就没有存在的意义了。所以这就是建造者模式的改进型。</p>
+<p>###建造者模式的改进型</p>
+<ul>
+<li><p>产品</p>
+<pre><code>public class LeequerRoom {
+    private String root;
+    private String top;
+    private String wall;
+    private String window;
+    public void applyRoom(RoomParam param) {
+        root = param.root;
+        top = param.top;
+        wall = param.wall;
+        window = param.window;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;leequer 房子:&quot; + root + &quot;:&quot; + wall + &quot;:&quot; + top+&quot;:&quot;+window;
+    }
+}
+</code></pre><p>我们为了成员变量的安全，不能随意改动，删除了get，set方法，但这样谁也无法改变它了，RoomParam 是建造者中的内部类，就是用来解决成员变量无法访问的问题。</p>
+</li>
+<li><p>具体建造者</p>
+<pre><code>  public class LeequerRoomBuild  {
+    LeequerRoom mRoom = new LeequerRoom();
+    RoomParam mRoomParam =  new RoomParam();
+    public LeequerRoomBuild makeRoot() {
+        System.out.println(&quot;正在打地基&quot;);
+        mRoomParam.root = &quot;地基&quot;;
+        return this;
+    }
+
+    public LeequerRoomBuild makeWall() {
+        System.out.println(&quot;正在建墙面&quot;);
+        mRoomParam.wall = &quot;墙&quot;;
+        return this;
+    }
+
+    public LeequerRoomBuild makeTop() {
+        System.out.println(&quot;正在建房顶&quot;);
+        mRoomParam.top = &quot;屋顶&quot;;
+        return this;
+    }
+
+    public LeequerRoom build() {
+        mRoom.applyRoom(mRoomParam);
+        return mRoom;
+    }
+
+    public LeequerRoomBuild makeWindows() {
+        System.out.println(&quot;正在建窗戶&quot;);
+        mRoomParam.window=&quot;窗户&quot;;
+        return this;
+    }
+
+    class RoomParam {
+        public String root;
+        public String top;
+        public String wall;
+        public String window;
+    }
+}
+</code></pre></li>
+</ul>
+<p>具体建造者中添加内部类，在build方法中调用产品的applyRoom方法，给产品赋值，也就是说，在没有调用build的方法之前，所有的值的修改都没有赋值。都是可以再次修改的。这样做，隐藏了构建过程。</p>
+<ul>
+<li><p>调用</p>
+<pre><code>    public class Main {
+    public static void main(String[] args) {
+        LeequerRoomBuild _LeequerRoomBuild = new LeequerRoomBuild();
+        _LeequerRoomBuild.makeRoot().makeWall().makeTop().makeWindows().build();
+        System.out.println(_LeequerRoomBuild.mRoom.toString());
+    }
+}
+</code></pre></li>
+</ul>
+<p>看到这句</p>
+<pre><code>_LeequerRoomBuild.makeRoot().makeWall().makeTop().makeWindows().build();
+</code></pre><p>是不是似曾相识，dailog就是这样用的。</p>
+<ul>
+<li>建造者模式的优点</li>
+</ul>
+<p>无须关心产品对象的具体组装过程，只需指定具体建造者的类型即可。</p>
+<p>建造者模式与抽象工厂模式有点相似，但是建造者模式返回一个完整的复杂产品，而抽象工厂模式返回一系列相关的产品；在抽象工厂模式中，客户端通过选择具体工厂来生成所需对象，而在建造者模式中，侧重于一步步构造一个复杂对象，然后将结果返回。</p>
+<p>如果将抽象工厂模式看成一个汽车配件生产厂，生成不同类型的汽车配件，那么建造者模式就是一个汽车组装厂，通过对配件进行组装返回一辆完整的汽车。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjc5nl8i500147wm69aski8e2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/09/07/建造者模式/" data-id="cjc5nl8jo002d7wm6yf65kxeq" class="article-share-link">Teilen</a>
       
       
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
 
     </footer>
   </div>
@@ -107,19 +323,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2015/04/17/Androidstudio优化/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Neuer</strong>
       <div class="article-nav-title">
         
-          Androidstudio 优化
+          android高级课程-性能优化--电量优化
         
       </div>
     </a>
   
   
-    <a href="/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2014/08/26/面向切面编程AOP/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Älter</strong>
-      <div class="article-nav-title">android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法</div>
+      <div class="article-nav-title">面向切面编程AOP</div>
     </a>
   
 </nav>
