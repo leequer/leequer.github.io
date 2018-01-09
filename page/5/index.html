@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Buscar"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -64,6 +64,283 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-面向切面编程AOP" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/08/26/面向切面编程AOP/" class="article-date">
+  <time datetime="2014-08-26T14:55:59.000Z" itemprop="datePublished">2014-08-26</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2014/08/26/面向切面编程AOP/">面向切面编程AOP</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>AOP是Aspect-Oriented Progreming的缩写，在OOP设计中有个单一职责原则，在很多时候都不会有问题，但是当很多模块都需要同一个功能的时候，这个时候还用OOP就会很麻烦。那么AOP在Android中的应用就应运而生。使用的工具是aspectJ。</p>
+<p>###需求</p>
+<ul>
+<li><p>计算方法执行的时间</p>
+<p>   public void one(View view) {</p>
+<pre><code>long beagin=System.currentTimeMillis();
+
+//模拟执行业务耗时代码
+{
+    SystemClock.sleep(3000);
+
+    Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+}
+
+Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-beagin)+&quot;ms&quot;);
+}
+</code></pre><p>  如果所有的方法都需要计算消耗时间，那每个方法都需要写同样的代码，一旦需求改动，所有的计算耗时的代码全部需要改动。写到这里，我在想，把计算耗时的封装在一个方法里面，做成工具类不就行了么？于是有了这样的代码：</p>
+<pre><code>public void one(View view) {
+    long begin=System.currentTimeMillis();
+
+    //模拟执行业务耗时代码
+    {
+        SystemClock.sleep(3000);
+
+        Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+    }
+    duration(begin);
+
+}
+public String duration(long begin){
+    Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-begin)+&quot;ms&quot;);
+}
+</code></pre><p>   那这时，需求改了，要判断是那个类输出的日志。那就是要加个类的参数，那我就需要修改这儿duration的方法，添加一个参数，那么所有调用这个方法的地方都需要修改。而且你发现，按个begin的计算，只是为了计算耗时，每个方法里面都要存在。</p>
+</li>
+</ul>
+<p>###考虑使用AOP    </p>
+<ul>
+<li><p>aspectJ:是在编译时就生成代码，而不是运行时，它用的不是javac而是自己的编译工具。但都生成的是.class文件。</p>
+</li>
+<li><p>AndroidStudio配置aspectJ</p>
+</li>
+</ul>
+<p>   1.在app的build.gradle中添加aspectJ的支持</p>
+<pre><code>////////第1步/////////
+
+
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath &apos;org.aspectj:aspectjtools:1.8.9&apos;
+        classpath &apos;org.aspectj:aspectjweaver:1.8.9&apos;
+    }
+}
+////////第1步结束/////////
+
+
+
+apply plugin: &apos;com.android.application&apos;
+
+////////////2///////////////
+repositories {
+    mavenCentral()
+}
+///////////////////////////
+
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId &quot;com.example.liqing.aopdemo&quot;
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName &quot;1.0&quot;
+        testInstrumentationRunner &quot;android.support.test.runner.AndroidJUnitRunner&quot;
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;), &apos;proguard-rules.pro&apos;
+        }
+    }
+}
+
+////////////3//////////////////
+final def log = project.logger
+final def variants = project.android.applicationVariants
+
+variants.all { variant -&gt;
+    if (!variant.buildType.isDebuggable()) {
+        log.debug(&quot;Skipping non-debuggable build type &apos;${variant.buildType.name}&apos;.&quot;)
+        return;
+    }
+
+    JavaCompile javaCompile = variant.javaCompile
+    javaCompile.doLast {
+        String[] args = [&quot;-showWeaveInfo&quot;,
+                         &quot;-1.8&quot;,
+                         &quot;-inpath&quot;, javaCompile.destinationDir.toString(),
+                         &quot;-aspectpath&quot;, javaCompile.classpath.asPath,
+                         &quot;-d&quot;, javaCompile.destinationDir.toString(),
+                         &quot;-classpath&quot;, javaCompile.classpath.asPath,
+                         &quot;-bootclasspath&quot;, project.android.bootClasspath.join(File.pathSeparator)]
+        log.debug &quot;ajc args: &quot; + Arrays.toString(args)
+
+        MessageHandler handler = new MessageHandler(true);
+        new Main().run(args, handler);
+        for (IMessage message : handler.getMessages(null, true)) {
+            switch (message.getKind()) {
+                case IMessage.ABORT:
+                case IMessage.ERROR:
+                case IMessage.FAIL:
+                    log.error message.message, message.thrown
+                    break;
+                case IMessage.WARNING:
+                    log.warn message.message, message.thrown
+                    break;
+                case IMessage.INFO:
+                    log.info message.message, message.thrown
+                    break;
+                case IMessage.DEBUG:
+                    log.debug message.message, message.thrown
+                    break;
+            }
+        }
+    }
+}
+///////////////////////////////////////////
+
+
+dependencies {
+    implementation fileTree(dir: &apos;libs&apos;, include: [&apos;*.jar&apos;])
+    implementation &apos;com.android.support:appcompat-v7:26.1.0&apos;
+    implementation &apos;com.android.support.constraint:constraint-layout:1.0.2&apos;
+    testImplementation &apos;junit:junit:4.12&apos;
+    androidTestImplementation &apos;com.android.support.test:runner:1.0.1&apos;
+    androidTestImplementation &apos;com.android.support.test.espresso:espresso-core:3.0.1&apos;
+    ///////////////4////////////////
+    compile files(&apos;libs/aspectjrt.jar&apos;)
+    /////////////////////////////////
+}
+</code></pre><p>  2.设置切点</p>
+<p>我们要计算one这个方法的耗时，那one这个方法就是需要切点的地方。</p>
+<pre><code>@BehaviorTrace(&quot;one&quot;)
+public void one(View view) {
+    long beagin=System.currentTimeMillis();
+
+
+    {
+        SystemClock.sleep(3000);
+
+        Log.i(TAG,&quot;点击 第一个按钮 执行&quot;);
+
+    }
+
+    Log.i(TAG,&quot;消耗时间：  &quot;+(System.currentTimeMillis()-beagin)+&quot;ms&quot;);
+}
+</code></pre><p>在one这个方法上方添加注解@BehaviorTrace(“one”)，首先BehaviorTrace这个不是固定的写法，这个是你创建的切点的名字，这里的名字要和切点类名相同，参数one，是对应BehaviorTrace中的 String value();方法，这是固定写法，来看看BehaviorTrace 的代码：</p>
+<pre><code>@Target(ElementType.METHOD)
+@Retention(RetentionPolicy.CLASS)
+public @interface BehaviorTrace {
+
+    String value();
+
+}
+</code></pre><p>3.定义切面</p>
+<pre><code>@Aspect  //--a
+public class BehaviorAspect {
+
+    @Pointcut(&quot;execution(@com.example.liqing.aopdemo.BehaviorTrace  * *(..))&quot;)//--b
+    public void anBehavior(){
+
+    }
+}
+
+@Around(&quot;anBehavior()&quot;)
+public Object dealPoint(ProceedingJoinPoint point) throws Throwable {
+    //d
+//        MethodSignature methodSignature= (MethodSignature) point.getSignature();
+//        Method _method = methodSignature.getMethod();
+//        BehaviorTrace  behaviorTrace=_method.getAnnotation(BehaviorTrace.class);
+//
+//        String contentType=behaviorTrace.value();
+//        int type=behaviorTrace.type();
+          String methodName = point.getSignature().getName();
+
+
+
+
+    Log.i(TAG, &quot;使用时间：   &quot; + simpleDateFormat.format(new Date()));
+    long beagin = System.currentTimeMillis();
+    Log.e(TAG,&quot;上下文：&quot;+point.getThis().toString());
+
+    //执行切点的方法 就是one的方法内容 c
+    Object object = null;
+    try {
+        object = point.proceed();
+    } catch (Exception e) {
+
+    }
+    //one方法执行完成 e
+
+
+    Log.i(TAG, &quot;消耗时间：  &quot; + (System.currentTimeMillis() - beagin) + &quot;ms&quot;);
+
+    return object;
+}
+</code></pre><p>a:固定写法，通过这个注解表示这个类是切面。</p>
+<p>b：</p>
+<p>Pointcut注解：</p>
+<pre><code>就是切点，即触发该类的条件。
+</code></pre><p>使用了execution，</p>
+<pre><code>也就是以方法执行时为切点，触发Aspect类。而execution里面的字符串是触发条件，也是具体的切点。
+</code></pre><p>-</p>
+<pre><code>&quot;execution(@com.example.liqing.aopdemo.BehaviorTrace  * *(..))&quot;
+</code></pre><p>这个条件是所有加了BehaviorTrace注解的方法或属性都会是切点，范围比较广。也就是说，执行每一个被BehaviorTrace注解的方法，都会执行此切点的功能。</p>
+<p>“**”表示是任意包名</p>
+<p>“..”表示任意类型任意多个参数</p>
+<p>C：从这里开始执行的就是被BehaviorTrace注解的方法的内容，前面的都是先执行的 到e 结束。后面的代码就是执行完被注解的方法后执行的。</p>
+<p>d：这些被注释掉的代码在问题出在</p>
+<pre><code>behaviorTrace=_method.getAnnotation(BehaviorTrace.class);
+</code></pre><p>该getAnnotation()方法在Android 5.0以上是能获取到注解实例的，但是在Android 5.0以下则会返回null。</p>
+<p>这样一个简单的AOP就完成了。</p>
+<ul>
+<li><p>另外除了Pointcut注解还有call get set 等</p>
+</li>
+<li><p>@Around,Around是指JPoint执行前或执行后备触发，而around就替代了原JPoint。除了Around还有其他几种方式。before after 等 </p>
+</li>
+</ul>
+<p>以上用到了可以看看</p>
+<p>代码地址：<a href="https://pan.baidu.com/s/1dEBXGrB" target="_blank" rel="noopener">https://pan.baidu.com/s/1dEBXGrB</a></p>
+<p>这个demo 没有版本问题 <a href="https://pan.baidu.com/s/1bqux2eN" target="_blank" rel="noopener">https://pan.baidu.com/s/1bqux2eN</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/08/26/面向切面编程AOP/" data-id="cjc7fpodi003ktkm6u80znjdb" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
+
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-ActivityThread" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -187,7 +464,7 @@ try {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjc73u8om0003f4m6oqntft4x" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/08/24/ActivityThread/" data-id="cjc7fpo990000tkm6tsaan0r9" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -447,7 +724,7 @@ public class Book implements Parcelable
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjc73u8rj002af4m63bcuvxoq" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/08/23/原型模式/" data-id="cjc7fpoct002mtkm6y8qh1qyp" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -627,7 +904,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjc73u8rw002nf4m6w33xvy0l" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/08/22/工厂模式/" data-id="cjc7fpocv002otkm6zhq55js2" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -777,7 +1054,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/08/21/单例模式/" data-id="cjc73u8re0028f4m6tygobc7o" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/08/21/单例模式/" data-id="cjc7fpocn002ftkm6o8un582r" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -817,7 +1094,7 @@ _CarFactory.creatBMWCar().drive();
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/07/20/android高级课程-性能优化--内存泄漏分析－2016-07-20/" data-id="cjc73u8pv0011f4m6mverpizu" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/07/20/android高级课程-性能优化--内存泄漏分析－2016-07-20/" data-id="cjc7fpob50017tkm6fdmuknlz" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -916,7 +1193,7 @@ target_link_libraries( # Specifies the target library.这个和上面相同
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/07/13/给现有工程添加NDK支持/" data-id="cjc73u8sm003hf4m61s116dzn" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/07/13/给现有工程添加NDK支持/" data-id="cjc7fpodb003atkm6y37vo7ar" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NDK/">NDK</a></li></ul>
@@ -1098,7 +1375,7 @@ if (mNickNameArea != null) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" data-id="cjc73u8q5001af4m68p91ar41" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/06/19/android高级课程-性能优化--内存泄漏分析－2016-06-19/" data-id="cjc7fpob20014tkm6yftu5saw" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -1490,7 +1767,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/02/16/泛型/" data-id="cjc73u8s8002yf4m68ktj4fw8" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/02/16/泛型/" data-id="cjc7fpod90037tkm602au1lyk" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/java基础/">java基础</a></li></ul>
@@ -1533,57 +1810,10 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/02/03/AndroidAnnotations-1概要和简单用法/" data-id="cjc73u8ot0007f4m6vtyv86s2" class="article-share-link">Compartir</a>
+      <a data-url="http://yoursite.com/2014/02/03/AndroidAnnotations-1概要和简单用法/" data-id="cjc7fpo9o0003tkm6fhvz824m" class="article-share-link">Partager</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li></ul>
-
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-快速排序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2013/01/25/快速排序/" class="article-date">
-  <time datetime="2013-01-25T12:59:59.000Z" itemprop="datePublished">2013-01-25</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2013/01/25/快速排序/">快速排序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#前情回顾</p>
-<ul>
-<li><p>上次说的<a href="http://leequer.oschina.io/2016/01/24/冒泡排序/" target="_blank" rel="noopener">冒泡排序</a>解决了<a href="http://leequer.oschina.io/2016/01/23/桶排序简化版/" target="_blank" rel="noopener">桶排序</a>的占用空间的问题。</p>
-</li>
-<li><p>但是冒泡排序带了新问题，他的执行效率很慢，如果一个一秒10亿次的电脑对1亿个数进行排序，桶排序只需要0.1秒，而冒泡排序需要115天。
-        
-          <p class="article-more-link">
-            <a href="/2013/01/25/快速排序/#more">Read More</a>
-          </p>
-        
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2013/01/25/快速排序/" data-id="cjc73u8ry002pf4m6q75jb1bs" class="article-share-link">Compartir</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/算法/">算法</a></li></ul>
 
     </footer>
   </div>
@@ -1596,7 +1826,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Previo</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Siguiente &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/4/">&laquo; Précédent</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/6/">Suivant &raquo;</a>
   </nav>
 
 </section>
@@ -1608,7 +1838,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Tags</h3>
+    <h3 class="widget-title">Mot-clés</h3>
     <div class="widget">
       <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
     </div>
@@ -1618,7 +1848,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Nube de Tags</h3>
+    <h3 class="widget-title">Nuage de mot-clés</h3>
     <div class="widget tagcloud">
       <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 13.33px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 11.67px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 11.67px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 11.67px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 16.67px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 11.67px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 15px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 15px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 18.33px;">移动架构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
     </div>
@@ -1627,7 +1857,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archivos</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
     </div>
@@ -1637,7 +1867,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Posts recientes</h3>
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
@@ -1674,7 +1904,7 @@ class GregorianCalendar extends Calendar implements Comparable&lt;GregorianCalen
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2018 leequer<br>
-      Construido por <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

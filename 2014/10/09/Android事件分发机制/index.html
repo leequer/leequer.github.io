@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Android事件分发机制-view | 有志青年</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。  View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listvi">
+<meta name="keywords" content="移动架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android事件分发机制-view">
+<meta property="og:url" content="http://yoursite.com/2014/10/09/Android事件分发机制/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。  View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listvi">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-09T09:29:10.160Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android事件分发机制-view">
+<meta name="twitter:description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。  View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listvi">
+  
+    <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">有志青年</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Android事件分发机制" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2014/10/09/Android事件分发机制/" class="article-date">
+  <time datetime="2014-10-09T12:00:58.000Z" itemprop="datePublished">2014-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Android事件分发机制-view
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>本文出自：<a href="http://blog.csdn.net/yanzi1225627/article/details/22592831" target="_blank" rel="noopener">http://blog.csdn.net/yanzi1225627/article/details/22592831</a></p>
+<ul>
+<li>探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。</li>
+</ul>
+<pre><code>View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listview这些。
+</code></pre><ul>
+<li>而事件即MotionEvent，最重要的有3个:</li>
+</ul>
+<pre><code>(1)MotionEvent.ACTION_DOWN  按下View，是所有事件的开始
+
+(2)MotionEvent.ACTION_MOVE   滑动事件
+
+(3)MotionEvent.ACTION_UP       与down对应，表示抬起
+</code></pre><ul>
+<li><p>另外，明确事件传递机制的最终目的都是为了触发执行View的点击监听和触摸监听:</p>
+<pre><code>******.setOnClickListener(new View.OnClickListener() {
+
+        @Override
+        public void onClick(View v) {
+
+            Log.i(tag, &quot;testLinelayout---onClick...&quot;);
+        }
+    });
+
+*******.setOnTouchListener(new View.OnTouchListener() {
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        b
+
+        return false;
+    }
+});
+</code></pre></li>
+<li><p>我们简称为onClick监听和onTouch监听，一般程序会注册这两个监听。从上面可以看到，onTouch监听里默认return false。不要小看了这个return false，后面可以看到它有大用。</p>
+</li>
+</ul>
+<hr>
+<p>对于View来说，事件传递机制有两个函数：dispatchTouchEvent负责分发事件，在dispatch<em>*</em>里又会调用onTouchEvent表示执行事件，或者说消费事件，结合源码分析其流程。</p>
+<ul>
+<li><p>事件传递的入口是View的dispatchTouchEvent()函数（button，textview等父类都是view）:</p>
+<p>  public boolean dispatchTouchEvent(MotionEvent event) {  </p>
+</li>
+</ul>
+<pre><code>    if (onFilterTouchEventForSecurity(event)) {  
+
+        ListenerInfo li = mListenerInfo;  
+        if (li != null &amp;&amp; li.mOnTouchListener != null &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED  
+                &amp;&amp; li.mOnTouchListener.onTouch(this, event)) {  //@1
+            return true;  
+        }  
+
+        if (onTouchEvent(event)) {  //@2
+            return true;  
+        }  
+    }  
+
+    if (mInputEventConsistencyVerifier != null) {  
+        mInputEventConsistencyVerifier.onUnhandledEvent(event, 0);  
+    }  
+    return false;  
+}
+</code></pre><p>@1:判断当我们有ontouchlistener时，会执行onTouch方法，这个就是我们在Activity里面调用的：</p>
+<pre><code>*******.setOnTouchListener(new View.OnTouchListener() {
+
+    @Override
+    public boolean onTouch(View v, MotionEvent event) {
+        b
+
+        return false;
+    }
+});
+</code></pre><p>也就是说onTouch会优先调用。</p>
+<p>@2：如果我们没有给控件设置ontouch方法，那么就会执行onTouchEvent，那就是说onTouchEvent在onTouch后面被调用。</p>
+<ul>
+<li>onTouchEvent 摘取主要代码</li>
+</ul>
+<pre><code>if (!mHasPerformedLongPress) {  
+
+                    removeLongPressCallback();  
+
+
+                    if (!focusTaken) {  
+
+                        if (mPerformClick == null) {  
+                            mPerformClick = new PerformClick();  //@1
+                        }  
+                        if (!post(mPerformClick)) {  
+                            performClick();  
+                        }  
+                    }
+</code></pre><p>@1:  performClick()方法 </p>
+<pre><code>public boolean performClick() {  
+    sendAccessibilityEvent(AccessibilityEvent.TYPE_VIEW_CLICKED);  
+
+    ListenerInfo li = mListenerInfo;  
+    if (li != null &amp;&amp; li.mOnClickListener != null) {  
+        playSoundEffect(SoundEffectConstants.CLICK);  
+        li.mOnClickListener.onClick(this);  //@1
+        return true;  
+    }  
+
+    return false;  
+}
+</code></pre><p>@1:调用了onclick方法，这就是我们在activity中定义的控件的onclick方法。那onclick是在onTouchEvent中调用的。它执行了我们注册的onClick监听。当然执行前会经过一系列判断，是否注册了监听等。</p>
+<p>###总结:<br>1、事件入口是dispatchTouchEvent(),它会先执行注册的onTouch监听,如果一切顺利的话，接着执行onTouchEvent，在onTouchEvent里会执行onClick监听。</p>
+<p>2、无论是dispatchTouchEvent还是onTouchEvent，如果返回true表示这个事件已经被消费、处理了，不再往下传了。在dispathTouchEvent的源码里可以看到，如果onTouchEvent返回了true，那么它也返回true。如果dispatch<em>*</em>在执行onTouch监听的时候，onTouch返回了true，那么它也返回true，这个事件提前被onTouch消费掉了。就不再执行onTouchEvent了，更别说onClick监听了。</p>
+<p>3、我们通常在onTouch监听了设置图片一旦被触摸就改变它的背景、透明度之类的，这就是在onTouch事件时实现。而在onClick监听了去具体干某些事。</p>
+<hr>
+<p>下面通过代码来说明</p>
+<ul>
+<li>自定义一个TestButton继承自Button，重写它的dispathTouchEvent和onTouchEvent方法，为了简单只关注down和up事件。</li>
+</ul>
+<pre><code>    import android.content.Context;  
+    import android.util.AttributeSet;  
+    import android.util.Log;  
+    import android.view.MotionEvent;  
+    import android.widget.Button;  
+
+    public class TestButton extends Button {  
+    private final static String tag = &quot;yan&quot;;  
+    public TestButton(Context context, AttributeSet attrs) {  
+        super(context, attrs);  
+        // TODO Auto-generated constructor stub  
+    }  
+    @Override  
+    public boolean onTouchEvent(MotionEvent event) {  
+        // TODO Auto-generated method stub  
+        switch(event.getAction()){  
+        case MotionEvent.ACTION_DOWN:  
+            Log.i(tag, &quot;TestButton-onTouchEvent-ACTION_DOWN...&quot;);  
+            break;  
+        case MotionEvent.ACTION_UP:  
+            Log.i(tag, &quot;TestButton-onTouchEvent-ACTION_UP...&quot;);  
+            break;  
+        default:break;  
+        }  
+        return super.onTouchEvent(event);  
+    }  
+
+    @Override  
+    public boolean dispatchTouchEvent(MotionEvent event) {  
+        // TODO Auto-generated method stub  
+        switch(event.getAction()){  
+        case MotionEvent.ACTION_DOWN:  
+            Log.i(tag, &quot;TestButton-dispatchTouchEvent-ACTION_DOWN...&quot;);  
+            break;  
+        case MotionEvent.ACTION_UP:  
+            Log.i(tag, &quot;TestButton-dispatchTouchEvent-ACTION_UP...&quot;);  
+            break;  
+        default:break;  
+        }  
+
+        return super.dispatchTouchEvent(event);  
+    }  
+
+}  
+</code></pre><ul>
+<li>在Activity里注册两个监听:</li>
+</ul>
+<pre><code> testBtn.setOnClickListener(new View.OnClickListener() {  
+
+    @Override  
+    public void onClick(View v) {  
+        // TODO Auto-generated method stub  
+        Log.i(tag, &quot;testBtn---onClick...&quot;);  
+    }  
+});  
+testBtn.setOnTouchListener(new View.OnTouchListener() {  
+
+    @Override  
+    public boolean onTouch(View v, MotionEvent event) {  
+        // TODO Auto-generated method stub  
+        switch(event.getAction()){  
+        case MotionEvent.ACTION_DOWN:  
+            Log.i(tag, &quot;testBtn-onTouch-ACTION_DOWN...&quot;);  
+            break;  
+        case MotionEvent.ACTION_UP:  
+            Log.i(tag, &quot;testBtn-onTouch-ACTION_UP...&quot;);  
+            break;  
+        default:break;  
+
+        }  
+        return false;  
+    }  
+})
+</code></pre><ul>
+<li>同时复写Activity的dispatchTouchEvent方法和onTouchEvent方法：</li>
+</ul>
+<pre><code>public boolean dispatchTouchEvent(MotionEvent ev) {  
+
+    switch(ev.getAction()){  
+    case MotionEvent.ACTION_DOWN:  
+        Log.i(tag, &quot;MainActivity-dispatchTouchEvent-ACTION_DOWN...&quot;);  
+        break;  
+    case MotionEvent.ACTION_UP:  
+        Log.i(tag, &quot;MainActivity-dispatchTouchEvent-ACTION_UP...&quot;);  
+        break;  
+    default:break;  
+    }  
+    return super.dispatchTouchEvent(ev);  
+        }  
+
+    @Override  
+    public boolean onTouchEvent(MotionEvent event) {  
+        // TODO Auto-generated method stub  
+        switch(event.getAction()){  
+        case MotionEvent.ACTION_DOWN:  
+            Log.i(tag, &quot;MainActivity-onTouchEvent-ACTION_DOWN...&quot;);  
+            break;  
+        case MotionEvent.ACTION_UP:  
+            Log.i(tag, &quot;MainActivity-onTouchEvent-ACTION_UP...&quot;);  
+            break;  
+        default:break;  
+        }  
+        return super.onTouchEvent(event);  
+    }
+</code></pre><p>最终一次点击，打印信息如下:</p>
+<pre><code>Line 33: 01-08 14:59:45.847 I/yan     ( 4613): MainActivity-dispatchTouchEvent-ACTION_DOWN...
+Line 35: 01-08 14:59:45.849 I/yan     ( 4613): TestButton-dispatchTouchEvent-ACTION_DOWN...
+Line 37: 01-08 14:59:45.849 I/yan     ( 4613): testBtn-onTouch-ACTION_DOWN...
+Line 39: 01-08 14:59:45.849 I/yan     ( 4613): TestButton-onTouchEvent-ACTION_DOWN...
+Line 41: 01-08 14:59:45.939 I/yan     ( 4613): MainActivity-dispatchTouchEvent-ACTION_UP...
+Line 43: 01-08 14:59:45.941 I/yan     ( 4613): TestButton-dispatchTouchEvent-ACTION_UP...
+Line 45: 01-08 14:59:45.944 I/yan     ( 4613): testBtn-onTouch-ACTION_UP...
+Line 47: 01-08 14:59:45.946 I/yan     ( 4613): TestButton-onTouchEvent-ACTION_UP...
+Line 49: 01-08 14:59:45.974 I/yan     ( 4613): testBtn---onClick...
+</code></pre><p>事件先由Activity的dispatchTouchEvent进行分发，然后TestButton的dispatchTouchEvent进行分发，接着执行onTouch监听，然后执行onTouchEvent。第二次UP动作的时候，在onTouchEvent里又执行了onClick监听。</p>
+<hr>
+<ul>
+<li>如果我们想这个TestButton只能执行onTouch监听不能执行onClick监听，方法有很多。在onTouch监听里默认返回false改为true，如下:</li>
+</ul>
+<pre><code>testBtn.setOnTouchListener(new View.OnTouchListener() {  
+
+    @Override  
+    public boolean onTouch(View v, MotionEvent event) {  
+
+        switch(event.getAction()){  
+        case MotionEvent.ACTION_DOWN:  
+            Log.i(tag, &quot;testBtn-onTouch-ACTION_DOWN...&quot;);  
+            break;  
+        case MotionEvent.ACTION_UP:  
+            Log.i(tag, &quot;testBtn-onTouch-ACTION_UP...&quot;);  
+            break;  
+        default:break;  
+
+        }  
+        return true;  
+    }  
+})
+</code></pre><p>事件流程为:</p>
+<pre><code>Line 75: 01-08 15:05:51.627 I/yan     ( 5262): MainActivity-dispatchTouchEvent-ACTION_DOWN...
+Line 77: 01-08 15:05:51.628 I/yan     ( 5262): TestButton-dispatchTouchEvent-ACTION_DOWN...
+Line 79: 01-08 15:05:51.629 I/yan     ( 5262): testBtn-onTouch-ACTION_DOWN...
+Line 81: 01-08 15:05:51.689 I/yan     ( 5262): MainActivity-dispatchTouchEvent-ACTION_UP...
+Line 83: 01-08 15:05:51.691 I/yan     ( 5262): TestButton-dispatchTouchEvent-ACTION_UP...
+Line 85: 01-08 15:05:51.695 I/yan     ( 5262): testBtn-onTouch-ACTION_UP...
+</code></pre><p>可以看到压根就没执行onTouchEvent。因为onTouch返回了true，已提前将这个事件消费了，就不往下传了，dispatch流程提前终止。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2014/10/09/Android事件分发机制/" data-id="cjc7fpo9w0005tkm6uu6or5eh" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Récent</strong>
+      <div class="article-nav-title">
+        
+          android高级课程-性能优化--电量优化
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/10/08/责任链模式/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">责任链模式</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidAnnotations/">AndroidAnnotations</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/AndroidUI/">AndroidUI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android屏幕适配/">Android屏幕适配</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android开源架构哪家强系列/">Android开源架构哪家强系列</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Android测试/">Android测试</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CMake/">CMake</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LINUX/">LINUX</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Makefile/">Makefile</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NDK/">NDK</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Python/">Python</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Rxjava/">Rxjava</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android-记录/">android 记录</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/androidstudio/">androidstudio</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android开源项目/">android开源项目</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/android高级课程/">android高级课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/java基础/">java基础</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/产品经理课程/">产品经理课程</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/人脸识别/">人脸识别</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/密码技术/">密码技术</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/移动架构/">移动架构</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/算法/">算法</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/AndroidAnnotations/" style="font-size: 10px;">AndroidAnnotations</a> <a href="/tags/AndroidUI/" style="font-size: 10px;">AndroidUI</a> <a href="/tags/Android屏幕适配/" style="font-size: 13.33px;">Android屏幕适配</a> <a href="/tags/Android开源架构哪家强系列/" style="font-size: 11.67px;">Android开源架构哪家强系列</a> <a href="/tags/Android插件开发/" style="font-size: 10px;">Android插件开发</a> <a href="/tags/Android测试/" style="font-size: 10px;">Android测试</a> <a href="/tags/CMake/" style="font-size: 10px;">CMake</a> <a href="/tags/LINUX/" style="font-size: 11.67px;">LINUX</a> <a href="/tags/Makefile/" style="font-size: 11.67px;">Makefile</a> <a href="/tags/NDK/" style="font-size: 10px;">NDK</a> <a href="/tags/Python/" style="font-size: 20px;">Python</a> <a href="/tags/Rxjava/" style="font-size: 16.67px;">Rxjava</a> <a href="/tags/android-记录/" style="font-size: 10px;">android 记录</a> <a href="/tags/androidstudio/" style="font-size: 11.67px;">androidstudio</a> <a href="/tags/android开源项目/" style="font-size: 10px;">android开源项目</a> <a href="/tags/android高级课程/" style="font-size: 15px;">android高级课程</a> <a href="/tags/ffmpeg/" style="font-size: 15px;">ffmpeg</a> <a href="/tags/java基础/" style="font-size: 10px;">java基础</a> <a href="/tags/产品经理课程/" style="font-size: 10px;">产品经理课程</a> <a href="/tags/人脸识别/" style="font-size: 10px;">人脸识别</a> <a href="/tags/密码技术/" style="font-size: 10px;">密码技术</a> <a href="/tags/移动架构/" style="font-size: 18.33px;">移动架构</a> <a href="/tags/算法/" style="font-size: 13.33px;">算法</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/08/">August 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/07/">July 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/04/">April 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/03/">March 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/02/">February 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/12/">December 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/11/">November 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/09/">September 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/08/">August 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/05/">May 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/02/">February 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/11/">November 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/10/">October 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/09/">September 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/07/">July 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/12/">December 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/11/">November 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/10/">October 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/09/">September 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/08/">August 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/07/">July 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/06/">June 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2014/02/">February 2014</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2013/01/">January 2013</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/08/">August 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/06/">June 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/05/">May 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/04/">April 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2012/01/">January 2012</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/09/">September 2011</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2011/03/">March 2011</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2017/09/11/python-购物车实例代码/">python 购物车实例代码</a>
+          </li>
+        
+          <li>
+            <a href="/2017/08/21/python-反射/">python 反射</a>
+          </li>
+        
+          <li>
+            <a href="/2017/07/21/python-序列化/">python 序列化</a>
+          </li>
+        
+          <li>
+            <a href="/2017/06/12/python-property/">python property</a>
+          </li>
+        
+          <li>
+            <a href="/2017/05/13/python__slots__/">python __slots__</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 leequer<br>
+      Propulsé par <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
