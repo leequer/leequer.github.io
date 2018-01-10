@@ -96,7 +96,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjc8ehjd0001lycm65ph3zg17" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/09/14/m3u8解释/" data-id="cjc8f5lvi001dzwm66uqssm5f" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/">ffmpeg</a></li></ul>
@@ -136,7 +136,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjc8ehjen0033ycm6r9zvi3ka" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/07/21/插件开发网摘记录/" data-id="cjc8f5lx6002wzwm63wne7b0t" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Android插件开发/">Android插件开发</a></li></ul>
@@ -179,7 +179,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjc8ehjbc0004ycm6nhnjf8f3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/04/17/Androidstudio优化/" data-id="cjc8f5lu20004zwm6s03kc2wq" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -219,7 +219,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjc8ehjcx001iycm6341a5fqz" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2015/02/03/gradle编译错误解决-1/" data-id="cjc8f5lvg001bzwm62fwg3el0" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/androidstudio/">androidstudio</a></li></ul>
@@ -299,7 +299,7 @@ for (int i = 0;i &lt; arr.length;i ++) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjc8ehjcu001gycm6ao4temku" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" data-id="cjc8f5lvc0019zwm65ya1qvqw" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -430,7 +430,7 @@ adb shell dumpsys batterystats &gt; com.example.android.sunshine.app &gt;battery
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjc8ehjcq001eycm62c9f2fwn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/11/09/android高级课程-性能优化-电量优化 /" data-id="cjc8f5lvl001gzwm66bwwwx92" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/android高级课程/">android高级课程</a></li></ul>
@@ -504,7 +504,7 @@ adb shell dumpsys batterystats &gt; com.example.android.sunshine.app &gt;battery
 <hr>
 <p>##一、View</p>
 <p>事件传递机制有两个函数：dispatchTouchEvent负责分发事件，在dispatchTouchEvent里又会调用onTouchEvent表示执行事件，或者说消费事件，结合源码分析其流程。</p>
-<p><img src="https://i.imgur.com/14fiFcT.png" alt=""></p>
+<p><img src="https://i.imgur.com/14fiFcT.png" alt="此图摘自此图摘自http://blog.csdn.net/guolin_blog/article/details/9097463/"></p>
 <ul>
 <li><p>事件传递的入口是View的dispatchTouchEvent()函数（button，textview等父类都是view）:</p>
 <p>  public boolean dispatchTouchEvent(MotionEvent event) {  </p>
@@ -726,7 +726,7 @@ Line 85: 01-08 15:05:51.695 I/yan     ( 5262): testBtn-onTouch-ACTION_UP...
 </code></pre><p>可以看到压根就没执行onTouchEvent。因为onTouch返回了true，已提前将这个事件消费了，就不往下传了，dispatch流程提前终止。</p>
 <p>##二、ViewGroup的dispatchTouchEvent、onInterceptTouchEvent、onTouchEvent</p>
 <p>再来看ViewGroup，在复写ViewGroup时可以发现它的onTouchEvent在在View里的，表示这两个方法是一样的。但dispatchTouchEvent是在ViewGroup里的，表示和View的dispatchTouchEvent不一样，多了一个onInterceptTouchEvent函数，表示拦截的意思。链接 打个很形象的比喻，这玩意就像个秘书、谋士。为啥View没有呢，因为它级别不够，一个Button里面是不可能有子View的。但LinearLayout(继承ViewGroup)就有孩子(子布局)，这个onInterceptTouchEvent就会判断事件要不要通知它的孩子呢。</p>
-<p><img src="https://i.imgur.com/J3sAnuF.png" alt=""></p>
+<p><img src="https://i.imgur.com/J3sAnuF.png" alt="此图摘自http://blog.csdn.net/guolin_blog/article/details/9153747"></p>
 <p>它的源码如下：</p>
 <pre><code> public boolean dispatchTouchEvent(MotionEvent ev) {  
     if (mInputEventConsistencyVerifier != null) {  
@@ -1078,7 +1078,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/10/09/Android事件分发机制/" data-id="cjc8ehjbk0008ycm6lkfvdo9d" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/10/09/Android事件分发机制/" data-id="cjc8f5lu60005zwm6dtf05113" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1236,7 +1236,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/10/08/责任链模式/" data-id="cjc8ehjf0003iycm6tehxxb4d" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/10/08/责任链模式/" data-id="cjc8f5lxi003czwm66ax7yxzu" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1340,7 +1340,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/09/08/建造者模式在Android中的使用AlertDialog/" data-id="cjc8ehjeh002vycm61791xk7l" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/09/08/建造者模式在Android中的使用AlertDialog/" data-id="cjc8f5lwz002pzwm6axy4va1e" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
@@ -1600,7 +1600,7 @@ public String toString() {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/09/07/建造者模式/" data-id="cjc8ehjef002tycm6oznneseo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/09/07/建造者模式/" data-id="cjc8f5lwy002mzwm6dqk0cfec" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>

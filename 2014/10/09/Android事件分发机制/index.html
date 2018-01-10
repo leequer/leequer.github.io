@@ -17,7 +17,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/14fiFcT.png">
 <meta property="og:image" content="https://i.imgur.com/J3sAnuF.png">
-<meta property="og:updated_time" content="2018-01-10T01:34:32.263Z">
+<meta property="og:updated_time" content="2018-01-10T02:01:15.264Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android事件分发机制">
 <meta name="twitter:description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。  View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listvi">
@@ -130,7 +130,7 @@
 <hr>
 <p>##一、View</p>
 <p>事件传递机制有两个函数：dispatchTouchEvent负责分发事件，在dispatchTouchEvent里又会调用onTouchEvent表示执行事件，或者说消费事件，结合源码分析其流程。</p>
-<p><img src="https://i.imgur.com/14fiFcT.png" alt=""></p>
+<p><img src="https://i.imgur.com/14fiFcT.png" alt="此图摘自此图摘自http://blog.csdn.net/guolin_blog/article/details/9097463/"></p>
 <ul>
 <li><p>事件传递的入口是View的dispatchTouchEvent()函数（button，textview等父类都是view）:</p>
 <p>  public boolean dispatchTouchEvent(MotionEvent event) {  </p>
@@ -352,7 +352,7 @@ Line 85: 01-08 15:05:51.695 I/yan     ( 5262): testBtn-onTouch-ACTION_UP...
 </code></pre><p>可以看到压根就没执行onTouchEvent。因为onTouch返回了true，已提前将这个事件消费了，就不往下传了，dispatch流程提前终止。</p>
 <p>##二、ViewGroup的dispatchTouchEvent、onInterceptTouchEvent、onTouchEvent</p>
 <p>再来看ViewGroup，在复写ViewGroup时可以发现它的onTouchEvent在在View里的，表示这两个方法是一样的。但dispatchTouchEvent是在ViewGroup里的，表示和View的dispatchTouchEvent不一样，多了一个onInterceptTouchEvent函数，表示拦截的意思。链接 打个很形象的比喻，这玩意就像个秘书、谋士。为啥View没有呢，因为它级别不够，一个Button里面是不可能有子View的。但LinearLayout(继承ViewGroup)就有孩子(子布局)，这个onInterceptTouchEvent就会判断事件要不要通知它的孩子呢。</p>
-<p><img src="https://i.imgur.com/J3sAnuF.png" alt=""></p>
+<p><img src="https://i.imgur.com/J3sAnuF.png" alt="此图摘自http://blog.csdn.net/guolin_blog/article/details/9153747"></p>
 <p>它的源码如下：</p>
 <pre><code> public boolean dispatchTouchEvent(MotionEvent ev) {  
     if (mInputEventConsistencyVerifier != null) {  
@@ -704,7 +704,7 @@ public boolean dispatchTouchEvent(MotionEvent event) {
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2014/10/09/Android事件分发机制/" data-id="cjc8ehjbk0008ycm6lkfvdo9d" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2014/10/09/Android事件分发机制/" data-id="cjc8f5lu60005zwm6dtf05113" class="article-share-link">Teilen</a>
       
       
   <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/移动架构/">移动架构</a></li></ul>
