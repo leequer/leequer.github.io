@@ -553,8 +553,8 @@ move(3, &apos;A&apos;, &apos;B&apos;, &apos;C&apos;)
       owner: '',
       repo: '',
       oauth: {
-        client_id: '',
-        client_secret: ''
+        client_id: '19e9892b4e6b7eb2ccf5',
+        client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49'
       }
     });
     gitment.render('container');
@@ -797,14 +797,6 @@ move(3, &apos;A&apos;, &apos;B&apos;, &apos;C&apos;)
 
 
   
-    
-
-    
-      <!-- UY BEGIN -->
-      <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2154820"></script>
-      <!-- UY END -->
-    
-  
 
 
 
@@ -816,6 +808,47 @@ move(3, &apos;A&apos;, &apos;B&apos;, &apos;C&apos;)
 
 
 
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'leequer',
+            repo: 'https://github.com/leequer/leequer.github.io.git',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49',
+            
+                client_id: '19e9892b4e6b7eb2ccf5'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
+      
+      </script>
+    
 
 
 
