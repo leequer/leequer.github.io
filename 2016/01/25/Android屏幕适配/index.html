@@ -422,39 +422,39 @@ px转dp ，按这个算下来，我们就可以更具美工给的px长度换算�
           
 
   
-   <div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
-  <div id="container" style="display:none"></div>
-  <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-  <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-  <script>
-  const myTheme = {
-    render(state, instance) {
-      const container = document.createElement('div');
-      container.lang = "en-US";
-      container.className = 'gitment-container gitment-root-container';
-      container.appendChild(instance.renderHeader(state, instance));
-      container.appendChild(instance.renderEditor(state, instance));
-      container.appendChild(instance.renderComments(state, instance));
-      container.appendChild(instance.renderFooter(state, instance));
-      return container;
-    }
-  }
-  function showGitment() {
-    $("#gitment_title").attr("style", "display:none");
-    $("#container").attr("style", "").addClass("gitment_container");
-    var gitment = new Gitment({
-      id: window.location.pathname,
-      theme: myTheme,
-      owner: 'leequer',
-      repo: 'https://leequer.github.io',
-      oauth: {
-        client_id: '19e9892b4e6b7eb2ccf5',
-        client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49'
-      }
-    });
-    gitment.render('container');
-  }
-  </script>
+	<div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
+	<div id="container" style="display:none"></div>
+	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+	<script>
+	  const myTheme = {
+		render(state, instance) {
+		  const container = document.createElement('div');
+		  container.lang = "en-US";
+		  container.className = 'gitment-container gitment-root-container';
+		  container.appendChild(instance.renderHeader(state, instance));
+		  container.appendChild(instance.renderEditor(state, instance));
+		  container.appendChild(instance.renderComments(state, instance));
+		  container.appendChild(instance.renderFooter(state, instance));
+		  return container;
+		}
+	  }
+	  function showGitment() {
+		$("#gitment_title").attr("style", "display:none");
+		$("#container").attr("style", "").addClass("gitment_container");
+		var gitment = new Gitment({
+		  id: window.location.pathname,
+		  theme: myTheme,
+		  owner: 'leequer',
+		  repo: 'https://leequer.github.io',
+		  oauth: {
+			client_id: '19e9892b4e6b7eb2ccf5',
+			client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49'
+		  }
+		});
+		gitment.render('container');
+	  }
+	</script>
 
   
   
@@ -761,7 +761,11 @@ px转dp ，按这个算下来，我们就可以更具美工给的px长度换算�
       }
 
       
-      renderGitment();
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
       
       </script>
     
