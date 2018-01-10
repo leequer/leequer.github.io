@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -74,8 +74,6 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml" />
-
 
 
 
@@ -98,7 +96,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -311,6 +309,12 @@
 print(&quot;###字典###&quot;);
 
 d = {&apos;a&apos;: 1, &apos;b&apos;: 2, 1: &apos;one&apos;, 2: &apos;two&apos;, 3: [1, 2, 3]}
+print(d)
+
+print(&quot;###list###&quot;);
+# list
+mList = [];
+mList = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 prin
           ...
           <!--noindex-->
@@ -442,7 +446,10 @@ prin
 # import ftp_client
 
 import os,sys,socketserver,time
-mCurrentPath = os.path.dirname(__file__) #当前文
+mCurrentPath = os.path.dirname(__file__) #当前文件的目录
+# sys.path.insert(0,os.path.dirname(__file__)) #将文件路径添加到环境变量中最前面的位置
+print(mCurrentPath)
+import 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -577,7 +584,11 @@ mCurrentPath = os.path.dirname(__file__) #当前文
 # 3.然后新建字符串拼接新数组
 
 mOrigin = &quot; i love china    &quot;;
-mOriginList 
+mOriginList = list(mOrigin);
+mSub = mOrigin.split(&quot; &quot;);
+mSubList = list(mSub);
+mZ = len(mSubList);
+mZ 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1400,7 +1411,12 @@ jazzyviewpager
 indicator
 
 – 几乎所有的新闻类APP中都有使用
-– https://github.co
+– https://github.com/JakeWharton/Android-ViewPagerIndicator
+
+Vitamio
+
+– 免费的Vitamio来打造属于自己的Android万能播放器
+– http://www.cnb
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1641,13 +1657,6 @@ indicator
           </nav>
 
           
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
 
           
 
@@ -1694,7 +1703,7 @@ indicator
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

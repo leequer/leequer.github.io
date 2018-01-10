@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -74,8 +74,6 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml" />
-
 
 
 
@@ -98,7 +96,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -306,7 +304,10 @@
         
           
           1.M3U8是一种可扩展的播放列表文件格式。它是一个包含UTF-8编码文字的m3u播放列表。m3u是包含媒体文件URL的一个事实上的播放列表标准。这种格式被用来作为HTTP Live 媒体流索引文件的格式。
-2.m3u8是一种视频列表格式，里面有真正的视频的链接，另外在m3u8里面还可以再嵌套一层m
+2.m3u8是一种视频列表格式，里面有真正的视频的链接，另外在m3u8里面还可以再嵌套一层m3u8
+3.m3u8是视频列表，编码还是h264等。
+4.m3u8并非苹果独占，m3u8这种列表其实编码格式是公开的。
+5.HLS 苹果推出的一种视频直播解决方案，将视频分成5-10秒的视频小段，然后
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -432,7 +433,8 @@
       
         
           
-          在 Android 开发中采用基于 ClassLoader 的动态加载技术，可以达到不安装新 APK 就升级 APP 的目的（插件化），也可以用来修复一些紧急 BUG（热修复），此外也可以用动态加载技术来精简 APK 的体积（移除 SO 库、拆分边缘业务模块）以及实现多主题在线下载。本REPO的主要
+          在 Android 开发中采用基于 ClassLoader 的动态加载技术，可以达到不安装新 APK 就升级 APP 的目的（插件化），也可以用来修复一些紧急 BUG（热修复），此外也可以用动态加载技术来精简 APK 的体积（移除 SO 库、拆分边缘业务模块）以及实现多主题在线下载。本REPO的主要内容是我对 Android 动态加载机制的一些研究、总结文章和 DEMO 项目。
+这里提前说明，个人不推荐使用插件化技术来动态发布和升级APP的业务功能，因为这会让 APP 的开发和维护变得十分繁琐、
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -812,7 +814,8 @@
           
           – 代码：
    `public static void fixInputMethodManagerLeak(Context destContext) {    if (destContext == null) {        return;    }
-InputMethodManager imm
+InputMethodManager imm = (InputMethodManager) destContext.getSystemService(Context.INPUT_METHOD_SERVICE);
+if (imm == null)
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -943,7 +946,7 @@ InputMethodManager imm
 
 通过安装Docker环境来安装。
 
-（
+（这种方式很简单，Docker真心好用，太彪悍了！）Docker是一种容器，一般用于云计算和大数据平台。提倡的一种思想就是：软件即服务。这句话不是盖的，一句话就可以将别人发布的docker服务环境一次全
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1073,7 +1076,11 @@ InputMethodManager imm
 
 探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。
 
-View即普通的控件，没有子布局的，如Button、TextVi
+View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listview这些。
+
+而事件即MotionEvent，最重要的有3个:
+
+(1)MotionEvent.AC
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1204,7 +1211,16 @@ View即普通的控件，没有子布局的，如Button、TextVi
 
 责任链模式是一种对象的行为模式。在责任链模式里，很多对象由每一个对象对其下家的引用而连接起来形成一条链。请求在这个链上传递，直到链上的某一个对象决定处理此请求。发出这个请求的客户端并不知道链上的哪一个对象最终处理这个请求，这使得系统可以在不影响客户端的情况下动态地重新组织和分配责任。
 
+注意
 
+责任链中上一个处理请求的对象必须包含有下一个处理对象的引用，形成一个单向链表。
+
+代码实现
+
+
+处理请求的抽象类
+public abstract class Handler {
+    pub
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1336,7 +1352,11 @@ AlertDialog 使用
 new AlertDialog.Builder(Context context).setTitle(&quot;注意&quot;).show();
 
 Builder调用的是 AlertController类中的AlertDialog的：
-public Builder
+public Builder(Context context) {
+         this(context, resolveDialogTheme(context, 0));
+     }
+
+这个this（context, 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1479,7 +1499,16 @@ public Builder
 产品 
 
 
-eg：比如要建一个房子，房子就是产品，设计者就是设计房子的，具体建造者就是工人，而工人按照先打地基，后垒墙，最后封顶的顺序，这个顺序
+eg：比如要建一个房子，房子就是产品，设计者就是设计房子的，具体建造者就是工人，而工人按照先打地基，后垒墙，最后封顶的顺序，这个顺序就是抽象建造者。
+
+抽象建造者
+
+
+
+public interface IBuild {
+    void makeRoot();
+    void makeWall();
+    void make
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1593,13 +1622,6 @@ eg：比如要建一个房子，房子就是产品，设计者就是设计房子
           </nav>
 
           
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
 
           
 
@@ -1646,7 +1668,7 @@ eg：比如要建一个房子，房子就是产品，设计者就是设计房子
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

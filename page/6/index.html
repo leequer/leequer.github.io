@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -74,8 +74,6 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml" />
-
 
 
 
@@ -98,7 +96,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -688,7 +686,7 @@
 2.卓越的产品经理：用户的目标是什么？为什么要提这个需求？是否做？如何实现？
 #能力1.分清用户需求和用户目标用户说：我要去外地，想要一个更快的马。于是你找到一匹好马
 
-我们说这个并不没有很好的分析用户的目标，用户的目标是更快，而不是马。更快的
+我们说这个并不没有很好的分析用户的目标，用户的目标是更快，而不是马。更快的马是用户认知范围内的一种解决方案，他的目标是更快。而不是一匹马。当他看到有汽车跑的比马更快的时候，他就会抱怨这是什么产品。产品经理需要做典型用户需求分析，找出真正用户的痛点。所有用户的需求都是原始需求
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -815,7 +813,7 @@
         
           
           #1.简介
-####CMake是一个跨平台的安装（编译）工具，可以用简单的语句来描述所有平台的安装(编译过程)。他能够输出各种各样的makefile或者project文件，能测试编译器所支持的C++特性,类似UNIX下的automake。只是 CMake 的组态档取名为 CMakeLists.txt
+####CMake是一个跨平台的安装（编译）工具，可以用简单的语句来描述所有平台的安装(编译过程)。他能够输出各种各样的makefile或者project文件，能测试编译器所支持的C++特性,类似UNIX下的automake。只是 CMake 的组态档取名为 CMakeLists.txt。Cmake 并不直接建构出最终的软件，而是产生标准的建构档（如 Unix 的 Makefile 或 Windows Visual C++ 的 projects/workspaces），然后再依一般的
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -948,7 +946,14 @@ myfun=$2 $1
 myfun_ret=$(call myfun,20,10)
 #输出
 test:
-    @echo $(myfun_
+    @echo $(myfun_ret)
+###$&gt;执行make test 结果是10 20
+#2递归式展开 是用等号 =
+str2是str1赋值的，递归展开寻找
+str2=$(str1)
+str1=hello
+test:
+ 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1075,7 +1080,8 @@ test:
         
           
           #1简介
-Linux 环境下的程序员如果不会使用 GNU make 来构建和管理自己的工程，应该不能算是一个合格的专业程序员，至少不能称得上是 Unix 程序员。在 Linux（unix）环境下使用 GNU 的 make 工具能够比较容易的构建一个属于你自己的工程，整个工程的编译只需要一个命令就可以
+Linux 环境下的程序员如果不会使用 GNU make 来构建和管理自己的工程，应该不能算是一个合格的专业程序员，至少不能称得上是 Unix 程序员。在 Linux（unix）环境下使用 GNU 的 make 工具能够比较容易的构建一个属于你自己的工程，整个工程的编译只需要一个命令就可以完成编译、连接以至于最后的执行。不过这需要我们投入一些时间去完成一个或者多个称之为 Makefile 文件的编写。此文件正是 make 正常工作的基础。Makefile只能在Linux下使用。
+###
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1206,7 +1212,10 @@ Linux 环境下的程序员如果不会使用 GNU make 来构建和管理自己�
 a发送邮件给b，在这个过程中，a就是sender，b就是receiver。这个过程中有可能有eve监听或者截获了邮件。这个eve不一定是人，也可以是一段监听的程序。
 
 
-于是，a发送邮件的时候进行了加密，加密前的叫原文，加密后的叫密文，b
+于是，a发送邮件的时候进行了加密，加密前的叫原文，加密后的叫密文，b收到后要解密才能看到原文。这样eve收到的也是密文。这样保证了&gt;机密性&lt;
+
+
+但是eve如果想知道邮件的内容，他会想办法去还原。这个过程叫做&gt;密码破译&lt;  也叫&gt;密码分析
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1334,7 +1343,7 @@ a发送邮件给b，在这个过程中，a就是sender，b就是receiver。这�
           
           隐藏指定的视频、或者图片文件夹在不想显示的目录下建个以.nomedia命名的文件夹就行了
 —————–Git———-文件如果之前已经被git跟踪了，这样修改是没有用的。每次修改完以后，用git status还是能看到提示它被修改了。解决办法就是在git中删除这个文件的跟踪记录，用这个命令
-git r
+git rm –cached 文件名路径和名称这样就从git的跟踪记录中删除了这个文件的跟踪记录。配合之前在.gitignore加的那行配置，以后你修改 project.iws 这个文件，git就不会有提示了。
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1462,7 +1471,7 @@ git r
           
           方案1
 ldpi,mdip,hdpi,xhdip,xxhdpi生成DP](https://github.com/luhaoaimama1/JavaZone/blob/master/JavaTest_Zone/src/%E9%80%82%E9%85%8D/MakeXml_Dp.java
-ldpi,md
+ldpi,mdip,hdpi,xhdip,xxhdpi生成SP](https://github.com/luhaoaimama1/JavaZone/blob/master/JavaTest_Zone/src/%E9
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1576,13 +1585,6 @@ ldpi,md
           </nav>
 
           
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
 
           
 
@@ -1629,7 +1631,7 @@ ldpi,md
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

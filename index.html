@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -74,8 +74,6 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml" />
-
 
 
 
@@ -98,7 +96,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -310,7 +308,11 @@
     (&apos;Mac Pro&apos;,9800),
     (&apos;Bike&apos;,800),
     (&apos;Watch&apos;,10600),
-    (&apos;
+    (&apos;Coffee&apos;,31),
+    (&apos;Alex Python&apos;,120),
+]
+shopping_list = []
+salary = input(&quot;Input
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -440,7 +442,9 @@
 &apos;&apos;&apos;
     hasattr(obj,name_str) , 判断一个对象obj里是否有对应的name_str字符串的方法
     getattr(obj,name_str), 根据字符串去获取obj对象里的对应的方法的内存地址
-
+    setattr(obj,&apos;y&apos;,z), is equivalent to ``x.y = v&apos;&apos;
+    delattr(obj,name_str)
+&
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -574,7 +578,12 @@ except ImportError:
 
 # 此处定义一个dict字典对象
 d = dict(name=&apos;思聪&apos;, age=29, score=80)
-str = 
+str = pickle.dumps(d)  # 调用pickle的dumps函数进行序列化处理
+print(str)
+# 你可以看看它长什么样子
+
+# 定义和创建一个file文件对象，设定模式为wb
+f = o
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -709,7 +718,12 @@ str =
     &apos;&apos;&apos;
 
     class Student:
-       
+        @property
+        def score(self):
+            return self._score
+
+        @score.setter
+        de
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -845,7 +859,14 @@ from types import MethodType
 __slots__只允许添加固定的方法和属性，使用__slots__限定class实例能添加的属性
 
 
-&apos;&apos;&ap
+&apos;&apos;&apos;
+
+
+class MyClass(object):
+    __slots__ = [&apos;name&apos;, &apos;set_name&apos;]
+
+
+def set_name
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -979,7 +1000,10 @@ class Fib100:
         def __iter__(self):
             return self
 
-        def __next_
+        def __next__(self):
+            self._1 = self._1 + 1;
+            if (self._1 &gt; 10):
+                raise 
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1115,7 +1139,11 @@ def isPrime(n):
     if n &lt;= 1:
         return False
     i = 2
- 
+    while i * i &lt;= n:
+        if n % i == 0:
+            return &quot;&quot;
+        i += 1
+    re
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1249,7 +1277,14 @@ def isPrime(n):
         return r[n]
 
     # def getitem (self, n):
-    #  
+    #     r = range(5);
+    #     print(r)
+    #     return r[n]
+
+
+f = Fib()
+for x in f[0:3:1]:
+    print(x
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1381,7 +1416,11 @@ with open(&apos;somefile.txt&apos;, &apos;rb&apos;) as f:
     print(data);
 
 # loop整个文档
-with open(&apos;somefile.txt
+with open(&apos;somefile.txt&apos;, &apos;rb&apos;) as f:
+    for line in f:
+        print (line);
+
+# 用读二进制文件的方式读取文件，用utf-8的编码来解
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1514,7 +1553,11 @@ class Dataset:
     # 我们创造一个dataset的类，这个类会帮我们下载相关的数据集，
     # 并给我们分类好x,y
     def __init__(self, name):
-        # 告诉类
+        # 告诉类，我们需要哪一个数据集
+        # 我们有两个选择，一个是&apos;iris&apos;一个是&apos;digits&apos;
+        self.name = name
+
+   
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1628,13 +1671,6 @@ class Dataset:
           </nav>
 
           
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
 
           
 
@@ -1681,7 +1717,7 @@ class Dataset:
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 

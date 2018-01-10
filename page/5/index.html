@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -74,8 +74,6 @@
 
 
 
-  <link rel="alternate" href="/atom.xml" title="有志青年" type="application/atom+xml" />
-
 
 
 
@@ -98,7 +96,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Mist',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -309,6 +307,12 @@
 ###需求
 
 计算方法执行的时间
+   public void one(View view) {
+long beagin=System.currentTimeMillis();
+
+//模拟执行业务耗时代码
+{
+    SystemC
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -441,7 +445,10 @@ ActivityThread 是应用程序的主线程，消息循环执行者；其中有�
 Looper.prepareMainLooper();//A 开启主线程中的循环消息接收
 
 ActivityThread thread = new ActivityThread();
-thr
+thread.attach(false);//B
+
+if (sMainThreadHandler == null) {
+    sMainThreadHandler = thread.getHandler(
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -572,7 +579,11 @@ thr
 概念：用于创建重复的对象，同时又能保证性能。这种类型的设计模式属于创建型模式，它提供了一种创建对象的最佳方式。
 
 
-目的：保护最原始的数据，隐藏复制过程。这种模式是实现了一个原型接口，该接口用于创建当前对象的克隆。当直接创建对象的代价比较大时，则采用这种模式。例如，一个对象需要在一个
+目的：保护最原始的数据，隐藏复制过程。这种模式是实现了一个原型接口，该接口用于创建当前对象的克隆。当直接创建对象的代价比较大时，则采用这种模式。例如，一个对象需要在一个高代价的数据库操作之后被创建。我们可以缓存该对象，在下一个请求时返回它的克隆，在需要的时候更新数据库，以此来减少数据库调用。
+
+意图：用原型的实例指定创建的种类，并通过拷贝这些原型创建新的对象。
+
+使
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -706,7 +717,11 @@ public interface Car {
     void drive();
 }
 
-public class BenCar i
+public class BenCar implements Car{
+
+    @Override
+    public void drive() {
+        System.out.println(&quot;ben car&quo
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -836,7 +851,10 @@ public class BenCar i
 静态实例，类加载的时候就把实例加载到内存中。线程安全，但消耗大。
 懒汉模式class Singleton {
 
-    private static Single
+    private static Singleton instance = null;      
+
+    public  static   Singleton instance() {      
+        if (instance =
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1095,7 +1113,9 @@ public class BenCar i
 ###1.创建CMAKEFIle.txt
 在app文件夹下新建一个CMakeLists.txt文件，内容如下
 # For more information about using CMake with Android Studio, read the
-# d
+# documentation: https://d.android.com/studio/projects/add-native-code.html
+
+# Sets the minimum version
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1225,7 +1245,12 @@ public class BenCar i
 Examplepublic class LeakAct extends Activity {  
 @Override
 protected void onCreate(Bundle savedInstanceState) {    
-    super.onCreate
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.aty_leak);
+    test();
+} 
+//这儿发生泄漏    
+public void
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1355,7 +1380,13 @@ protected void onCreate(Bundle savedInstanceState) {
  首先泛型的本质便是类型参数化，通俗的说就是用一个变量来表示类型，这个类型可以是String,Integer等等不确定，原理类似如下代码：
 int pattern; //声明一个变量未赋值，pattern可以看作是泛型
 pattern = 4;
-pattern = 5;//4和5就可以
+pattern = 5;//4和5就可以看作是String和Integer
+ 泛型的具体形式 有 泛型类 泛型方法 泛型类：
+class Test&lt;T&gt;
+{
+    private T t;
+    Test(T t)
+    
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -1593,13 +1624,6 @@ pattern = 5;//4和5就可以
           </nav>
 
           
-            <div class="feed-link motion-element">
-              <a href="/atom.xml" rel="alternate">
-                <i class="fa fa-rss"></i>
-                RSS
-              </a>
-            </div>
-          
 
           
 
@@ -1646,7 +1670,7 @@ pattern = 5;//4和5就可以
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
 
 
 
