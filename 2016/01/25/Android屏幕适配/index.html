@@ -432,12 +432,21 @@ px转dp ，按这个算下来，我们就可以更具美工给的px长度换算�
 		  const container = document.createElement('div');
 		  container.lang = "en-US";
 		  container.className = 'gitment-container gitment-root-container';
+		  container.appendChild(instance.renderSomething(state, instance))
 		  container.appendChild(instance.renderHeader(state, instance));
 		  container.appendChild(instance.renderEditor(state, instance));
 		  container.appendChild(instance.renderComments(state, instance));
 		  container.appendChild(instance.renderFooter(state, instance));
-		  return container;
+		  return container
 		}
+	  },
+	  renderSomething(state, instance) {
+		const container = document.createElement('div')
+		container.lang = "en-US"
+		if (state.user.login) {
+			container.innerText = `Hello, ${state.user.login}`
+		}
+		return container
 	  }
 	  function showGitment() {
 		$("#gitment_title").attr("style", "display:none");
@@ -452,7 +461,7 @@ px转dp ，按这个算下来，我们就可以更具美工给的px长度换算�
 			client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49'
 		  }
 		});
-		gitment.render('container');
+		gitment.render(document.body);
 	  }
 	</script>
 
