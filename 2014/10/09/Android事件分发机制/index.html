@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。  View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listvi">
+<meta name="description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。   View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listv">
 <meta name="keywords" content="移动架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android事件分发机制">
 <meta property="og:url" content="http://yoursite.com/2014/10/09/Android事件分发机制/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。  View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listvi">
+<meta property="og:description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。   View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listv">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://i.imgur.com/14fiFcT.png">
 <meta property="og:image" content="https://i.imgur.com/J3sAnuF.png">
-<meta property="og:updated_time" content="2018-01-10T02:11:31.103Z">
+<meta property="og:updated_time" content="2018-01-10T07:52:00.533Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android事件分发机制">
-<meta name="twitter:description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。  View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listvi">
+<meta name="twitter:description" content="本文出自：http://blog.csdn.net/yanzi1225627/article/details/22592831  探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。   View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listv">
 <meta name="twitter:image" content="https://i.imgur.com/14fiFcT.png">
 
 
@@ -317,8 +317,10 @@
 <ul>
 <li>探讨Android事件传递机制前，明确android的两大基础控件类型:View和ViewGroup。</li>
 </ul>
-<pre><code>View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listview这些。
-</code></pre><ul>
+<ul>
+<li>View即普通的控件，没有子布局的，如Button、TextView. ViewGroup继承自View，表示可以有子控件，如Linearlayout、Listview这些。</li>
+</ul>
+<ul>
 <li>而事件即MotionEvent，最重要的有3个:</li>
 </ul>
 <pre><code>(1)MotionEvent.ACTION_DOWN  按下View，是所有事件的开始
@@ -376,18 +378,8 @@
     }  
     return false;  
 }
-</code></pre><p>@1:判断当我们有ontouchlistener时，会执行onTouch方法，这个就是我们在Activity里面调用的：</p>
-<pre><code>*******.setOnTouchListener(new View.OnTouchListener() {
-
-    @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        b
-
-        return false;
-    }
-});
-</code></pre><p>也就是说onTouch会优先调用。</p>
-<p>@2：如果我们没有给控件设置ontouch方法，那么就会执行onTouchEvent，那就是说onTouchEvent在onTouch后面被调用。</p>
+</code></pre><p>@1:如果mOnTouchListener != null，(mViewFlags &amp; ENABLED_MASK) == ENABLED和mOnTouchListener.onTouch(this, event)这三个条件都为真，就返回true，先看一下第一个条件，mOnTouchListener，mOnTouchListener正是在setOnTouchListener方法里赋值的，也就是说只要我们给控件注册了touch事件，mOnTouchListener就一定被赋值了。第二个条件(mViewFlags &amp; ENABLED_MASK) == ENABLED是判断当前点击的控件是否是enable的，按钮默认都是enable的，因此这个条件恒定为true。第三个条件就比较关键了，mOnTouchListener.onTouch(this, event)，其实也就是去回调控件注册touch事件时的onTouch方法。也就是说如果我们在onTouch方法里返回true，就会让这三个条件全部成立，从而整个方法直接返回true。如果我们在onTouch方法里返回false，就会再去执行onTouchEvent(event)方法。</p>
+<p>@2：如果我们没有给控件设置ontouch方法返回ture，那么就会执行onTouchEvent，那就是说onTouchEvent在onTouch后面被调用。</p>
 <ul>
 <li>onTouchEvent 摘取主要代码</li>
 </ul>
