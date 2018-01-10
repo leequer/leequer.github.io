@@ -415,10 +415,10 @@
     $("#gitment_title").attr("style", "display:none");
     $("#container").attr("style", "").addClass("gitment_container");
     var gitment = new Gitment({
-      id: location.href,
+      id: window.location.pathname,
       theme: myTheme,
       owner: 'leequer',
-      repo: 'leequer.github.io',
+      repo: 'https://leequer.github.io',
       oauth: {
         client_id: '19e9892b4e6b7eb2ccf5',
         client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49'
@@ -693,7 +693,7 @@
         var gitment = new Gitmint({
             id: window.location.pathname, 
             owner: 'leequer',
-            repo: 'leequer.github.io',
+            repo: 'https://leequer.github.io',
             
             lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
             
