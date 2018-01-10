@@ -424,49 +424,20 @@ else:
           
 
   
-	<div onclick="showGitment()" id="gitment_title" class="gitment_title">显示 Gitment 评论</div>
-	<div id="container" style="display:none"></div>
-	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
-	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
-	<script>
-	  const myTheme = {
-		render(state, instance) {
-		  const container = document.createElement('div');
-		  container.lang = "en-US";
-		  container.className = 'gitment-container gitment-root-container';
-		  container.appendChild(instance.renderSomething(state, instance))
-		  container.appendChild(instance.renderHeader(state, instance));
-		  container.appendChild(instance.renderEditor(state, instance));
-		  container.appendChild(instance.renderComments(state, instance));
-		  container.appendChild(instance.renderFooter(state, instance));
-		  return container
-		}
-	  },
-	  renderSomething(state, instance) {
-		const container = document.createElement('div')
-		container.lang = "en-US"
-		if (state.user.login) {
-			container.innerText = `Hello, ${state.user.login}`
-		}
-		return container
+	
+	 
+	const  gitment = new Gitment({
+	  id: window.location.pathname,
+	  theme: myTheme,
+	  owner: 'leequer',
+	  repo: 'https://github.com/leequer/leequer.github.io.git',
+	  oauth: {
+		client_id: '19e9892b4e6b7eb2ccf5',
+		client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49'
 	  }
-	  function showGitment() {
-		$("#gitment_title").attr("style", "display:none");
-		$("#container").attr("style", "").addClass("gitment_container");
-		var gitment = new Gitment({
-		  id: window.location.pathname,
-		  theme: myTheme,
-		  owner: 'leequer',
-		  repo: 'https://github.com/leequer/leequer.github.io.git',
-		  oauth: {
-			client_id: '19e9892b4e6b7eb2ccf5',
-			client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49'
-		  }
-		});
-		gitment.render(document.body);
-	  }
-	</script>
-
+	});
+	gitment.render('comments');
+	 
   
   
   
