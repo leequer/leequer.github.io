@@ -737,7 +737,11 @@ X_train, y_train, X_test, y_test = data.get_train_test_set(0.7)
       }
 
       
-      renderGitment();
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
       
       </script>
     
