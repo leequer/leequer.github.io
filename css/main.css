@@ -1046,9 +1046,6 @@ pre .javascript .function {
     border-bottom-color: #222;
   }
 }
-.comments {
-  margin: 60px 20px 0;
-}
 .gitment_title:hover {
   color: #fff;
   background: #0a9caf;
@@ -1098,6 +1095,9 @@ pre .javascript .function {
   color: #0a9caf;
   cursor: pointer;
   font-size: 14px;
+}
+.comments {
+  margin: 60px 20px 0;
 }
 .tag-cloud {
   text-align: center;
@@ -1872,7 +1872,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #6ede9c;
+  background: #9fb6d9;
 }
 .links-of-blogroll {
   font-size: 13px;
