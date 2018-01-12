@@ -1,0 +1,1220 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="移动架构," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="#前言  一直看别人的博客，理解事件分发机制，于是自己写了一个例子理解一下，发现，还有好多细节没有参透，在此记录。  #提示  再次之前，一定要先看“Android事件分发机制”这篇文章，或者这篇文章中提到的那两个博客。  #一切从个简单的例子开始  在界面上定义一个RelativeLayout布局，布局中有个一个按钮按钮，一个ImageView。 &amp;lt;?xml version=&amp;quot;1">
+<meta name="keywords" content="移动架构">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android事件分发机制-测试详解">
+<meta property="og:url" content="http://yoursite.com/2014/11/09/Android事件分发机制-测试详解/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="#前言  一直看别人的博客，理解事件分发机制，于是自己写了一个例子理解一下，发现，还有好多细节没有参透，在此记录。  #提示  再次之前，一定要先看“Android事件分发机制”这篇文章，或者这篇文章中提到的那两个博客。  #一切从个简单的例子开始  在界面上定义一个RelativeLayout布局，布局中有个一个按钮按钮，一个ImageView。 &amp;lt;?xml version=&amp;quot;1">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-01-12T07:49:19.657Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android事件分发机制-测试详解">
+<meta name="twitter:description" content="#前言  一直看别人的博客，理解事件分发机制，于是自己写了一个例子理解一下，发现，还有好多细节没有参透，在此记录。  #提示  再次之前，一定要先看“Android事件分发机制”这篇文章，或者这篇文章中提到的那两个博客。  #一切从个简单的例子开始  在界面上定义一个RelativeLayout布局，布局中有个一个按钮按钮，一个ImageView。 &amp;lt;?xml version=&amp;quot;1">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/11/09/Android事件分发机制-测试详解/"/>
+
+
+
+
+
+  <title>Android事件分发机制-测试详解 | 有志青年</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">有志青年</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2014/11/09/Android事件分发机制-测试详解/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Android事件分发机制-测试详解</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2014-11-09T21:00:58+08:00">
+                2014-11-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2014/11/09/Android事件分发机制-测试详解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count gitment-comments-count" data-xid="/2014/11/09/Android事件分发机制-测试详解/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#前言</p>
+<ul>
+<li>一直看别人的博客，理解事件分发机制，于是自己写了一个例子理解一下，发现，还有好多细节没有参透，在此记录。</li>
+</ul>
+<p>#提示</p>
+<ul>
+<li>再次之前，一定要先看<a href="https://leequer.github.io/2014/10/09/Android%E4%BA%8B%E4%BB%B6%E5%88%86%E5%8F%91%E6%9C%BA%E5%88%B6/" target="_blank" rel="noopener">“Android事件分发机制”</a>这篇文章，或者这篇文章中提到的那两个博客。</li>
+</ul>
+<p>#一切从个简单的例子开始</p>
+<ul>
+<li><p>在界面上定义一个RelativeLayout布局，布局中有个一个按钮按钮，一个ImageView。</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+    xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+    xmlns:tools=&quot;http://schemas.android.com/tools&quot;
+    android:id=&quot;@+id/id_root_layout&quot;
+    android:background=&quot;@color/colorAccent&quot;
+    android:layout_width=&quot;300dp&quot;
+    android:layout_height=&quot;300dp&quot;
+    tools:context=&quot;com.example.liqing.myapplication.MainActivity&quot;&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/imageView&quot;
+        android:layout_width=&quot;232dp&quot;
+        android:layout_height=&quot;202dp&quot;
+        android:layout_marginStart=&quot;8dp&quot;
+        android:layout_marginTop=&quot;8dp&quot;
+        app:layout_constraintStart_toStartOf=&quot;parent&quot;
+        app:layout_constraintTop_toTopOf=&quot;parent&quot;
+        app:srcCompat=&quot;@android:drawable/ic_input_add&quot;
+        android:layout_marginLeft=&quot;8dp&quot; /&gt;
+
+    &lt;Button
+        android:id=&quot;@+id/button&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_alignLeft=&quot;@+id/imageView&quot;
+        android:layout_alignParentBottom=&quot;true&quot;
+        android:layout_alignStart=&quot;@+id/imageView&quot;
+        android:layout_marginLeft=&quot;37dp&quot;
+        android:layout_marginStart=&quot;37dp&quot;
+        android:text=&quot;Button&quot; /&gt;
+
+&lt;/RelativeLayout&gt;
+</code></pre></li>
+<li><p>给RelativeLayout，button，imageview设置ontouchEventListener。</p>
+<pre><code>public class ActivityTanTan extends AppCompatActivity {
+</code></pre></li>
+</ul>
+<pre><code>    private ImageView mImage;
+    private RelativeLayout mlayout;
+    private Button mb;
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        mImage = findViewById(R.id.imageView);
+        mlayout=findViewById(R.id.id_root_layout);
+        mb = findViewById(R.id.button);
+
+
+        Log.e(tag,&quot;image enable is &quot;+mImage.isEnabled();
+        Log.e(tag,&quot;image click is &quot;+mImage.isClickable());
+        Log.e(tag,&quot;image long click is &quot;+mImage.isLongClickable());
+        Log.e(tag,&quot;image context click is &quot;+mImage.isContextClickable());
+
+
+        Log.e(tag,&quot;button click is &quot;+mb.isClickable());
+        Log.e(tag,&quot;button enable is &quot;+mb.isEnabled());
+
+        Log.e(tag,&quot;layout enable is &quot;+mlayout.isEnabled());
+        Log.e(tag,&quot;layout click is &quot;+mlayout.isClickable());
+
+
+
+        mImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                Log.e(tag,&quot;mImage ontouch&quot;);
+                switch (event.getAction())
+                {
+
+                    case MotionEvent.ACTION_DOWN:
+                        Log.e(tag,&quot;mImage down&quot;);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Log.e(tag,&quot;mImage move&quot;);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e(tag,&quot;mImage up&quot;);
+                        break;
+                }
+
+                return false;
+            }
+        });
+        mlayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+
+                        Log.e(tag,&quot;mlayout down&quot;);
+
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Log.e(tag,&quot;mlayout move&quot;);
+
+
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e(tag,&quot;mlayout up&quot;);
+
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+
+
+
+        mb.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+
+                switch (event.getAction())
+                {
+                    case MotionEvent.ACTION_DOWN:
+                        Log.e(tag,&quot;mb down&quot;);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Log.e(tag,&quot;mb move&quot;);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e(tag,&quot;mb up&quot;);
+                        break;
+                }
+
+                return false;
+            }
+        });
+
+
+    }
+
+
+}
+</code></pre><ul>
+<li><p>当我点击button，控制台输出：</p>
+<pre><code>mb down
+mb move
+mb up
+</code></pre></li>
+<li><p>结论：你如果了解事件分发机制，你就知道为什么没有执行RelativeLayout的 down move up，因为事件被button消费了。这个事件，我认为是这么个流程，首先，点击事件被硬件捕捉，然后传给被点击控件的dispatchTouchEvent方法，也就是view的dispatchTouchEvent方法，，如果dispatchTouchEvent方法返回true，那这个事件被消费，不会传递给任何其它控件，否则，会调用此控件的父控件的dispatchTouchEvent方法，就是layout的dispatchTouchEvent方法，就是viewgroup的dispatchTouchEvent方法。</p>
+</li>
+<li><p>接着我点击imageview，控制台输出</p>
+<p>  mImage  down<br>  mlayout down</p>
+</li>
+<li><p>what？从表面上看，这个事件没有被imageview消费，而传给了它的父容器RelativeLayout。（至于为什么没有调用move up方法，至今没有看到源码中找到解释）</p>
+</li>
+<li><p>why？button和imageview有什么不同么？先看看什么情况，这个控件的事件不会被消费。Q1</p>
+</li>
+<li><p>从上面推荐的文章可以看到，当view类型的控件的dispatchTouchEvent方法返回的是false，这时候这个事件就会返回给父类。由于我们点击的是imageview，所以我们要看view的dispatchTouchEvent方法。</p>
+<pre><code> public boolean dispatchTouchEvent(MotionEvent event) {
+        // If the event should be handled by accessibility focus first.
+        if (event.isTargetAccessibilityFocus()) {
+            // We don&apos;t have focus or no virtual descendant has it, do not handle the event.
+            if (!isAccessibilityFocusedViewOrHost()) {
+                return false;
+            }
+            // We have focus and got the event, then use normal event dispatch.
+            event.setTargetAccessibilityFocus(false);
+        }
+
+        if (mInputEventConsistencyVerifier != null) {
+            mInputEventConsistencyVerifier.onTouchEvent(event, 0);
+        }
+
+        final int actionMasked = event.getActionMasked();
+        if (actionMasked == MotionEvent.ACTION_DOWN) {
+            // Defensive cleanup for new gesture
+            stopNestedScroll();
+        }
+
+@1以上代码不影响代码走向，没有返回，那就是做些判断，暂时没有必要仔细阅读。
+
+        boolean result = false;
+</code></pre></li>
+</ul>
+<pre><code>        if (onFilterTouchEventForSecurity(event)) {
+@2以上代码判断事件是否安全，我不知道什么意思，但这里我们没有做什么特殊处理，这里应该返回true
+
+@3下面这句，和返回值有关，要看看，两个判断，全部成立赋值result为true。
+    首先，(mViewFlags &amp; ENABLED_MASK) == ENABLED，搜索全文，这个是返回控件是否是enabled的方法的返回值，通过Log.e(tag,&quot;image enable is &quot;+mImage.isEnabled();这个方法返回true可以看到，imageview是enable，此条件成立。
+    然后,handleScrollBarDragging(event) 处理滚动bar拖动事件，这个返回时false。
+    此分支不会赋值result为true；
+
+            if ((mViewFlags &amp; ENABLED_MASK) == ENABLED &amp;&amp; handleScrollBarDragging(event)) {
+                result = true;
+            }
+@4这句，是关键，四个条件，有一个为false就不成立。
+  首先，li != null，这就是看有没有设置listener，我们设置了touchlisnter，所以，成立。
+  然后，li.mOnTouchListener != null 我们定义了onToucheListener方法，所以，成立。
+  然后，li.mOnTouchListener.onTouch(this, event)这就是调用了我们写的onTouch中的方法，于是输出的’mImage  down‘，但我们定义的onTouchListener返回值是false，所以，此条件返回false。
+  于是，这个if语句，不执行。
+            //noinspection SimplifiableIfStatement
+            ListenerInfo li = mListenerInfo;
+            if (li != null &amp;&amp; li.mOnTouchListener != null
+                    &amp;&amp; (mViewFlags &amp; ENABLED_MASK) == ENABLED
+                    &amp;&amp; li.mOnTouchListener.onTouch(this, event)) {
+                result = true;
+            }
+@5这句，两个条件，如果都成立，赋值result为true
+  首先，！result为true，上面的result都没有赋值true，这里取反就是true。
+  然后，onTouchEvent(event)返回值。看下面分析：@6
+            if (!result &amp;&amp; onTouchEvent(event)) {
+                result = true;
+            }
+        }
+
+        if (!result &amp;&amp; mInputEventConsistencyVerifier != null) {
+            mInputEventConsistencyVerifier.onUnhandledEvent(event, 0);
+        }
+
+        // Clean up after nested scrolls if this is the end of a gesture;
+        // also cancel it if we tried an ACTION_DOWN but we didn&apos;t want the rest
+        // of the gesture.
+        if (actionMasked == MotionEvent.ACTION_UP ||
+                actionMasked == MotionEvent.ACTION_CANCEL ||
+                (actionMasked == MotionEvent.ACTION_DOWN &amp;&amp; !result)) {
+            stopNestedScroll();
+        }
+        @7
+        return result;
+    }
+</code></pre><p>###@6 onTouchEvent(event)：</p>
+<pre><code>public boolean onTouchEvent(MotionEvent event) {
+       final float x = event.getX();
+       final float y = event.getY();
+       final int viewFlags = mViewFlags;
+       final int action = event.getAction();
+
+       @8:
+       final boolean clickable = ((viewFlags &amp; CLICKABLE) == CLICKABLE
+               || (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)
+               || (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE;
+       @9:
+       if ((viewFlags &amp; ENABLED_MASK) == DISABLED) {
+           if (action == MotionEvent.ACTION_UP &amp;&amp; (mPrivateFlags &amp; PFLAG_PRESSED) != 0) {
+               setPressed(false);
+           }
+           mPrivateFlags3 &amp;= ~PFLAG3_FINGER_DOWN;
+           // A disabled view that is clickable still consumes the touch
+           // events, it just doesn&apos;t respond to them.
+           return clickable;
+       }
+       @10:
+       if (mTouchDelegate != null) {
+           if (mTouchDelegate.onTouchEvent(event)) {
+               return true;
+           }
+       }
+       @11:
+       if (clickable || (viewFlags &amp; TOOLTIP) == TOOLTIP) {
+           switch (action) {
+               case MotionEvent.ACTION_UP:
+                   mPrivateFlags3 &amp;= ~PFLAG3_FINGER_DOWN;
+                   if ((viewFlags &amp; TOOLTIP) == TOOLTIP) {
+                       handleTooltipUp();
+                   }
+                   if (!clickable) {
+                       removeTapCallback();
+                       removeLongPressCallback();
+                       mInContextButtonPress = false;
+                       mHasPerformedLongPress = false;
+                       mIgnoreNextUpEvent = false;
+                       break;
+                   }
+                   boolean prepressed = (mPrivateFlags &amp; PFLAG_PREPRESSED) != 0;
+                   if ((mPrivateFlags &amp; PFLAG_PRESSED) != 0 || prepressed) {
+                       // take focus if we don&apos;t have it already and we should in
+                       // touch mode.
+                       boolean focusTaken = false;
+                       if (isFocusable() &amp;&amp; isFocusableInTouchMode() &amp;&amp; !isFocused()) {
+                           focusTaken = requestFocus();
+                       }
+
+                       if (prepressed) {
+                           // The button is being released before we actually
+                           // showed it as pressed.  Make it show the pressed
+                           // state now (before scheduling the click) to ensure
+                           // the user sees it.
+                           setPressed(true, x, y);
+                       }
+
+                       if (!mHasPerformedLongPress &amp;&amp; !mIgnoreNextUpEvent) {
+                           // This is a tap, so remove the longpress check
+                           removeLongPressCallback();
+
+                           // Only perform take click actions if we were in the pressed state
+                           if (!focusTaken) {
+                               // Use a Runnable and post this rather than calling
+                               // performClick directly. This lets other visual state
+                               // of the view update before click actions start.
+                               if (mPerformClick == null) {
+                                   mPerformClick = new PerformClick();
+                               }
+                               if (!post(mPerformClick)) {
+                                   performClick();
+                               }
+                           }
+                       }
+
+                       if (mUnsetPressedState == null) {
+                           mUnsetPressedState = new UnsetPressedState();
+                       }
+
+                       if (prepressed) {
+                           postDelayed(mUnsetPressedState,
+                                   ViewConfiguration.getPressedStateDuration());
+                       } else if (!post(mUnsetPressedState)) {
+                           // If the post failed, unpress right now
+                           mUnsetPressedState.run();
+                       }
+
+                       removeTapCallback();
+                   }
+                   mIgnoreNextUpEvent = false;
+                   break;
+
+               case MotionEvent.ACTION_DOWN:
+                   if (event.getSource() == InputDevice.SOURCE_TOUCHSCREEN) {
+                       mPrivateFlags3 |= PFLAG3_FINGER_DOWN;
+                   }
+                   mHasPerformedLongPress = false;
+
+                   if (!clickable) {
+                       checkForLongClick(0, x, y);
+                       break;
+                   }
+
+                   if (performButtonActionOnTouchDown(event)) {
+                       break;
+                   }
+
+                   // Walk up the hierarchy to determine if we&apos;re inside a scrolling container.
+                   boolean isInScrollingContainer = isInScrollingContainer();
+
+                   // For views inside a scrolling container, delay the pressed feedback for
+                   // a short period in case this is a scroll.
+                   if (isInScrollingContainer) {
+                       mPrivateFlags |= PFLAG_PREPRESSED;
+                       if (mPendingCheckForTap == null) {
+                           mPendingCheckForTap = new CheckForTap();
+                       }
+                       mPendingCheckForTap.x = event.getX();
+                       mPendingCheckForTap.y = event.getY();
+                       postDelayed(mPendingCheckForTap, ViewConfiguration.getTapTimeout());
+                   } else {
+                       // Not inside a scrolling container, so show the feedback right away
+                       setPressed(true, x, y);
+                       checkForLongClick(0, x, y);
+                   }
+                   break;
+
+               case MotionEvent.ACTION_CANCEL:
+                   if (clickable) {
+                       setPressed(false);
+                   }
+                   removeTapCallback();
+                   removeLongPressCallback();
+                   mInContextButtonPress = false;
+                   mHasPerformedLongPress = false;
+                   mIgnoreNextUpEvent = false;
+                   mPrivateFlags3 &amp;= ~PFLAG3_FINGER_DOWN;
+                   break;
+
+               case MotionEvent.ACTION_MOVE:
+                   if (clickable) {
+                       drawableHotspotChanged(x, y);
+                   }
+
+                   // Be lenient about moving outside of buttons
+                   if (!pointInView(x, y, mTouchSlop)) {
+                       // Outside button
+                       // Remove any future long press/tap checks
+                       removeTapCallback();
+                       removeLongPressCallback();
+                       if ((mPrivateFlags &amp; PFLAG_PRESSED) != 0) {
+                           setPressed(false);
+                       }
+                       mPrivateFlags3 &amp;= ~PFLAG3_FINGER_DOWN;
+                   }
+                   break;
+           }
+           @13
+           return true;
+       }
+       @12
+       return false;
+   }
+</code></pre><h3 id="8"><a href="#8" class="headerlink" title="@8:"></a>@8:</h3><pre><code>final boolean clickable = 
+((viewFlags &amp; CLICKABLE) == CLICKABLE
+|| (viewFlags &amp; LONG_CLICKABLE) == LONG_CLICKABLE)
+|| (viewFlags &amp; CONTEXT_CLICKABLE) == CONTEXT_CLICKABLE;
+</code></pre><p>   这三个判断，我们通过代码来判断结果：</p>
+<pre><code>Log.e(tag,&quot;image click is &quot;+mImage.isClickable());--false
+Log.e(tag,&quot;image long click is &quot;+mImage.isLongClickable());--false
+Log.e(tag,&quot;image context click is &quot;+mImage.isContextClickable());--false
+</code></pre><p>   那这个判断就容易看出结果，那就是false，没有true的。那clickable就是false；于是走到@9</p>
+<p>###@9：如果此判断不成立就不会执行此段代码</p>
+<pre><code>if ((viewFlags &amp; ENABLED_MASK) == DISABLED)
+</code></pre><p>   而我们通过下面的代码可以得到，imageview的是enable的。</p>
+<pre><code>Log.e(tag,&quot;image enable is &quot;+mImage.isEnabled();--true
+</code></pre><p>   所以，这个代码块不会执行。于是我们到了@10</p>
+<p>###@10：mTouchDelegate 这个变量，只要没有设置过，就是空，那我们没有设置过，那这个判断不成立，不执行此段代码；于是我们到了@11</p>
+<p>###@11：判断条件 if (clickable || (viewFlags &amp; TOOLTIP) == TOOLTIP) </p>
+<p>clickable 是false这是@1就确定的，那后面这个判断，我经过各种二进制的于 或运算，得出结果是false。那就是这段代码不执行。代码一下到了@12</p>
+<p>###@12：返回false</p>
+<p>###那onTouchEvent的返回值就是false 我们回到dispatchTouchEvent方法中的@6位置，也就是我们跑出来分析onTouchEvent的位置。那@5的判断也是false，不执行代码。</p>
+<p>###@7返回了result = false；到这里，imageview的事件处理就完成了，返回了false，那就是没有消费掉这个点击事件，于是交给个父容器，layout，这样父容器的layout down就执行了。</p>
+<p>##这就是为什么imagview点击返回的还有layout的down的方法的原因，也就是Q1的答案。</p>
+<p>###那问题来了，button为什么没有输出layout down呢？也就是说为什么button把事件消费了呢？那我们再来一圈：首先，点击了button，调用了button的父类view的dispatchTouchEvent事件，这里和imageview都一样，直到@8判断，通过</p>
+<pre><code>Log.e(tag,&quot;button click is &quot;+mb.isClickable())--ture;
+</code></pre><p>###我们可以得到button的((viewFlags &amp; CLICKABLE) == CLICKABLE是true，那就可以了，有一个是true返回true ，就执行这个if块。你会发现，这个代码块里面就一个switch判断，执行完毕就执行@13的代码返回true。 那就是onTouchEvent返回是true。那就是dispatchTouchEvent的@5的位置的第二个条件返回时true，那@5的判断成立，给result赋值了true，整个dispatchTouchEvent返回了true。这样，button把事件消费了。不会给父容器layout了，也就不输入layout的ontouchListener中的代码。</p>
+<p>#结论：</p>
+<p>##layout包裹button，点击button，先执行button的dispatchTouchEvent方法，如果这个方法返回true，说明事件被消费，此事件不会传递给父容器layout。无论是@4中的li.mOnTouchListener.onTouch(this, event)返回值是true，也就是我们定义的setOnTouchListener是返回true，还是@8的clickable为ture，都可以消费事件。不信你可以试一下，如果把imageview的setOnTouchListener的返回值改为true，或者给imageview设置setOnClickListener，那么会输入image down image move image up 而不会输入layout down，前一种方式就是直接实现了@4的条件，后者是实现了@8的条件，因为给imageview设置setOnClickListener，会自动设置imageview的clickable为true，和单独设置mImage.setClickable(true) 是一样的效果。</p>
+<p>##通过imagview和button的对比，发现，如果控件的isClickable()，isLongClickable()，isContextClickable（）有一个是true，就会消费事件。</p>
+<p>##还有一个知识点，当你点击一个区域，系统会判断你点击的区域的父容器中有没有子控件，如果没有，则父容器消费此事件，而不是点击位置其它地方的子控件消费事件。</p>
+<p>##还有一个知识点，当你按下，滑动，抬起时，每次都会重新执行setOnTouchListener方法。代码如下：@14行，在你每次滑动的时候都会被输出。</p>
+<pre><code>mImage.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                @14 
+                Log.e(tag,&quot;mImage ontouch&quot;);
+                switch (event.getAction())
+                {
+
+                    case MotionEvent.ACTION_DOWN:
+                        Log.e(tag,&quot;mImage down&quot;);
+                        break;
+                    case MotionEvent.ACTION_MOVE:
+                        Log.e(tag,&quot;mImage move&quot;);
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        Log.e(tag,&quot;mImage up&quot;);
+                        break;
+                }
+
+                return true
+                        ;
+            }
+        });
+</code></pre><p>代码：<a href="https://pan.baidu.com/s/1c33Pb5u" target="_blank" rel="noopener">https://pan.baidu.com/s/1c33Pb5u</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/移动架构/" rel="tag"># 移动架构</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/11/09/android高级课程-性能优化-电量优化 /" rel="next" title="android高级课程-性能优化--电量优化">
+                <i class="fa fa-chevron-left"></i> android高级课程-性能优化--电量优化
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/12/09/android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法/" rel="prev" title="android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法">
+                android高级课程-性能优化－inputMethodMandager 系统输入法导致的内存泄漏的解决方法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+	
+	<div id="container"></div>
+	<link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+	<script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+	<script>
+		const  gitment = new Gitment({
+		  id: window.location.pathname,
+		  theme: myTheme,
+		  owner: 'leequer',
+		  repo: 'https://github.com/leequer/leequer.github.io.git',
+		  oauth: {
+			client_id: '19e9892b4e6b7eb2ccf5',
+			client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49'
+		  }
+		});
+		gitment.render('comments');
+	 
+	</script>
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leequer</p>
+              <p class="site-description motion-element" itemprop="description">我不是胖，只是肉有点多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">62</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/leequer" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:447476554@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#8"><span class="nav-number">1.</span> <span class="nav-text">@8:</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leequer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'leequer',
+            repo: 'https://github.com/leequer/leequer.github.io.git',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49',
+            
+                client_id: '19e9892b4e6b7eb2ccf5'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
