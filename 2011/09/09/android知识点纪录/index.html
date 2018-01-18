@@ -88,7 +88,7 @@
 <meta property="og:description" content="—————-开发记录—————@隐藏指定的视频、或者图片文件夹在不想显示的目录下建个以.nomedia命名的文件夹就行了 —————–Git——————-@文件如果之前已经被git跟踪了，这样修改是没有用的。每次修改完以后，用git status还是能看到提示它被修改了。解决办法就是在git中删除这个文件的跟踪记录，用这个命令 git rm --cached 文件名路径和名称 这样就从git的跟踪">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://camo.githubusercontent.com/b55c62484bb6a7d4b5280988d5cbaf993ca6579f/68747470733a2f2f6431337961637572716a676172612e636c6f756466726f6e742e6e65742f75736572732f3635353434392f73637265656e73686f74732f323137393334322f6d656e755f64726962626c652e676966">
-<meta property="og:updated_time" content="2018-01-17T02:44:07.774Z">
+<meta property="og:updated_time" content="2018-01-18T07:01:46.918Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="android 知识点记录">
 <meta name="twitter:description" content="—————-开发记录—————@隐藏指定的视频、或者图片文件夹在不想显示的目录下建个以.nomedia命名的文件夹就行了 —————–Git——————-@文件如果之前已经被git跟踪了，这样修改是没有用的。每次修改完以后，用git status还是能看到提示它被修改了。解决办法就是在git中删除这个文件的跟踪记录，用这个命令 git rm --cached 文件名路径和名称 这样就从git的跟踪">
@@ -329,6 +329,10 @@
 </blockquote>
 <p>  <a href="http://blog.csdn.net/jason0539/article/details/42743531" target="_blank" rel="noopener">参考文章</a></p>
 <blockquote>
+<p>ListView 加载item思路</p>
+</blockquote>
+<p>  1.当listview加载item时，它从view池子中拿，第一次是没有的，所以它会从getview方法中获取。当listview滑动时，滑出去的item被一个view的池子收集，并临时解除这个item和父容器的关系，同时要显示出来的item从池子中拿被回收的item。</p>
+<blockquote>
 <p>jazzyviewpager</p>
 </blockquote>
 <p>– 可以让viewpager有各种绚丽的动画，而且还可以自由扩展；</p>
@@ -476,7 +480,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">64</span>
+                  <span class="site-state-item-count">66</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
