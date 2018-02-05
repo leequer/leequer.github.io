@@ -79,21 +79,23 @@
 
 
 
-<meta name="description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
+<meta name="description" content="本文参考：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
 <meta name="keywords" content="移动架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android requestWindowFeature()的应用">
 <meta property="og:url" content="http://yoursite.com/2015/10/02/requestWindowFeature()的应用/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
+<meta property="og:description" content="本文参考：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/1615296400-0.png">
 <meta property="og:image" content="http://yoursite.com/img/1615293304-1.png">
 <meta property="og:image" content="http://yoursite.com/img/16152aC1-2.png">
-<meta property="og:updated_time" content="2018-02-05T08:16:37.406Z">
+<meta property="og:image" content="http://yoursite.com/img/16152aa2-3.png">
+<meta property="og:image" content="http://yoursite.com/img/1615294J9-4.png">
+<meta property="og:updated_time" content="2018-02-05T08:56:09.887Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android requestWindowFeature()的应用">
-<meta name="twitter:description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
+<meta name="twitter:description" content="本文参考：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
 <meta name="twitter:image" content="http://yoursite.com/img/1615296400-0.png">
 
 
@@ -314,7 +316,7 @@
       
 
       
-        <p>本文摘自：<a href="http://www.bkjia.com/Androidjc/837971.html" title="http://www.bkjia.com/Androidjc/837971.html" target="_blank" rel="noopener">http://www.bkjia.com/Androidjc/837971.html</a></p>
+        <p>本文参考：<a href="http://www.bkjia.com/Androidjc/837971.html" title="http://www.bkjia.com/Androidjc/837971.html" target="_blank" rel="noopener">http://www.bkjia.com/Androidjc/837971.html</a></p>
 <p>我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示.</p>
 <p>　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。</p>
 <p>#枚举常量</p>
@@ -333,8 +335,11 @@
 <li>效果图</li>
 </ul>
 <p><img src="/img/1615296400-0.png" alt="图1默认"></p>
-<h3 id="FEATURE-CUSTOM-TITLE"><a href="#FEATURE-CUSTOM-TITLE" class="headerlink" title="FEATURE_CUSTOM_TITLE"></a>FEATURE_CUSTOM_TITLE</h3><ul>
-<li></li>
+<ul>
+<li>不用测试有效</li>
+</ul>
+<h3 id="FEATURE-CUSTOM-TITLE"><a href="#FEATURE-CUSTOM-TITLE" class="headerlink" title="FEATURE _ CUSTOM_TITLE"></a>FEATURE _ CUSTOM_TITLE</h3><ul>
+<li>自定义标题</li>
 <li><p>代码：</p>
 <p>  this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);<br>  setContentView(R.layout.main);</p>
 </li>
@@ -370,42 +375,75 @@
 <li>效果图</li>
 </ul>
 <p><img src="/img/16152aC1-2.png" alt="图3自定义标题"></p>
-<p>自定义标题完成，它是一个xml文件布局</p>
-<p>title.xml</p>
-<p>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
-<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content" android:layout_height="wrap_content"><br><br>  <imageview android:layout_width="wrap_content" android:layout_height="wrap_content" android:src="@drawable/icon"><br>   <textview android:id="@+id/text" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_alignparentleft="true" android:text="文本"><br><br></textview></imageview></linearlayout>
+<h3 id="FEATURE-INDETERMINATE-PROGRESS"><a href="#FEATURE-INDETERMINATE-PROGRESS" class="headerlink" title="FEATURE  INDETERMINATE  PROGRESS"></a>FEATURE <em> INDETERMINATE </em> PROGRESS</h3><ul>
+<li>表示一个进程正在运行</li>
+<li>效果图</li>
+</ul>
+<p><img src="/img/16152aa2-3.png" alt=""></p>
+<ul>
+<li><p>代码</p>
+<ul>
+<li><p>1.progress.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout
+  xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+  android:layout_width=&quot;wrap_content&quot;
+  android:layout_height=&quot;wrap_content&quot;&gt;
+  &lt;ProgressBar android:id=&quot;@+id/progress&quot;
 
-<p>3.FEATURE_INDETERMINATE_PROGRESS详解</p>
-<p>表示一个进程正在运行</p>
-<p>　　　　图4标题进度条显示</p>
-<p>实现代码</p>
-<p>1.progress.xml</p>
-<p>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
-<linearlayout xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="wrap_content" android:layout_height="wrap_content"><br>  <progressbar android:id="@+id/progress" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_gravity="center_vertical" style="?android:attr/progressBarStyleSmallTitle"><br><br></progressbar><br></linearlayout>
+      android:layout_width=&quot;wrap_content&quot;
+
+      android:layout_height=&quot;wrap_content&quot;   
+
+      android:layout_gravity=&quot;center_vertical&quot;
+      style=&quot;?android:attr/progressBarStyleSmallTitle&quot;&gt;
+
+&lt;/ProgressBar&gt;
+&lt;/LinearLayout&gt;
+</code></pre></li>
+</ul>
+</li>
+</ul>
+<pre><code>- 2.Java代码
+
+        this.requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
+        setContentView(R.layout.main);
 
 
+        getWindow().setFeatureInt(Window.FEATURE_INDETERMINATE_PROGRESS, R.layout.progress);
+        setProgressBarIndeterminateVisibility(true);
+</code></pre><ul>
+<li><p>想让进度条消失，在适当的地方 加上下面代码</p>
+<pre><code>setProgressBarIndeterminateVisibility(false);
+</code></pre></li>
+<li><p>亲测有效</p>
+</li>
+</ul>
+<h3 id="FEATURELEFT-ICON"><a href="#FEATURELEFT-ICON" class="headerlink" title="FEATURELEFT  ICON"></a>FEATURE<em>LEFT </em> ICON</h3><ul>
+<li>左侧显示图标</li>
+<li>效果图</li>
+</ul>
+<p><img src="/img/1615294J9-4.png" alt=""></p>
+<ul>
+<li>代码</li>
+</ul>
+<pre><code>this.requestWindowFeature(Window.FEATURE_LEFT_ICON);
+setContentView(R.layout.main);
 
-<p>2.Java代码</p>
-<p>this.requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);<br>  setContentView(R.layout.main);</p>
-<p>  getWindow().setFeatureInt(Window.FEATURE_INDETERMINATE_PROGRESS, R.layout.progress);<br>  setProgressBarIndeterminateVisibility(true);</p>
-<p>3.FEATURE_LEFT_ICON详解</p>
-<p>左侧显示图标</p>
-<p>图5</p>
-<p>实现代码</p>
-<p>  this.requestWindowFeature(Window.FEATURE_LEFT_ICON);<br>  setContentView(R.layout.main);</p>
-<p>  getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.icon);</p>
-<p>4.FEATURE_NO_TITLE详解</p>
-<p> 可用于全屏显示</p>
-<p>实现代码</p>
-<p>this.requestWindowFeature(Window.FEATURE_NO_TITLE);<br>  setContentView(R.layout.main);</p>
-<p>  getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);</p>
-<p>android 使用requestWindowFeature(WindowFEATURE_CUSTOM_TITLE);来自定义标题，但是运行程序后就会出<br>此问题通常是requestWindowFeature(Window.FEATURE_CUSTOM_TITLE)引起，2.3上应该没有此错误的。</p>
-<p>4.0上为什么会报错，推算PhoneWindow.java改动了，具体代码没详细看。</p>
-<p>现说明解决方法：</p>
-<p>AndroidMainfest.xml中对应的activity添加风格样式:</p>
-<p>android:theme=”xxxxx”</p>
-<p>在Android 开发中怎全屏显示？<br>在Android应用程序的第一个Activity的onCreate()函数中<br>加以下代码即可：<br>this.requestWindowFeature(Window.FEATURE_NO_TITLE);<br>this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,<br>WindowManager.LayoutParams.FLAG_FULLSCREEN);<br>注意：以上两行代码要写在setContentView(R.layout.main);上面。</p>
-<p>下面是一个全屏的Activity 代码:<br>public class MainActivity extends Activity {<br>@Override<br>public void onCreate(Bundle savedInstanceState) {<br>super.onCreate(savedInstanceState);<br>//隐去标题栏（应用程序的名字）<br>this.requestWindowFeature(Window.FEATURE_NO_TITLE);<br>//隐去状态栏部分(电池等图标和一切修饰部分)<br>this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,<br>WindowManager.LayoutParams.FLAG_FULLSCREEN);<br>setContentView(R.layout.main);<br>}<br>}</p>
+getWindow().setFeatureDrawableResource(Window.FEATURE_LEFT_ICON, R.drawable.icon);
+</code></pre><ul>
+<li>亲测有效</li>
+</ul>
+<h3 id="FEATURE-NO-TITLE"><a href="#FEATURE-NO-TITLE" class="headerlink" title="FEATURE  NO  TITLE"></a>FEATURE <em> NO </em> TITLE</h3><ul>
+<li>可用于全屏显示</li>
+<li><p>代码</p>
+<pre><code>this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+setContentView(R.layout.main);
+getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+</code></pre></li>
+<li><p>亲测有效</p>
+</li>
+</ul>
 
       
     </div>
@@ -592,7 +630,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#详解"><span class="nav-number">1.</span> <span class="nav-text">详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DEFAULT-FEATURES"><span class="nav-number">1.1.</span> <span class="nav-text">DEFAULT_FEATURES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FEATURE-CUSTOM-TITLE"><span class="nav-number">1.2.</span> <span class="nav-text">FEATURE_CUSTOM_TITLE</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#详解"><span class="nav-number">1.</span> <span class="nav-text">详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DEFAULT-FEATURES"><span class="nav-number">1.1.</span> <span class="nav-text">DEFAULT_FEATURES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FEATURE-CUSTOM-TITLE"><span class="nav-number">1.2.</span> <span class="nav-text">FEATURE _ CUSTOM_TITLE</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FEATURE-INDETERMINATE-PROGRESS"><span class="nav-number">1.3.</span> <span class="nav-text">FEATURE  INDETERMINATE  PROGRESS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FEATURELEFT-ICON"><span class="nav-number">1.4.</span> <span class="nav-text">FEATURELEFT  ICON</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FEATURE-NO-TITLE"><span class="nav-number">1.5.</span> <span class="nav-text">FEATURE  NO  TITLE</span></a></li></ol></li></ol></div>
             
 
           </div>
