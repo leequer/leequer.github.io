@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 一、">
+<meta name="description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
 <meta name="keywords" content="移动架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android requestWindowFeature()的应用">
 <meta property="og:url" content="http://yoursite.com/2015/10/02/requestWindowFeature()的应用/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 一、">
+<meta property="og:description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-05T07:48:30.780Z">
+<meta property="og:image" content="http://yoursite.com/img/1615296400-0.png">
+<meta property="og:image" content="http://yoursite.com/img/1615293304-1.png">
+<meta property="og:image" content="http://yoursite.com/img/16152aC1-2.png">
+<meta property="og:updated_time" content="2018-02-05T08:16:37.406Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android requestWindowFeature()的应用">
-<meta name="twitter:description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 一、">
+<meta name="twitter:description" content="本文摘自：http://www.bkjia.com/Androidjc/837971.html 我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示. 　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。 #枚">
+<meta name="twitter:image" content="http://yoursite.com/img/1615296400-0.png">
 
 
 
@@ -313,7 +317,7 @@
         <p>本文摘自：<a href="http://www.bkjia.com/Androidjc/837971.html" title="http://www.bkjia.com/Androidjc/837971.html" target="_blank" rel="noopener">http://www.bkjia.com/Androidjc/837971.html</a></p>
 <p>我们在开发程序是经常会需要软件全屏显示、自定义标题（使用按钮等控件）和其他的需求，今天这一讲就是如何控制Android应用程序的窗体显示.</p>
 <p>　　首先介绍一个重要方法那就是requestWindowFeature(featrueId),它的功能是启用窗体的扩展特性。参数是Window类中定义的常量。</p>
-<p>一、枚举常量</p>
+<p>#枚举常量</p>
 <p>1.DEFAULT_FEATURES：系统默认状态，一般不需要指定</p>
 <p>2.FEATURE_CONTEXT_MENU：启用ContextMenu，默认该项已启用，一般无需指定</p>
 <p>3.FEATURE_CUSTOM_TITLE：自定义标题。当需要自定义标题时必须指定。如：标题是一个按钮时</p>
@@ -323,16 +327,49 @@
 <p>7.FEATURE_OPTIONS_PANEL：启用“选项面板”功能，默认已启用。</p>
 <p>8.FEATURE_PROGRESS：进度指示器功能</p>
 <p>9.FEATURE_RIGHT_ICON:标题栏右侧的图标</p>
-<p>二、详解</p>
-<p>默认显示状态</p>
-<p>图1默认</p>
-<p>1.FEATURE_CUSTOM_TITLE详解</p>
-<p>this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);<br>        setContentView(R.layout.main);</p>
-<p>图2 无标题</p>
-<p>这是因为没设置Featrue</p>
-<p>在上面代码后加：getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);　</p>
+<h2 id="详解"><a href="#详解" class="headerlink" title="详解"></a>详解</h2><h3 id="DEFAULT-FEATURES"><a href="#DEFAULT-FEATURES" class="headerlink" title="DEFAULT_FEATURES"></a>DEFAULT_FEATURES</h3><ul>
+<li>默认显示状态 </li>
+<li>代码:不需要特殊指定</li>
+<li>效果图</li>
+</ul>
+<p><img src="/img/1615296400-0.png" alt="图1默认"></p>
+<h3 id="FEATURE-CUSTOM-TITLE"><a href="#FEATURE-CUSTOM-TITLE" class="headerlink" title="FEATURE_CUSTOM_TITLE"></a>FEATURE_CUSTOM_TITLE</h3><ul>
+<li></li>
+<li><p>代码：</p>
+<p>  this.requestWindowFeature(Window.FEATURE_CUSTOM_TITLE);<br>  setContentView(R.layout.main);</p>
+</li>
+<li><p>效果图</p>
+<p><img src="/img/1615293304-1.png" alt="图2 无标题"></p>
+</li>
+<li><p>没有内容 这是因为没设置Featrue</p>
+</li>
+<li><p>在上面代码后加：</p>
+<pre><code>getWindow().setFeatureInt(Window.FEATURE_CUSTOM_TITLE, R.layout.title);　
+</code></pre></li>
+<li><p>新建title.xml文件</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;LinearLayout
+  xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+  android:layout_width=&quot;wrap_content&quot;
+  android:layout_height=&quot;wrap_content&quot; &gt;
+
+  &lt;ImageView android:layout_width=&quot;wrap_content&quot;  
+        android:layout_height=&quot;wrap_content&quot;  
+        android:src=&quot;@drawable/icon&quot;/&gt;
+   &lt;TextView android:id=&quot;@+id/text&quot;  
+        android:layout_width=&quot;wrap_content&quot;  
+        android:layout_height=&quot;wrap_content&quot;  
+        android:layout_alignParentLeft=&quot;true&quot;  
+        android:text=&quot;文本&quot; /&gt;  
+
+&lt;/LinearLayout&gt;
+</code></pre></li>
+</ul>
 <p>　</p>
-<p>图3自定义标题</p>
+<ul>
+<li>效果图</li>
+</ul>
+<p><img src="/img/16152aC1-2.png" alt="图3自定义标题"></p>
 <p>自定义标题完成，它是一个xml文件布局</p>
 <p>title.xml</p>
 <p>&lt;?xml version=”1.0” encoding=”utf-8”?&gt;</p>
@@ -468,8 +505,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -536,6 +582,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#详解"><span class="nav-number">1.</span> <span class="nav-text">详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DEFAULT-FEATURES"><span class="nav-number">1.1.</span> <span class="nav-text">DEFAULT_FEATURES</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#FEATURE-CUSTOM-TITLE"><span class="nav-number">1.2.</span> <span class="nav-text">FEATURE_CUSTOM_TITLE</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
