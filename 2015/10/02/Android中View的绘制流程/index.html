@@ -88,7 +88,7 @@
 <meta property="og:description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/2397836-f1f6a200704884a2.png">
-<meta property="og:updated_time" content="2018-02-05T07:23:21.988Z">
+<meta property="og:updated_time" content="2018-02-05T07:47:32.958Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中View的绘制流程">
 <meta name="twitter:description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
@@ -326,8 +326,7 @@
 </ul>
 <p>在Android系统中，窗口是独占一个Surface实例的显示区域，每个窗口的Surface由WindowManagerService分配。我们可以把Surface看作一块画布，应用可以通过Canvas或OpenGL在其上面作画。画好之后，通过SurfaceFlinger将多块Surface按照特定的顺序（即Z-order）进行混合，而后输出到FrameBuffer中，这样用户界面就得以显示。</p>
 <p>android.view.Window这个抽象类可以看做Android中对窗口这一宏观概念所做的约定，而PhoneWindow这个类是Framework为我们提供的Android窗口概念的具体实现。接下来我们先来介绍一下android.view.Window这个抽象类。</p>
-<p>####这个抽象类包含了三个核心组件：</p>
-<ul>
+<h4 id="这个抽象类包含了三个核心组件："><a href="#这个抽象类包含了三个核心组件：" class="headerlink" title="这个抽象类包含了三个核心组件："></a>这个抽象类包含了三个核心组件：</h4><ul>
 <li>WindowManager.LayoutParams: 窗口的布局参数；</li>
 <li>Callback: 窗口的回调接口，通常由Activity实现；</li>
 <li>ViewTree: 窗口所承载的控件树。</li>
@@ -608,8 +607,8 @@ switch (verticalGravity) {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/19/Ubuntu下修改环境变量的三种方法/" rel="prev" title="Ubuntu下修改环境变量的三种方法">
-                Ubuntu下修改环境变量的三种方法 <i class="fa fa-chevron-right"></i>
+              <a href="/2015/10/02/requestWindowFeature()的应用/" rel="prev" title="Android requestWindowFeature()的应用">
+                Android requestWindowFeature()的应用 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -692,7 +691,7 @@ switch (verticalGravity) {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">68</span>
+                  <span class="site-state-item-count">69</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -754,7 +753,7 @@ switch (verticalGravity) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Window"><span class="nav-number">1.</span> <span class="nav-text">Window</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PhoneWindow"><span class="nav-number">2.</span> <span class="nav-text">PhoneWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从setContentView-说开去"><span class="nav-number">3.</span> <span class="nav-text">从setContentView()说开去</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Window"><span class="nav-number">1.</span> <span class="nav-text">Window</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#这个抽象类包含了三个核心组件："><span class="nav-number">1.1.</span> <span class="nav-text">这个抽象类包含了三个核心组件：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PhoneWindow"><span class="nav-number">2.</span> <span class="nav-text">PhoneWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从setContentView-说开去"><span class="nav-number">3.</span> <span class="nav-text">从setContentView()说开去</span></a></li></ol></div>
             
 
           </div>
