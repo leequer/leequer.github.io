@@ -88,7 +88,7 @@
 <meta property="og:description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/2397836-f1f6a200704884a2.png">
-<meta property="og:updated_time" content="2018-02-05T09:33:02.554Z">
+<meta property="og:updated_time" content="2018-02-06T03:36:00.376Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中View的绘制流程">
 <meta name="twitter:description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
@@ -430,7 +430,7 @@ public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean a
     + &quot;ViewGroup root and attachToRoot=true&quot;);
         }
 
-        // 递归地填充布局
+        // 递归地填充布局---@1
         rInflate(parser, root, inflaterContext, attrs, false);
      } else {
         // temp为xml布局文件的根View
@@ -473,7 +473,7 @@ public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean a
     return result;
   }
 }
-</code></pre><p>在上面的源码中，首先对于布局文件中的 merge 标签进行单独处理，调用rInflate()方法来递归填充布局。这个方法的源码如下：</p>
+</code></pre><p>在上面的源码中，首先对于布局文件中的 merge 标签进行单独处理，@1处调用rInflate()方法来递归填充布局。这个方法的源码如下：</p>
 <pre><code>void rInflate(XmlPullParser parser, View parent, Context context,
     AttributeSet attrs, boolean finishInflate) throws XmlPullParserException, IOException {
     // 获取当前标记的深度，根标记的深度为0
@@ -504,7 +504,7 @@ public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean a
         final View view = createViewFromTag(parent, name, context, attrs);
         final ViewGroup viewGroup = (ViewGroup) parent;
         final ViewGroup.LayoutParams params=viewGroup.generateLayoutParams(attrs);
-        // 递归地加载子View
+        // 递归地加载子View  --@2
         rInflateChildren(parser, view, attrs, true);
         viewGroup.addView(view, params);
       }
@@ -514,96 +514,322 @@ public View inflate(@LayoutRes int resource, @Nullable ViewGroup root, boolean a
         parent.onFinishInflate();
     }
 }
-</code></pre><p>我们可以看到，上面的inflate()和rInflate()方法中都调用了rInflateChildren()方法，这个方法的源码如下：</p>
-<p>1<br>2<br>3<br>final void rInflateChildren(XmlPullParser parser, View parent, AttributeSet attrs, boolean finishInflate) throws XmlPullParserException, IOException {<br>    rInflate(parser, parent, parent.getContext(), attrs, finishInflate);<br>}<br>从源码中我们可以知道，rInflateChildren()方法实际上调用了rInflate()方法。</p>
-<p>到这里，setContentView()的整体执行流程我们就分析完了，至此我们已经完成了Activity的ContentView的创建与设置工作。接下来，我们开始进入正题，分析View的绘制流程。</p>
-<p>ViewRoot<br>在介绍View的绘制前，首先我们需要知道是谁负责执行View绘制的整个流程。实际上，View的绘制是由ViewRoot来负责的。每个应用程序窗口的decorView都有一个与之关联的ViewRoot对象，这种关联关系是由WindowManager来维护的。</p>
-<p>那么decorView与ViewRoot的关联关系是在什么时候建立的呢？答案是Activity启动时，ActivityThread.handleResumeActivity()方法中建立了它们两者的关联关系。这里我们不具体分析它们建立关联的时机与方式，感兴趣的同学可以参考相关源码。下面我们直入主题，分析一下ViewRoot是如何完成View的绘制的。</p>
-<p>View绘制的起点<br>当建立好了decorView与ViewRoot的关联后，ViewRoot类的requestLayout()方法会被调用，以完成应用程序用户界面的初次布局。实际被调用的是ViewRootImpl类的requestLayout()方法，这个方法的源码如下：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>@Override<br>public void requestLayout() {<br>  if (!mHandlingLayoutInLayoutRequest) {<br>    // 检查发起布局请求的线程是否为主线程<br>    checkThread();<br>    mLayoutRequested = true;<br>    scheduleTraversals();<br>  }<br>}<br>上面的方法中调用了scheduleTraversals()方法来调度一次完成的绘制流程，该方法会向主线程发送一个“遍历”消息，最终会导致ViewRootImpl的performTraversals()方法被调用。下面，我们以performTraversals()为起点，来分析View的整个绘制流程。</p>
-<p>三个阶段<br>View的整个绘制流程可以分为以下三个阶段：</p>
-<p>measure: 判断是否需要重新计算View的大小，需要的话则计算；<br>layout: 判断是否需要重新计算View的位置，需要的话则计算；<br>draw: 判断是否需要重新绘制View，需要的话则重绘制。<br>这三个子阶段可以用下图来描述：</p>
-<p>measure阶段<br>此阶段的目的是计算出控件树中的各个控件要显示其内容的话，需要多大尺寸。起点是ViewRootImpl的measureHierarchy()方法，这个方法的源码如下：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>private boolean measureHierarchy(final View host, final WindowManager.LayoutParams lp, final Resources res,<br>    final int desiredWindowWidth, final int desiredWindowHeight) {<br>  // 传入的desiredWindowXxx为窗口尺寸<br>  int childWidthMeasureSpec;<br>  int childHeightMeasureSpec;<br>  boolean windowSizeMayChange = false;<br>  . . .<br>  boolean goodMeasure = false;</p>
-<p>  if (!goodMeasure) {<br>    childWidthMeasureSpec = getRootMeasureSpec(desiredWindowWidth, lp.width);<br>    childHeightMeasureSpec = getRootMeasureSpec(desiredWindowHeight, lp.height);<br>    performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);</p>
-<pre><code>if (mWidth != host.getMeasuredWidth() || mHeight != host.getMeasuredHeight()) {
-  windowSizeMayChange = true;
+</code></pre><p>我们可以看到，上面的inflate()和rInflate()方法中都调用了rInflateChildren()方法@2，这个方法的源码如下：</p>
+<pre><code>final void rInflateChildren(XmlPullParser parser, View parent, AttributeSet attrs, boolean finishInflate) throws XmlPullParserException, IOException {
+    rInflate(parser, parent, parent.getContext(), attrs, finishInflate);
 }
-</code></pre><p>  }<br>  return windowSizeMayChange;<br>}<br>上面的代码中调用getRootMeasureSpec()方法来获取根MeasureSpec，这个根MeasureSpec代表了对decorView的宽高的约束信息。继续分析之前，我们先来简单地介绍下MeasureSpec的概念。<br>MeasureSpec是一个32位整数，由SpecMode和SpecSize两部分组成，其中，高2位为SpecMode，低30位为SpecSize。SpecMode为测量模式，SpecSize为相应测量模式下的测量尺寸。View（包括普通View和ViewGroup）的SpecMode由本View的LayoutParams结合父View的MeasureSpec生成。<br>SpecMode的取值可为以下三种：</p>
-<p>EXACTLY: 对子View提出了一个确切的建议尺寸（SpecSize）；<br>AT_MOST: 子View的大小不得超过SpecSize；<br>UNSPECIFIED: 对子View的尺寸不作限制，通常用于系统内部。<br>传入performMeasure()方法的MeasureSpec的SpecMode为EXACTLY，SpecSize为窗口尺寸。<br>performMeasure()方法的源码如下：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>private void performMeasure(int childWidthMeasureSpec, int childHeightMeasureSpec) {<br>  . . .<br>  try {<br>    mView.measure(childWidthMeasureSpec, childHeightMeasureSpec);<br>  } finally {<br>    . . .<br>  }<br>}<br>上面代码中的mView即为decorView，也就是说会转向对View.measure()方法的调用，这个方法的源码如下：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>/**</p>
+</code></pre><p>从源码中我们可以知道，rInflateChildren()方法实际上调用了rInflate()方法。</p>
+<p>到这里，setContentView()的整体执行流程我们就分析完了，至此我们已经完成了Activity的ContentView的创建与设置工作。接下来，我们开始进入正题，分析View的绘制流程。</p>
+<h2 id="ViewRoot"><a href="#ViewRoot" class="headerlink" title="ViewRoot"></a>ViewRoot</h2><p>在介绍View的绘制前，首先我们需要知道是谁负责执行View绘制的整个流程。实际上，View的绘制是由ViewRoot来负责的。每个应用程序窗口的decorView都有一个与之关联的ViewRoot对象，这种关联关系是由WindowManager来维护的。</p>
+<p>那么decorView与ViewRoot的关联关系是在什么时候建立的呢？答案是Activity启动时，ActivityThread.handleResumeActivity()方法中建立了它们两者的关联关系。这里我们不具体分析它们建立关联的时机与方式，感兴趣的同学可以参考相关源码。下面我们直入主题，分析一下ViewRoot是如何完成View的绘制的。</p>
+<h3 id="View绘制的起点"><a href="#View绘制的起点" class="headerlink" title="View绘制的起点"></a>View绘制的起点</h3><p>当建立好了decorView与ViewRoot的关联后，ViewRoot类的requestLayout()方法会被调用，以完成应用程序用户界面的初次布局。实际被调用的是ViewRootImpl类的requestLayout()方法，这个方法的源码如下：</p>
+<pre><code>@Override
+public void requestLayout() {
+  if (!mHandlingLayoutInLayoutRequest) {
+    // 检查发起布局请求的线程是否为主线程 
+    checkThread();
+    mLayoutRequested = true;
+    scheduleTraversals();
+  }
+}
+</code></pre><p>上面的方法中调用了scheduleTraversals()方法来调度一次完成的绘制流程，该方法会向主线程发送一个“遍历”消息，最终会导致ViewRootImpl的performTraversals()方法被调用。下面，我们以performTraversals()为起点，来分析View的整个绘制流程。</p>
+<h3 id="三个阶段"><a href="#三个阶段" class="headerlink" title="三个阶段"></a>三个阶段</h3><p>View的整个绘制流程可以分为以下三个阶段：</p>
 <ul>
-<li>调用这个方法来算出一个View应该为多大。参数为父View对其宽高的约束信息。</li>
-<li><p>实际的测量工作在onMeasure()方法中进行<br>*/<br>public final void measure(int widthMeasureSpec, int heightMeasureSpec) {<br>. . .<br>// 判断是否需要重新布局</p>
-<p>// 若mPrivateFlags中包含PFLAG_FORCE_LAYOUT标记，则强制重新布局<br>// 比如调用View.requestLayout()会在mPrivateFlags中加入此标记<br>final boolean forceLayout = (mPrivateFlags &amp; PFLAG_FORCE_LAYOUT) == PFLAG_FORCE_LAYOUT;<br>final boolean specChanged = widthMeasureSpec != mOldWidthMeasureSpec<br>   || heightMeasureSpec != mOldHeightMeasureSpec;<br>final boolean isSpecExactly = MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY<br>   &amp;&amp; MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY;<br>final boolean matchesSpecSize = getMeasuredWidth() == MeasureSpec.getSize(widthMeasureSpec)<br>   &amp;&amp; getMeasuredHeight() == MeasureSpec.getSize(heightMeasureSpec);<br>final boolean needsLayout = specChanged<br>   &amp;&amp; (sAlwaysRemeasureExactly || !isSpecExactly || !matchesSpecSize);</p>
-<p>// 需要重新布局<br>if (forceLayout || needsLayout) {<br> . . .<br> // 先尝试从缓从中获取，若forceLayout为true或是缓存中不存在或是<br> // 忽略缓存，则调用onMeasure()重新进行测量工作<br> int cacheIndex = forceLayout ? -1 : mMeasureCache.indexOfKey(key);<br> if (cacheIndex &lt; 0 || sIgnoreMeasureCache) {<br>   // measure ourselves, this should set the measured dimension flag back<br>   onMeasure(widthMeasureSpec, heightMeasureSpec);<br>   . . .<br> } else {<br>   // 缓存命中，直接从缓存中取值即可，不必再测量<br>   long value = mMeasureCache.valueAt(cacheIndex);<br>   // Casting a long to int drops the high 32 bits, no mask needed<br>   setMeasuredDimensionRaw((int) (value &gt;&gt; 32), (int) value);<br>   . . .<br> }<br> . . .<br>}<br>mOldWidthMeasureSpec = widthMeasureSpec;<br>mOldHeightMeasureSpec = heightMeasureSpec;<br>mMeasureCache.put(key, ((long) mMeasuredWidth) &lt;&lt; 32 |<br>   (long) mMeasuredHeight &amp; 0xffffffffL); // suppress sign extension<br>}<br>从measure()方法的源码中我们可以知道，只有以下两种情况之一，才会进行实际的测量工作：</p>
+<li>measure: 判断是否需要重新计算View的大小，需要的话则计算；</li>
+<li>layout: 判断是否需要重新计算View的位置，需要的话则计算；</li>
+<li>draw: 判断是否需要重新绘制View，需要的话则重绘制。<br>这三个子阶段可以用下图来描述：</li>
+</ul>
+<h4 id="measure阶段"><a href="#measure阶段" class="headerlink" title="measure阶段"></a>measure阶段</h4><p>此阶段的目的是计算出控件树中的各个控件要显示其内容的话，需要多大尺寸。起点是ViewRootImpl的measureHierarchy()方法，这个方法的源码如下：</p>
+<pre><code>private boolean measureHierarchy(final View host, final WindowManager.LayoutParams lp, final Resources res,
+    final int desiredWindowWidth, final int desiredWindowHeight) {
+  // 传入的desiredWindowXxx为窗口尺寸
+  int childWidthMeasureSpec;
+  int childHeightMeasureSpec;
+  boolean windowSizeMayChange = false;
+  . . .
+  boolean goodMeasure = false;
+
+  if (!goodMeasure) {
+    childWidthMeasureSpec = getRootMeasureSpec(desiredWindowWidth, lp.width);
+    childHeightMeasureSpec = getRootMeasureSpec(desiredWindowHeight, lp.height);
+    performMeasure(childWidthMeasureSpec, childHeightMeasureSpec);
+
+    if (mWidth != host.getMeasuredWidth() || mHeight != host.getMeasuredHeight()) {
+      windowSizeMayChange = true;
+    }
+  }
+  return windowSizeMayChange;
+}
+</code></pre><p>上面的代码中调用getRootMeasureSpec()方法来获取根MeasureSpec，这个根MeasureSpec代表了对decorView的宽高的约束信息。继续分析之前，我们先来简单地介绍下MeasureSpec的概念。MeasureSpec是一个32位整数，由SpecMode和SpecSize两部分组成，其中，高2位为SpecMode，低30位为SpecSize。SpecMode为测量模式，SpecSize为相应测量模式下的测量尺寸。View（包括普通View和ViewGroup）的SpecMode由本View的LayoutParams结合父View的MeasureSpec生成。</p>
+<blockquote>
+<p>SpecMode的取值可为以下三种：</p>
+</blockquote>
+<ul>
+<li>EXACTLY: 对子View提出了一个确切的建议尺寸（SpecSize）；</li>
+<li>AT_MOST: 子View的大小不得超过SpecSize；</li>
+<li>UNSPECIFIED: 对子View的尺寸不作限制，通常用于系统内部。</li>
+</ul>
+<blockquote>
+<p>传入performMeasure()方法的MeasureSpec的SpecMode为EXACTLY，SpecSize为窗口尺寸。<br>performMeasure()方法的源码如下：</p>
+</blockquote>
+<pre><code>private void performMeasure(int childWidthMeasureSpec, int childHeightMeasureSpec) {
+  . . .
+  try {
+    mView.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+  } finally {
+    . . .
+  }
+}
+</code></pre><p>上面代码中的mView即为decorView，也就是说会转向对View.measure()方法的调用，这个方法的源码如下：</p>
+<pre><code>/**
+ * 调用这个方法来算出一个View应该为多大。参数为父View对其宽高的约束信息。
+ * 实际的测量工作在onMeasure()方法中进行
+ */
+public final void measure(int widthMeasureSpec, int heightMeasureSpec) {
+  . . .
+  // 判断是否需要重新布局
+
+  // 若mPrivateFlags中包含PFLAG_FORCE_LAYOUT标记，则强制重新布局
+  // 比如调用View.requestLayout()会在mPrivateFlags中加入此标记
+  final boolean forceLayout = (mPrivateFlags &amp; PFLAG_FORCE_LAYOUT) == PFLAG_FORCE_LAYOUT;
+  final boolean specChanged = widthMeasureSpec != mOldWidthMeasureSpec
+      || heightMeasureSpec != mOldHeightMeasureSpec;
+  final boolean isSpecExactly = MeasureSpec.getMode(widthMeasureSpec) == MeasureSpec.EXACTLY
+      &amp;&amp; MeasureSpec.getMode(heightMeasureSpec) == MeasureSpec.EXACTLY;
+  final boolean matchesSpecSize = getMeasuredWidth() == MeasureSpec.getSize(widthMeasureSpec)
+      &amp;&amp; getMeasuredHeight() == MeasureSpec.getSize(heightMeasureSpec);
+  final boolean needsLayout = specChanged
+      &amp;&amp; (sAlwaysRemeasureExactly || !isSpecExactly || !matchesSpecSize);
+
+  // 需要重新布局 
+  if (forceLayout || needsLayout) {
+    . . .
+    // 先尝试从缓从中获取，若forceLayout为true或是缓存中不存在或是
+    // 忽略缓存，则调用onMeasure()重新进行测量工作
+    int cacheIndex = forceLayout ? -1 : mMeasureCache.indexOfKey(key);
+    if (cacheIndex &lt; 0 || sIgnoreMeasureCache) {
+      // measure ourselves, this should set the measured dimension flag back
+      onMeasure(widthMeasureSpec, heightMeasureSpec);
+      . . .
+    } else {
+      // 缓存命中，直接从缓存中取值即可，不必再测量
+      long value = mMeasureCache.valueAt(cacheIndex);
+      // Casting a long to int drops the high 32 bits, no mask needed
+      setMeasuredDimensionRaw((int) (value &gt;&gt; 32), (int) value);
+      . . .
+    }
+    . . .
+  }
+  mOldWidthMeasureSpec = widthMeasureSpec;
+  mOldHeightMeasureSpec = heightMeasureSpec;
+  mMeasureCache.put(key, ((long) mMeasuredWidth) &lt;&lt; 32 |
+      (long) mMeasuredHeight &amp; 0xffffffffL); // suppress sign extension
+}
+</code></pre><blockquote>
+<p>从measure()方法的源码中我们可以知道，只有以下两种情况之一，才会进行实际的测量工作：</p>
+</blockquote>
+<ul>
+<li>forceLayout为true：这表示强制重新布局，可以通过View.requestLayout()来实现；</li>
+<li><p>needsLayout为true，这需要specChanged为true（表示本次传入的MeasureSpec与上次传入的不同），并且以下三个条件之一成立：</p>
+<ul>
+<li>sAlwaysRemeasureExactly为true: 该变量默认为false；</li>
+<li>isSpecExactly为false: 若父View对子View提出了精确的宽高约束，则该变量为true，否则为false</li>
+<li>matchesSpecSize为false: 表示父View的宽高尺寸要求与上次测量的结果不同</li>
+</ul>
 </li>
 </ul>
-<p>forceLayout为true：这表示强制重新布局，可以通过View.requestLayout()来实现；<br>needsLayout为true，这需要specChanged为true（表示本次传入的MeasureSpec与上次传入的不同），并且以下三个条件之一成立：<br>sAlwaysRemeasureExactly为true: 该变量默认为false；<br>isSpecExactly为false: 若父View对子View提出了精确的宽高约束，则该变量为true，否则为false<br>matchesSpecSize为false: 表示父View的宽高尺寸要求与上次测量的结果不同<br>对于decorView来说，实际执行测量工作的是FrameLayout的onMeasure()方法，该方法的源码如下：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>@Override<br>protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {<br>  int count = getChildCount();<br>  . . .<br>  int maxHeight = 0;<br>  int maxWidth = 0;</p>
-<p>  int childState = 0;<br>  for (int i = 0; i &lt; count; i++) {<br>    final View child = getChildAt(i);<br>    if (mMeasureAllChildren || child.getVisibility() != GONE) {<br>      measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);<br>      final LayoutParams lp = (LayoutParams) child.getLayoutParams();<br>      maxWidth = Math.max(maxWidth,<br>          child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin);<br>      maxHeight = Math.max(maxHeight,<br>          child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin);<br>      childState = combineMeasuredStates(childState, child.getMeasuredState());</p>
-<pre><code>  . . .
+<blockquote>
+<p>对于decorView来说，实际执行测量工作的是FrameLayout的onMeasure()方法，该方法的源码如下：</p>
+</blockquote>
+<pre><code>@Override
+protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+  int count = getChildCount();
+  . . .
+  int maxHeight = 0;
+  int maxWidth = 0;
+
+  int childState = 0;
+  for (int i = 0; i &lt; count; i++) {
+    final View child = getChildAt(i);
+    if (mMeasureAllChildren || child.getVisibility() != GONE) {
+      measureChildWithMargins(child, widthMeasureSpec, 0, heightMeasureSpec, 0);
+      final LayoutParams lp = (LayoutParams) child.getLayoutParams();
+      maxWidth = Math.max(maxWidth,
+          child.getMeasuredWidth() + lp.leftMargin + lp.rightMargin);
+      maxHeight = Math.max(maxHeight,
+          child.getMeasuredHeight() + lp.topMargin + lp.bottomMargin);
+      childState = combineMeasuredStates(childState, child.getMeasuredState());
+
+      . . .
+    }
+  }
+
+  // Account for padding too
+  maxWidth += getPaddingLeftWithForeground() + getPaddingRightWithForeground();
+  maxHeight += getPaddingTopWithForeground() + getPaddingBottomWithForeground();
+
+  // Check against our minimum height and width
+  maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());
+  maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());
+
+  // Check against our foreground&apos;s minimum height and width
+  final Drawable drawable = getForeground();
+  if (drawable != null) {
+    maxHeight = Math.max(maxHeight, drawable.getMinimumHeight());
+    maxWidth = Math.max(maxWidth, drawable.getMinimumWidth());
+  }
+
+  setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),
+        resolveSizeAndState(maxHeight, heightMeasureSpec,
+        childState &lt;&lt; MEASURED_HEIGHT_STATE_SHIFT));
+  . . .
 }
-</code></pre><p>  }</p>
-<p>  // Account for padding too<br>  maxWidth += getPaddingLeftWithForeground() + getPaddingRightWithForeground();<br>  maxHeight += getPaddingTopWithForeground() + getPaddingBottomWithForeground();</p>
-<p>  // Check against our minimum height and width<br>  maxHeight = Math.max(maxHeight, getSuggestedMinimumHeight());<br>  maxWidth = Math.max(maxWidth, getSuggestedMinimumWidth());</p>
-<p>  // Check against our foreground’s minimum height and width<br>  final Drawable drawable = getForeground();<br>  if (drawable != null) {<br>    maxHeight = Math.max(maxHeight, drawable.getMinimumHeight());<br>    maxWidth = Math.max(maxWidth, drawable.getMinimumWidth());<br>  }</p>
-<p>  setMeasuredDimension(resolveSizeAndState(maxWidth, widthMeasureSpec, childState),<br>        resolveSizeAndState(maxHeight, heightMeasureSpec,<br>        childState &lt;&lt; MEASURED_HEIGHT_STATE_SHIFT));<br>  . . .<br>}<br>FrameLayout是ViewGroup的子类，后者有一个View[]类型的成员变量mChildren，代表了其子View集合。通过getChildAt(i)能获取指定索引处的子View，通过getChildCount()可以获得子View的总数。</p>
+</code></pre><p>FrameLayout是ViewGroup的子类，后者有一个View[]类型的成员变量mChildren，代表了其子View集合。通过getChildAt(i)能获取指定索引处的子View，通过getChildCount()可以获得子View的总数。</p>
 <p>在上面的源码中，首先调用measureChildWithMargins()方法对所有子View进行了一遍测量，并计算出所有子View的最大宽度和最大高度。而后将得到的最大高度和宽度加上padding，这里的padding包括了父View的padding和前景区域的padding。然后会检查是否设置了最小宽高，并与其比较，将两者中较大的设为最终的最大宽高。最后，若设置了前景图像，我们还要检查前景图像的最小宽高。</p>
 <p>经过了以上一系列步骤后，我们就得到了maxHeight和maxWidth的最终值，表示当前容器View用这个尺寸就能够正常显示其所有子View（同时考虑了padding和margin）。而后我们需要调用resolveSizeAndState()方法来结合传来的MeasureSpec来获取最终的测量宽高，并保存到mMeasuredWidth与mMeasuredHeight成员变量中。</p>
-<p>从以上代码的执行流程中，我们可以看到，容器View通过measureChildWithMargins()方法对所有子View进行测量后，才能得到自身的测量结果。也就是说，对于ViewGroup及其子类来说，要先完成子View的测量，再进行自身的测量（考虑进padding等）。<br>接下来我们来看下ViewGroup的measureChildWithMargins()方法的实现：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>protected void measureChildWithMargins(View child,<br>  int parentWidthMeasureSpec, int widthUsed,<br>  int parentHeightMeasureSpec, int heightUsed) {<br>  final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();<br>  final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,<br>      mPaddingLeft + mPaddingRight + lp.leftMargin + lp.rightMargin + widthUsed, lp.width);<br>  final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec<br>      mPaddingTop + mPaddingBottom + lp.topMargin + lp.bottomMargin + heightUsed, lp.height);</p>
-<p>  child.measure(childWidthMeasureSpec, childHeightMeasureSpec);</p>
-<p>}<br>由以上代码我们可以知道，对于ViewGroup来说，它会调用child.measure()来完成子View的测量。传入ViewGroup的MeasureSpec是它的父View用于约束其测量的，那么ViewGroup本身也需要生成一个childMeasureSpec来限制它的子View的测量工作。这个childMeasureSpec就由getChildMeasureSpec()方法生成。接下来我们来分析这个方法：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>public static int getChildMeasureSpec(int spec, int padding, int childDimension) {<br>  // spec为父View的MeasureSpec<br>  // padding为父View在相应方向的已用尺寸加上父View的padding和子View的margin<br>  // childDimension为子View的LayoutParams的值<br>  int specMode = MeasureSpec.getMode(spec);<br>  int specSize = MeasureSpec.getSize(spec);</p>
-<p>  // 现在size的值为父View相应方向上的可用大小<br>  int size = Math.max(0, specSize - padding);</p>
-<p>  int resultSize = 0;<br>  int resultMode = 0;</p>
-<p>  switch (specMode) {<br>    // Parent has imposed an exact size on us<br>    case MeasureSpec.EXACTLY:<br>      if (childDimension &gt;= 0) {<br>        // 表示子View的LayoutParams指定了具体大小值（xx dp）<br>        resultSize = childDimension;<br>        resultMode = MeasureSpec.EXACTLY;<br>      } else if (childDimension == LayoutParams.MATCH_PARENT) {<br>        // 子View想和父View一样大<br>        resultSize = size;<br>        resultMode = MeasureSpec.EXACTLY;<br>      } else if (childDimension == LayoutParams.WRAP_CONTENT) {<br>        // 子View想自己决定其尺寸，但不能比父View大<br>        resultSize = size;<br>        resultMode = MeasureSpec.AT_MOST;<br>      }<br>      break;</p>
-<pre><code>// Parent has imposed a maximum size on us
-case MeasureSpec.AT_MOST:
-  if (childDimension &gt;= 0) {
-    // 子View指定了具体大小
-    resultSize = childDimension;
-    resultMode = MeasureSpec.EXACTLY;
-  } else if (childDimension == LayoutParams.MATCH_PARENT) {
-    // 子View想跟父View一样大，但是父View的大小未固定下来
-    // 所以指定约束子View不能比父View大
-    resultSize = size;
-    resultMode = MeasureSpec.AT_MOST;
-  } else if (childDimension == LayoutParams.WRAP_CONTENT) {
-    // 子View想要自己决定尺寸，但不能比父View大
-    resultSize = size;
-    resultMode = MeasureSpec.AT_MOST;
-  }
-  break;
+<p>从以上代码的执行流程中，我们可以看到，容器View通过measureChildWithMargins()方法对所有子View进行测量后，才能得到自身的测量结果。也就是说，对于ViewGroup及其子类来说，要先完成子View的测量，再进行自身的测量（考虑进padding等）。</p>
+<blockquote>
+<p>接下来我们来看下ViewGroup的measureChildWithMargins()方法的实现：</p>
+</blockquote>
+<pre><code>protected void measureChildWithMargins(View child,
+  int parentWidthMeasureSpec, int widthUsed,
+  int parentHeightMeasureSpec, int heightUsed) {
+  final MarginLayoutParams lp = (MarginLayoutParams) child.getLayoutParams();
+  final int childWidthMeasureSpec = getChildMeasureSpec(parentWidthMeasureSpec,
+      mPaddingLeft + mPaddingRight + lp.leftMargin + lp.rightMargin + widthUsed, lp.width);
+  final int childHeightMeasureSpec = getChildMeasureSpec(parentHeightMeasureSpec
+      mPaddingTop + mPaddingBottom + lp.topMargin + lp.bottomMargin + heightUsed, lp.height);
 
-  . . .
-</code></pre><p>  }</p>
-<p>  //noinspection ResourceType<br>  return MeasureSpec.makeMeasureSpec(resultSize, resultMode);<br>}<br>上面的方法展现了根据父View的MeasureSpec和子View的LayoutParams生成子View的MeasureSpec的过程， 子View的LayoutParams表示了子View的期待大小。这个产生的MeasureSpec用于指导子View自身的测量结果的确定。<br>在上面的代码中，我们可以看到当ParentMeasureSpec的SpecMode为EXACTLY时，表示父View对子View指定了确切的宽高限制。此时根据子View的LayoutParams的不同，分以下三种情况：</p>
+  child.measure(childWidthMeasureSpec, childHeightMeasureSpec);
+
+}
+</code></pre><p>由以上代码我们可以知道，对于ViewGroup来说，它会调用child.measure()来完成子View的测量。传入ViewGroup的MeasureSpec是它的父View用于约束其测量的，那么ViewGroup本身也需要生成一个childMeasureSpec来限制它的子View的测量工作。这个childMeasureSpec就由getChildMeasureSpec()方法生成。接下来我们来分析这个方法：</p>
+<pre><code>public static int getChildMeasureSpec(int spec, int padding, int childDimension) {
+  // spec为父View的MeasureSpec
+  // padding为父View在相应方向的已用尺寸加上父View的padding和子View的margin
+  // childDimension为子View的LayoutParams的值
+  int specMode = MeasureSpec.getMode(spec);
+  int specSize = MeasureSpec.getSize(spec);
+
+  // 现在size的值为父View相应方向上的可用大小
+  int size = Math.max(0, specSize - padding);
+
+  int resultSize = 0;
+  int resultMode = 0;
+
+  switch (specMode) {
+    // Parent has imposed an exact size on us
+    case MeasureSpec.EXACTLY:
+      if (childDimension &gt;= 0) {
+        // 表示子View的LayoutParams指定了具体大小值（xx dp）
+        resultSize = childDimension;
+        resultMode = MeasureSpec.EXACTLY;
+      } else if (childDimension == LayoutParams.MATCH_PARENT) {
+        // 子View想和父View一样大
+        resultSize = size;
+        resultMode = MeasureSpec.EXACTLY;
+      } else if (childDimension == LayoutParams.WRAP_CONTENT) {
+        // 子View想自己决定其尺寸，但不能比父View大
+        resultSize = size;
+        resultMode = MeasureSpec.AT_MOST;
+      }
+      break;
+
+    // Parent has imposed a maximum size on us
+    case MeasureSpec.AT_MOST:
+      if (childDimension &gt;= 0) {
+        // 子View指定了具体大小
+        resultSize = childDimension;
+        resultMode = MeasureSpec.EXACTLY;
+      } else if (childDimension == LayoutParams.MATCH_PARENT) {
+        // 子View想跟父View一样大，但是父View的大小未固定下来
+        // 所以指定约束子View不能比父View大
+        resultSize = size;
+        resultMode = MeasureSpec.AT_MOST;
+      } else if (childDimension == LayoutParams.WRAP_CONTENT) {
+        // 子View想要自己决定尺寸，但不能比父View大
+        resultSize = size;
+        resultMode = MeasureSpec.AT_MOST;
+      }
+      break;
+
+      . . .
+  }
+
+  //noinspection ResourceType
+  return MeasureSpec.makeMeasureSpec(resultSize, resultMode);
+}
+</code></pre><p>上面的方法展现了根据父View的MeasureSpec和子View的LayoutParams生成子View的MeasureSpec的过程， 子View的LayoutParams表示了子View的期待大小。这个产生的MeasureSpec用于指导子View自身的测量结果的确定。<br>在上面的代码中，我们可以看到当ParentMeasureSpec的SpecMode为EXACTLY时，表示父View对子View指定了确切的宽高限制。此时根据子View的LayoutParams的不同，分以下三种情况：</p>
 <p>具体大小（childDimension）：这种情况下令子View的SpecSize为childDimension，即子View在LayoutParams指定的具体大小值；令子View的SpecMode为EXACTLY，即这种情况下若该子View为容器View，它也有能力给其子View指定确切的宽高限制（子View只能在这个宽高范围内），若为普通View，它的最终测量大小就为childDimension。<br>match_parent：此时表示子View想和父View一样大。这种情况下得到的子View的SpecMode与上种情况相同，只不过SpecSize为size，即父View的剩余可用大小。<br>wrap_content: 这表示了子View想自己决定自己的尺寸（根据其内容的大小动态决定）。这种情况下子View的确切测量大小只能在其本身的onMeasure()方法中计算得出，父View此时无从知晓。所以暂时将子View的SpecSize设为size（父View的剩余大小）；令子View的SpecMode为AT_MOST，表示了若子View为ViewGroup，它没有能力给其子View指定确切的宽高限制，毕竟它本身的测量宽高还悬而未定。<br>当ParentMeasureSpec的SpecMode为AT_MOST时，我们也可以根据子View的LayoutParams的不同来分三种情况讨论：</p>
 <p>具体大小：这时令子View的SpecSize为childDimension，SpecMode为EXACTLY。<br>match_parent：表示子View想和父View一样大，故令子View的SpecSize为size，但是由于父View本身的测量宽高还无从确定，所以只是暂时令子View的测量结果为父View目前的可用大小。这时令子View的SpecMode为AT_MOST。<br>wrap_content：表示子View想自己决定大小（根据其内容动态确定）。然而这时父View还无法确定其自身的测量宽高，所以暂时令子View的SpecSize为size，SpecMode为AT_MOST。<br>从上面的分析我们可以得到一个通用的结论，当子View的测量结果能够确定时，子View的SpecMode就为EXACTLY；当子View的测量结果还不能确定（只是暂时设为某个值）时，子View的SpecMode为AT_MOST。<br>在measureChildWithMargins()方法中，获取了知道子View测量的MeasureSpec后，接下来就要调用child.measure()方法，并把获取到的childMeasureSpec传入。这时便又会调用onMeasure()方法，若此时的子View为ViewGroup的子类，便会调用相应容器类的onMeasure()方法，其他容器View的onMeasure()方法与FrameLayout的onMeasure()方法执行过程相似。</p>
 <p>下面会我们回到FrameLayout的onMeasure()方法，当递归地执行完所有子View的测量工作后，会调用resolveSizeAndState()方法来根据之前的测量结果确定最终对FrameLayout的测量结果并存储起来。View类的resolveSizeAndState()方法的源码如下：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>public static int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {<br>  final int specMode = MeasureSpec.getMode(measureSpec);<br>  final int specSize = MeasureSpec.getSize(measureSpec);<br>  final int result;<br>  switch (specMode) {<br>    case MeasureSpec.AT_MOST:<br>      if (specSize &lt; size) {<br>        // 父View给定的最大尺寸小于完全显示内容所需尺寸<br>        // 则在测量结果上加上MEASURED_STATE_TOO_SMALL<br>        result = specSize | MEASURED_STATE_TOO_SMALL;<br>      } else {<br>       result = size;<br>      }<br>      break;</p>
-<pre><code>case MeasureSpec.EXACTLY:
-  // 若specMode为EXACTLY，则不考虑size，result直接赋值为specSize
-  result = specSize;
-  break;
+<pre><code>public static int resolveSizeAndState(int size, int measureSpec, int childMeasuredState) {
+  final int specMode = MeasureSpec.getMode(measureSpec);
+  final int specSize = MeasureSpec.getSize(measureSpec);
+  final int result;
+  switch (specMode) {
+    case MeasureSpec.AT_MOST:
+      if (specSize &lt; size) {
+        // 父View给定的最大尺寸小于完全显示内容所需尺寸
+        // 则在测量结果上加上MEASURED_STATE_TOO_SMALL
+        result = specSize | MEASURED_STATE_TOO_SMALL;
+      } else {
+       result = size;
+      }
+      break;
 
-case MeasureSpec.UNSPECIFIED:
-default:
-  result = size;
-</code></pre><p>  }</p>
-<p>  return result | (childMeasuredState &amp; MEASURED_STATE_MASK);</p>
-<p>}<br>对于普通View，会调用View类的onMeasure()方法来进行实际的测量工作，该方法的源码如下：</p>
-<p>1<br>2<br>3<br>4<br>protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {<br>    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),<br>        getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));<br>}<br>对于普通View（非ViewgGroup）来说，只需完成自身的测量工作即可。以上代码中通过setMeasuredDimension()方法设置测量的结果，具体来说是以getDefaultSize()方法的返回值来作为测量结果。getDefaultSize()方法的源码如下：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>public static int getDefaultSize(int size, int measureSpec) {<br>  int result = size;<br>  int specMode = MeasureSpec.getMode(measureSpec);<br>  int specSize = MeasureSpec.getSize(measureSpec);<br>  switch (specMode) {<br>    case MeasureSpec.UNSPECIFIED:<br>      result = size;<br>      break;<br>    case MeasureSpec.AT_MOST:<br>    case MeasureSpec.EXACTLY:<br>      result = specSize;<br>      break;<br>  }<br>  return result;<br>}<br>由以上代码我们可以看到，View的getDefaultSize()方法对于AT_MOST和EXACTLY这两种情况都返回了SpecSize作为result。所以若我们的自定义View直接继承了View类，我们就要自己对wrap_content (对应了AT_MOST)这种情况进行处理，否则对自定义View指定wrap_content就和match_parent效果一样了。</p>
-<p>layout阶段<br>layout阶段的基本思想也是由根View开始，递归地完成整个控件树的布局（layout）工作。</p>
+    case MeasureSpec.EXACTLY:
+      // 若specMode为EXACTLY，则不考虑size，result直接赋值为specSize
+      result = specSize;
+      break;
+
+    case MeasureSpec.UNSPECIFIED:
+    default:
+      result = size;
+  }
+
+  return result | (childMeasuredState &amp; MEASURED_STATE_MASK);
+
+}
+</code></pre><p>对于普通View，会调用View类的onMeasure()方法来进行实际的测量工作，该方法的源码如下：</p>
+<pre><code>protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    setMeasuredDimension(getDefaultSize(getSuggestedMinimumWidth(), widthMeasureSpec),
+        getDefaultSize(getSuggestedMinimumHeight(), heightMeasureSpec));
+}
+</code></pre><p>对于普通View（非ViewgGroup）来说，只需完成自身的测量工作即可。以上代码中通过setMeasuredDimension()方法设置测量的结果，具体来说是以getDefaultSize()方法的返回值来作为测量结果。getDefaultSize()方法的源码如下：</p>
+<pre><code>public static int getDefaultSize(int size, int measureSpec) {
+  int result = size;
+  int specMode = MeasureSpec.getMode(measureSpec);
+  int specSize = MeasureSpec.getSize(measureSpec);
+  switch (specMode) {
+    case MeasureSpec.UNSPECIFIED:
+      result = size;
+      break;
+    case MeasureSpec.AT_MOST:
+    case MeasureSpec.EXACTLY:
+      result = specSize;
+      break;
+  }
+  return result;
+}
+</code></pre><p>由以上代码我们可以看到，View的getDefaultSize()方法对于AT_MOST和EXACTLY这两种情况都返回了SpecSize作为result。所以若我们的自定义View直接继承了View类，我们就要自己对wrap_content (对应了AT_MOST)这种情况进行处理，否则对自定义View指定wrap_content就和match_parent效果一样了。</p>
+<h4 id="layout阶段"><a href="#layout阶段" class="headerlink" title="layout阶段"></a>layout阶段</h4><p>layout阶段的基本思想也是由根View开始，递归地完成整个控件树的布局（layout）工作。</p>
 <p>View.layout()<br>我们把对decorView的layout()方法的调用作为布局整个控件树的起点，实际上调用的是View类的layout()方法，源码如下：</p>
-<p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>public void layout(int l, int t, int r, int b) {<br>    // l为本View左边缘与父View左边缘的距离<br>    // t为本View上边缘与父View上边缘的距离<br>    // r为本View右边缘与父View左边缘的距离<br>    // b为本View下边缘与父View上边缘的距离<br>    . . .<br>    boolean changed = isLayoutModeOptical(mParent) ?            setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);<br>    if (changed || (mPrivateFlags &amp; PFLAG_LAYOUT_REQUIRED) == PFLAG_LAYOUT_REQUIRED) {<br>        onLayout(changed, l, t, r, b);<br>        . . .</p>
-<pre><code>}
-. . .
-</code></pre><p>}<br>这个方法会调用setFrame()方法来设置View的mLeft、mTop、mRight和mBottom四个参数，这四个参数描述了View相对其父View的位置（分别赋值为l, t, r, b），在setFrame()方法中会判断View的位置是否发生了改变，若发生了改变，则需要对子View进行重新布局，对子View的局部是通过onLayout()方法实现了。由于普通View（ 非ViewGroup）不含子View，所以View类的onLayout()方法为空。因此接下来，我们看看ViewGroup类的onLayout()方法的实现。</p>
+<pre><code>public void layout(int l, int t, int r, int b) {
+    // l为本View左边缘与父View左边缘的距离
+    // t为本View上边缘与父View上边缘的距离
+    // r为本View右边缘与父View左边缘的距离
+    // b为本View下边缘与父View上边缘的距离
+    . . .
+    boolean changed = isLayoutModeOptical(mParent) ?            setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);
+    if (changed || (mPrivateFlags &amp; PFLAG_LAYOUT_REQUIRED) == PFLAG_LAYOUT_REQUIRED) {
+        onLayout(changed, l, t, r, b);
+        . . .
+
+    }
+    . . .
+}
+</code></pre><p>这个方法会调用setFrame()方法来设置View的mLeft、mTop、mRight和mBottom四个参数，这四个参数描述了View相对其父View的位置（分别赋值为l, t, r, b），在setFrame()方法中会判断View的位置是否发生了改变，若发生了改变，则需要对子View进行重新布局，对子View的局部是通过onLayout()方法实现了。由于普通View（ 非ViewGroup）不含子View，所以View类的onLayout()方法为空。因此接下来，我们看看ViewGroup类的onLayout()方法的实现。</p>
 <p>ViewGroup.onLayout()<br>实际上ViewGroup类的onLayout()方法是abstract，这是因为不同的布局管理器有着不同的布局方式。<br>这里我们以decorView，也就是FrameLayout的onLayout()方法为例，分析ViewGroup的布局过程：</p>
 <p>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65<br>66<br>67<br>68<br>69<br>@Override<br>protected void onLayout(boolean changed, int left, int top, int right, int bottom) {<br>  layoutChildren(left, top, right, bottom, false /<em> no force left gravity </em>/);<br>}</p>
 <p>void layoutChildren(int left, int top, int right, int bottom, boolean forceLeftGravity) {<br>  final int count = getChildCount();<br>  final int parentLeft = getPaddingLeftWithForeground();<br>  final int parentRight = right - left - getPaddingRightWithForeground();<br>  final int parentTop = getPaddingTopWithForeground();<br>  final int parentBottom = bottom - top - getPaddingBottomWithForeground();</p>
@@ -849,7 +1075,7 @@ switch (verticalGravity) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Window"><span class="nav-number">1.</span> <span class="nav-text">Window</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#这个抽象类包含了三个核心组件："><span class="nav-number">1.1.</span> <span class="nav-text">这个抽象类包含了三个核心组件：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PhoneWindow"><span class="nav-number">2.</span> <span class="nav-text">PhoneWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从setContentView-说开去"><span class="nav-number">3.</span> <span class="nav-text">从setContentView()说开去</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Window"><span class="nav-number">1.</span> <span class="nav-text">Window</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#这个抽象类包含了三个核心组件："><span class="nav-number">1.1.</span> <span class="nav-text">这个抽象类包含了三个核心组件：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PhoneWindow"><span class="nav-number">2.</span> <span class="nav-text">PhoneWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从setContentView-说开去"><span class="nav-number">3.</span> <span class="nav-text">从setContentView()说开去</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewRoot"><span class="nav-number"></span> <span class="nav-text">ViewRoot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#View绘制的起点"><span class="nav-number">1.</span> <span class="nav-text">View绘制的起点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三个阶段"><span class="nav-number">2.</span> <span class="nav-text">三个阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#measure阶段"><span class="nav-number">2.1.</span> <span class="nav-text">measure阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#layout阶段"><span class="nav-number">2.2.</span> <span class="nav-text">layout阶段</span></a></li></ol></li></ol></div>
             
 
           </div>
