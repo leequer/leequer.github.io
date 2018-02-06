@@ -88,7 +88,7 @@
 <meta property="og:description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/2397836-f1f6a200704884a2.png">
-<meta property="og:updated_time" content="2018-02-06T03:36:00.376Z">
+<meta property="og:updated_time" content="2018-02-06T03:46:50.169Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中View的绘制流程">
 <meta name="twitter:description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
@@ -316,7 +316,7 @@
 <p>本篇文章摘自<a href="https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0" title="https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0" target="_blank" rel="noopener">https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0</a>会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。<br>在进行实际的分析之前，我们先来看下面这张图：</p>
 <p><img src="/img/2397836-f1f6a200704884a2.png" alt=""></p>
 <p>我们来对上图做出简单解释：DecorView是一个应用窗口的根容器，它本质上是一个FrameLayout。DecorView有唯一一个子View，它是一个垂直LinearLayout，包含两个子元素，一个是TitleView（ActionBar的容器），另一个是ContentView（窗口内容的容器）。关于ContentView，它是一个FrameLayout（android.R.id.content)，我们平常用的setContentView就是设置它的子View。上图还表达了每个Activity都与一个Window（具体来说是PhoneWindow）相关联，用户界面则由Window所承载。</p>
-<h3 id="Window"><a href="#Window" class="headerlink" title="Window"></a>Window</h3><p>Window即窗口，这个概念在Android Framework中的实现为android.view.Window这个抽象类，这个抽象类是对Android系统中的窗口的抽象。在介绍这个类之前，我们先来看看究竟什么是窗口呢？</p>
+<h1 id="Window"><a href="#Window" class="headerlink" title="Window"></a>Window</h1><p>Window即窗口，这个概念在Android Framework中的实现为android.view.Window这个抽象类，这个抽象类是对Android系统中的窗口的抽象。在介绍这个类之前，我们先来看看究竟什么是窗口呢？</p>
 <p>实际上，窗口是一个宏观的思想，它是屏幕上用于绘制各种UI元素及响应用户输入事件的一个矩形区域。通常具备以下两个特点：</p>
 <ul>
 <li><p>独立绘制，不与其它界面相互影响；</p>
@@ -332,14 +332,14 @@
 <li>ViewTree: 窗口所承载的控件树。</li>
 </ul>
 <p>下面我们来看一下Android中Window的具体实现（也是唯一实现）——PhoneWindow。</p>
-<h3 id="PhoneWindow"><a href="#PhoneWindow" class="headerlink" title="PhoneWindow"></a>PhoneWindow</h3><ul>
+<h1 id="PhoneWindow"><a href="#PhoneWindow" class="headerlink" title="PhoneWindow"></a>PhoneWindow</h1><ul>
 <li><p>PhoneWindow这个类是Framework为我们提供的Android窗口的具体实现。</p>
 </li>
 <li><p>我们平时调用setContentView()方法设置Activity的用户界面时，实际上就完成了对所关联的PhoneWindow的ViewTree的设置。</p>
 </li>
 <li>我们还可以通过Activity类的<a href="https://leequer.github.io/2015/10/02/requestWindowFeature(" target="_blank" rel="noopener">requestWindowFeature()方法</a>%E7%9A%84%E5%BA%94%E7%94%A8/)来定制Activity关联PhoneWindow的外观，这个方法实际上做的是把我们所请求的窗口外观特性存储到了Window的mFeatures成员中，在窗口绘制阶段生成外观模板时，会根据mFeatures的值绘制特定外观。</li>
 </ul>
-<h3 id="从setContentView-说开去"><a href="#从setContentView-说开去" class="headerlink" title="从setContentView()说开去"></a>从setContentView()说开去</h3><p>在分析setContentView()方法前，我们需要明确：这个方法只是完成了Activity的ContentView的创建，而并没有执行View的绘制流程。</p>
+<h1 id="从setContentView-说开去"><a href="#从setContentView-说开去" class="headerlink" title="从setContentView()说开去"></a>从setContentView()说开去</h1><p>在分析setContentView()方法前，我们需要明确：这个方法只是完成了Activity的ContentView的创建，而并没有执行View的绘制流程。</p>
 <p>当我们自定义Activity继承自android.app.Activity时候，调用的setContentView()方法是Activity类的，源码如下：</p>
 <pre><code>public void setContentView(@LayoutRes int layoutResID) {   
   getWindow().setContentView(layoutResID);   
@@ -1075,7 +1075,7 @@ switch (verticalGravity) {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Window"><span class="nav-number">1.</span> <span class="nav-text">Window</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#这个抽象类包含了三个核心组件："><span class="nav-number">1.1.</span> <span class="nav-text">这个抽象类包含了三个核心组件：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#PhoneWindow"><span class="nav-number">2.</span> <span class="nav-text">PhoneWindow</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#从setContentView-说开去"><span class="nav-number">3.</span> <span class="nav-text">从setContentView()说开去</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewRoot"><span class="nav-number"></span> <span class="nav-text">ViewRoot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#View绘制的起点"><span class="nav-number">1.</span> <span class="nav-text">View绘制的起点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三个阶段"><span class="nav-number">2.</span> <span class="nav-text">三个阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#measure阶段"><span class="nav-number">2.1.</span> <span class="nav-text">measure阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#layout阶段"><span class="nav-number">2.2.</span> <span class="nav-text">layout阶段</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Window"><span class="nav-number">1.</span> <span class="nav-text">Window</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#这个抽象类包含了三个核心组件："><span class="nav-number">1.0.0.1.</span> <span class="nav-text">这个抽象类包含了三个核心组件：</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#PhoneWindow"><span class="nav-number">2.</span> <span class="nav-text">PhoneWindow</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#从setContentView-说开去"><span class="nav-number">3.</span> <span class="nav-text">从setContentView()说开去</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#ViewRoot"><span class="nav-number">3.1.</span> <span class="nav-text">ViewRoot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#View绘制的起点"><span class="nav-number">3.1.1.</span> <span class="nav-text">View绘制的起点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三个阶段"><span class="nav-number">3.1.2.</span> <span class="nav-text">三个阶段</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#measure阶段"><span class="nav-number">3.1.2.1.</span> <span class="nav-text">measure阶段</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#layout阶段"><span class="nav-number">3.1.2.2.</span> <span class="nav-text">layout阶段</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
