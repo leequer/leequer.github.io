@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="区块链," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="以太坊私有链搭建过程以及一些常用的操作： 系统和软件 Ubuntu kylin 16.04 LTS 64位 geth 1.8.1   geth 1.8.1 安装$ sudo add-apt-repository -y ppa:ethereum/ethereum $ sudo apt-get update $ sudo apt-get install ethereum 搭建私有链一、准备创世区块配置">
+<meta name="keywords" content="区块链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="以太坊-私有链的安装，启动，操作">
+<meta property="og:url" content="http://yoursite.com/2017/11/01/以太坊-私有链的安装，启动，操作/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="以太坊私有链搭建过程以及一些常用的操作： 系统和软件 Ubuntu kylin 16.04 LTS 64位 geth 1.8.1   geth 1.8.1 安装$ sudo add-apt-repository -y ppa:ethereum/ethereum $ sudo apt-get update $ sudo apt-get install ethereum 搭建私有链一、准备创世区块配置">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-03-05T03:56:10.043Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="以太坊-私有链的安装，启动，操作">
+<meta name="twitter:description" content="以太坊私有链搭建过程以及一些常用的操作： 系统和软件 Ubuntu kylin 16.04 LTS 64位 geth 1.8.1   geth 1.8.1 安装$ sudo add-apt-repository -y ppa:ethereum/ethereum $ sudo apt-get update $ sudo apt-get install ethereum 搭建私有链一、准备创世区块配置">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/01/以太坊-私有链的安装，启动，操作/"/>
+
+
+
+
+
+  <title>以太坊-私有链的安装，启动，操作 | 有志青年</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">有志青年</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/01/以太坊-私有链的安装，启动，操作/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">以太坊-私有链的安装，启动，操作</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-01T12:02:59+08:00">
+                2017-11-01
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2017/11/01/以太坊-私有链的安装，启动，操作/"class="leancloud_visitors" data-flag-title="以太坊-私有链的安装，启动，操作">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="以太坊私有链搭建过程以及一些常用的操作："><a href="#以太坊私有链搭建过程以及一些常用的操作：" class="headerlink" title="以太坊私有链搭建过程以及一些常用的操作："></a>以太坊私有链搭建过程以及一些常用的操作：</h1><blockquote>
+<p>系统和软件</p>
+<p>Ubuntu kylin 16.04 LTS 64位</p>
+<p>geth 1.8.1 </p>
+</blockquote>
+<h2 id="geth-1-8-1-安装"><a href="#geth-1-8-1-安装" class="headerlink" title="geth 1.8.1 安装"></a>geth 1.8.1 安装</h2><pre><code>$ sudo add-apt-repository -y ppa:ethereum/ethereum
+$ sudo apt-get update
+$ sudo apt-get install ethereum
+</code></pre><h2 id="搭建私有链"><a href="#搭建私有链" class="headerlink" title="搭建私有链"></a>搭建私有链</h2><h3 id="一、准备创世区块配置文件"><a href="#一、准备创世区块配置文件" class="headerlink" title="一、准备创世区块配置文件"></a>一、准备创世区块配置文件</h3><p>以太坊支持自定义创世区块（就是第一个区块），要运行私有链，我们就需要定义自己的创世区块，创世区块信息写在一个json格式的配置文件中。首先将下面的内容保存到一个json文件中，例如genesis.json。</p>
+<pre><code>{
+ &quot;config&quot;: {
+
+        &quot;homesteadBlock&quot;: 5
+
+    },
+    &quot;coinbase&quot; : &quot;0x0000000000000000000000000000000000000000&quot;,
+    &quot;difficulty&quot; : &quot;0x10000&quot;,
+    &quot;extraData&quot; : &quot;&quot;,
+    &quot;gasLimit&quot; : &quot;0xffffffff&quot;,
+    &quot;nonce&quot; : &quot;0x0000000000000042&quot;,
+    &quot;mixhash&quot; : &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,
+    &quot;parentHash&quot; : &quot;0x0000000000000000000000000000000000000000000000000000000000000000&quot;,
+    &quot;timestamp&quot; : &quot;0x00&quot;,
+    &quot;alloc&quot;: { }
+}
+</code></pre><h3 id="二、初始化：写入创世区块"><a href="#二、初始化：写入创世区块" class="headerlink" title="二、初始化：写入创世区块"></a>二、初始化：写入创世区块</h3><p>准备好创世区块配置文件后，需要初始化区块链，将上面的创世区块信息写入到区块链中。首先要新建一个目录用来存放区块链数据，假设新建的数据目录为~/privatechain/data0，genesis.json保存在~/privatechain中，此时目录结构应该是这样的：</p>
+<pre><code>privatechain  
+├── data0  
+└── genesis.json
+</code></pre><p>接下来进入privatechain中，执行初始化命令：</p>
+<pre><code>$ cd privatechain  
+$ geth --datadir data0 init genesis.json 
+</code></pre><p>上面的命令的主体是geth init，表示初始化区块链，命令可以带有选项和参数，其中–datadir选项后面跟一个目录名，这里为data0，表示指定数据存放目录为data0，genesis.json是init命令的参数。</p>
+<p>运行上面的命令，会读取genesis.json文件，根据其中的内容，将创世区块写入到区块链中。如果看到以下的输出内容，说明初始化成功了。</p>
+<pre><code>INFO [03-05|11:28:24] Maximum peer count                       ETH=25 LES=0 total=25
+INFO [03-05|11:28:24] Allocated cache and file handles         database=/home/liqing/Documents/Ethereum/workspace/etherTest2/data0/geth/chaindata cache=16 handles=16
+INFO [03-05|11:28:24] Writing custom genesis block 
+INFO [03-05|11:28:24] Persisted trie from memory database      nodes=0 size=0.00B time=2.334µs gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [03-05|11:28:24] Successfully wrote genesis state         database=chaindata                                                                 hash=fc6c93…5b8363
+INFO [03-05|11:28:24] Allocated cache and file handles         database=/home/liqing/Documents/Ethereum/workspace/etherTest2/data0/geth/lightchaindata cache=16 handles=16
+INFO [03-05|11:28:24] Writing custom genesis block 
+INFO [03-05|11:28:24] Persisted trie from memory database      nodes=0 size=0.00B time=2.262µs gcnodes=0 gcsize=0.00B gctime=0s livenodes=1 livesize=0.00B
+INFO [03-05|11:28:24] Successfully wrote genesis state         database=lightchaindata                                                                 hash=fc6c93…5b8363
+</code></pre><p>初始化成功后，会在数据目录data0中生成geth和keystore两个文件夹，此时目录结构如下：</p>
+<pre><code>privatechain  
+├── data0  
+│   ├── geth  
+│   │   └── chaindata  
+│   │       ├── 000002.log  
+│   │       ├── CURRENT  
+│   │       ├── LOCK  
+│   │       ├── LOG  
+│   │       └── MANIFEST-000003  
+│   └── keystore  
+└── genesis.json  
+</code></pre><p>其中geth/chaindata中存放的是区块数据，keystore中存放的是账户数据。</p>
+<h3 id="三、启动私有链节点"><a href="#三、启动私有链节点" class="headerlink" title="三、启动私有链节点"></a>三、启动私有链节点</h3><p>初始化完成后，就有了一条自己的私有链，之后就可以启动自己的私有链节点并做一些操作，在终端中输入以下命令即可启动节点：</p>
+<pre><code>$ geth --datadir data0 --networkid 1108 console
+</code></pre><p>上面命令的主体是geth console，表示启动节点并进入交互式控制台，–datadir选项指定使用data0作为数据目录，–networkid选项后面跟一个数字，这里是1108，表示指定这个私有链的网络id为1108。网络id在连接到其他节点的时候会用到，以太坊公网的网络id是1，为了不与公有链网络冲突，运行私有链节点的时候要指定自己的网络id。</p>
+<p>运行上面的命令后，就启动了区块链节点并进入了Javascript Console：</p>
+<pre><code>INFO [03-05|10:56:25] Maximum peer count                       ETH=25 LES=0 total=25
+INFO [03-05|10:56:25] Starting peer-to-peer node               instance=Geth/v1.8.1-stable-1e67410e/linux-amd64/go1.9.4
+INFO [03-05|10:56:25] Allocated cache and file handles         database=/home/liqing/Documents/Ethereum/workspace/etherTest/data0/geth/chaindata cache=768 handles=512
+INFO [03-05|10:56:25] Initialised chain configuration          config=&quot;{ChainID: &lt;nil&gt; Homestead: 5 DAO: &lt;nil&gt; DAOSupport: false EIP150: &lt;nil&gt; EIP155: &lt;nil&gt; EIP158: &lt;nil&gt; Byzantium: &lt;nil&gt; Engine: unknown}&quot;
+INFO [03-05|10:56:25] Disk storage enabled for ethash caches   dir=/home/liqing/Documents/Ethereum/workspace/etherTest/data0/geth/ethash count=3
+INFO [03-05|10:56:25] Disk storage enabled for ethash DAGs     dir=/home/liqing/.ethash                                                  count=2
+INFO [03-05|10:56:25] Initialising Ethereum protocol           versions=&quot;[63 62]&quot; network=1108
+INFO [03-05|10:56:25] Loaded most recent local header          number=0 hash=a0e580…a5e82e td=262144
+INFO [03-05|10:56:25] Loaded most recent local full block      number=0 hash=a0e580…a5e82e td=262144
+INFO [03-05|10:56:25] Loaded most recent local fast block      number=0 hash=a0e580…a5e82e td=262144
+INFO [03-05|10:56:25] Loaded local transaction journal         transactions=0 dropped=0
+INFO [03-05|10:56:25] Regenerated local transaction journal    transactions=0 accounts=0
+INFO [03-05|10:56:25] Starting P2P networking 
+INFO [03-05|10:56:27] UDP listener up                          self=enode://72c146d19af9ed474dd4d432e8d28cfb0099a734d8f5fc576dc773103be2ae7fbf55c4f64765787bf2514e61c2bb5ab5fa7de7af0a8cc0ab7b4d5b17543a5a82@[::]:30303
+INFO [03-05|10:56:27] RLPx listener up                         self=enode://72c146d19af9ed474dd4d432e8d28cfb0099a734d8f5fc576dc773103be2ae7fbf55c4f64765787bf2514e61c2bb5ab5fa7de7af0a8cc0ab7b4d5b17543a5a82@[::]:30303
+INFO [03-05|10:56:27] IPC endpoint opened                      url=/home/liqing/Documents/Ethereum/workspace/etherTest/data0/geth.ipc
+Welcome to the Geth JavaScript console!
+
+instance: Geth/v1.8.1-stable-1e67410e/linux-amd64/go1.9.4
+INFO [03-05|10:56:27] Etherbase automatically configured       address=0xcc0C638cfD383E5271509D0932b092b184BE8259
+coinbase: 0xcc0c638cfd383e5271509d0932b092b184be8259
+at block: 0 (Thu, 01 Jan 1970 08:00:00 CST)
+ datadir: /home/liqing/Documents/Ethereum/workspace/etherTest/data0
+ modules: admin:1.0 debug:1.0 eth:1.0 miner:1.0 net:1.0 personal:1.0 rpc:1.0 txpool:1.0 web3:1.0
+</code></pre><p>这是一个交互式的Javascript执行环境，在这里面可以执行Javascript代码，其中&gt;是命令提示符。在这个环境里也内置了一些用来操作以太坊的Javascript对象，可以直接使用这些对象。这些对象主要包括：</p>
+<pre><code>eth：包含一些跟操作区块链相关的方法
+net：包含以下查看p2p网络状态的方法
+admin：包含一些与管理节点相关的方法
+miner：包含启动&amp;停止挖矿的一些方法
+personal：主要包含一些管理账户的方法
+txpool：包含一些查看交易内存池的方法
+web3：包含了以上对象，还包含一些单位换算的方法
+</code></pre><h2 id="Javascript-Console-基本操作"><a href="#Javascript-Console-基本操作" class="headerlink" title="Javascript Console  基本操作"></a>Javascript Console  基本操作</h2><p>进入以太坊Javascript Console后，就可以使用里面的内置对象做一些操作，这些内置对象提供的功能很丰富，比如查看区块和交易、创建账户、挖矿、发送交易、部署智能合约等。 接下来介绍几个常用功能，下面的操作中，前面带&gt;的表示在Javascript Console中执行的命令。</p>
+<h3 id="一、创建账户"><a href="#一、创建账户" class="headerlink" title="一、创建账户"></a>一、创建账户</h3><p>前面只是搭建了私有链，并没有自己的账户，可以在js console中输入eth.accounts来验证：</p>
+<pre><code>&gt; eth.accounts  
+[] 
+</code></pre><p>接下来使用personal对象来创建一个账户：</p>
+<pre><code>&gt; personal.newAccount()  
+Passphrase:   
+Repeat passphrase:   
+&quot;0xcc0c638cfd383e5271509d0932b092b184be8259&quot;  
+</code></pre><p>会提示输入密码和确认密码，输入密码不会有显示，只要输入就可以了，之后就会显示新创建的账户地址。</p>
+<p>给账户地址起个名字：</p>
+<pre><code>addr0 = &quot;0xcc0c638cfd383e5271509d0932b092b184be8259&quot;
+</code></pre><p>这样给账户地址起名字，你可以直接输入addr0  回车，显示此地址，相当于一个变量，但是如果关闭了此control，这些变量就作废了。</p>
+<p>可以创建多个账户，我们再来创建一个账户：</p>
+<blockquote>
+<p>personal.newAccount()<br>    Passphrase:<br>    Repeat passphrase:<br>    “0x002839b9a82ea3e040c371a58a164c19f6292301”  </p>
+</blockquote>
+<p>账户默认会保存在数据目录的keystore文件夹中。查看目录结构，发现data0/keystore中多了两个文件，这两个文件就对应刚才创建的两个账户，这是json格式的文本文件，可以打开查看，里面存的是私钥经过密码加密后的信息。</p>
+<pre><code>data0  
+├── geth  
+│   ├── chaindata  
+│   ├── LOCK  
+│   ├── nodekey  
+│   └── nodes  
+├── geth.ipc  
+├── history  
+└── keystore  
+    ├── UTC--2017-11-01T02-38-40.056986933Z--cc0c638cfd383e5271509d0932b092b184be8259  
+    └── UTC--2017-11-01T02-44-39.336877186Z--002839b9a82ea3e040c371a58a164c19f6292301 
+</code></pre><h3 id="二、查看账户余额"><a href="#二、查看账户余额" class="headerlink" title="二、查看账户余额"></a>二、查看账户余额</h3><p>eth对象提供了查看账户余额的方法：</p>
+<pre><code>&gt; eth.getBalance(eth.accounts[0])  
+0  
+&gt; eth.getBalance(eth.accounts[1])  
+0 
+</code></pre><p>或者 我们刚才起了名字，也可以这样用</p>
+<pre><code>&gt; eth.getBalance(addr0)  
+    0  
+    &gt; eth.getBalance(addr1)  
+    0 
+</code></pre><p>目前两个账户的以太币余额都是0，要使账户有余额，可以从其他账户转账过来，或者通过挖矿来获得以太币奖励。</p>
+<h3 id="三、启动-amp-停止挖矿"><a href="#三、启动-amp-停止挖矿" class="headerlink" title="三、启动&amp;停止挖矿"></a>三、启动&amp;停止挖矿</h3><p>通过miner.start()来启动挖矿：</p>
+<pre><code>&gt; miner.start(1) 
+</code></pre><p>其中start的参数表示挖矿使用的线程数。第一次启动挖矿会先生成挖矿所需的DAG文件，这个过程有点慢，等进度达到100%后，就会开始挖矿，此时屏幕会被挖矿信息刷屏。</p>
+<pre><code>INFO [03-05|11:00:09] Generating DAG in progress               epoch=0 percentage=94 elapsed=3m17.934s
+INFO [03-05|11:00:11] Generating DAG in progress               epoch=0 percentage=95 elapsed=3m20.042s
+INFO [03-05|11:00:13] Generating DAG in progress               epoch=0 percentage=96 elapsed=3m22.099s
+INFO [03-05|11:00:15] Generating DAG in progress               epoch=0 percentage=97 elapsed=3m24.192s
+INFO [03-05|11:00:17] Generating DAG in progress               epoch=0 percentage=98 elapsed=3m26.232s
+INFO [03-05|11:00:19] Generating DAG in progress               epoch=0 percentage=99 elapsed=3m28.712s
+</code></pre><p>如果想停止挖矿，在js console中输入miner.stop()： </p>
+<p>挖到一个区块会奖励5个以太币，挖矿所得的奖励会进入矿工的账户，这个账户叫做coinbase，默认情况下coinbase是本地账户中的第一个账户，有一个锤子就是挖到了矿：</p>
+<pre><code>INFO [03-05|11:00:19] Generated ethash verification cache      epoch=0 elapsed=3m28.716s
+INFO [03-05|11:00:20] Successfully sealed new block            number=1 hash=0d119a…c4f9e8
+INFO [03-05|11:00:20] 🔨 mined potential block                  number=1 hash=0d119a…c4f9e8
+INFO [03-05|11:00:20] Commit new mining work                   number=2 txs=0 uncles=0 elapsed=156.586
+</code></pre><p>现在的coinbase是账户0，要想使挖矿奖励进入其他账户，通过miner.setEtherbase()将其他账户设置成coinbase即可：</p>
+<pre><code>&gt; miner.setEtherbase(eth.accounts[1])  
+true  
+&gt; eth.coinbase  
+&quot;0x002839b9a82ea3e040c371a58a164c19f6292301&quot;  
+</code></pre><p>我们还是以账户0作为coinbase，挖到区块以后，账户0里面应该就有余额了：</p>
+<pre><code>&gt; eth.getBalance(addr0)
+45000000000000000000
+</code></pre><p>getBalance()返回值的单位是wei，wei是以太币的最小单位，1个以太币=10的18次方个wei。要查看有多少个以太币，可以用web3.fromWei()将返回值换算成以太币：</p>
+<pre><code>&gt; web3.fromWei(eth.getBalance(addr0),&apos;ether&apos;)
+45
+</code></pre><h3 id="五、查看交易和区块"><a href="#五、查看交易和区块" class="headerlink" title="五、查看交易和区块"></a>五、查看交易和区块</h3><p>eth对象封装了查看交易和区块信息的方法。</p>
+<p>查看当前区块总数：</p>
+<pre><code>&gt; eth.blockNumber  
+9  
+</code></pre><p>参考文章：<a href="http://blog.csdn.net/u013096666/article/details/72639906" target="_blank" rel="noopener">http://blog.csdn.net/u013096666/article/details/72639906</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/区块链/" rel="tag"># 区块链</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/11/python-购物车实例代码/" rel="next" title="python 购物车实例代码">
+                <i class="fa fa-chevron-left"></i> python 购物车实例代码
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzI0Mi85Nzk5"></div>
+    </div>
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leequer</p>
+              <p class="site-description motion-element" itemprop="description">我不是胖，只是肉有点多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/leequer" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:447476554@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#以太坊私有链搭建过程以及一些常用的操作："><span class="nav-number">1.</span> <span class="nav-text">以太坊私有链搭建过程以及一些常用的操作：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#geth-1-8-1-安装"><span class="nav-number">1.1.</span> <span class="nav-text">geth 1.8.1 安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#搭建私有链"><span class="nav-number">1.2.</span> <span class="nav-text">搭建私有链</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、准备创世区块配置文件"><span class="nav-number">1.2.1.</span> <span class="nav-text">一、准备创世区块配置文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、初始化：写入创世区块"><span class="nav-number">1.2.2.</span> <span class="nav-text">二、初始化：写入创世区块</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、启动私有链节点"><span class="nav-number">1.2.3.</span> <span class="nav-text">三、启动私有链节点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Javascript-Console-基本操作"><span class="nav-number">1.3.</span> <span class="nav-text">Javascript Console  基本操作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一、创建账户"><span class="nav-number">1.3.1.</span> <span class="nav-text">一、创建账户</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、查看账户余额"><span class="nav-number">1.3.2.</span> <span class="nav-text">二、查看账户余额</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、启动-amp-停止挖矿"><span class="nav-number">1.3.3.</span> <span class="nav-text">三、启动&amp;停止挖矿</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#五、查看交易和区块"><span class="nav-number">1.3.4.</span> <span class="nav-text">五、查看交易和区块</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leequer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'leequer',
+            repo: 'https://github.com/leequer/leequer.github.io.git',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49',
+            
+                client_id: '19e9892b4e6b7eb2ccf5'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("g6QTkM1EHRvlyWzXA7Uj9P6u-gzGzoHsz", "u7DkS9lXJisLp5VBDIleP8c1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+		<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("g6QTkM1EHRvlyWzXA7Uj9P6u-gzGzoHsz", "u7DkS9lXJisLp5VBDIleP8c1");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>

@@ -79,20 +79,20 @@
 
 
 
-<meta name="description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
+<meta name="description" content="##概述 本篇文章转载https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0并添加自己的理解和试验结果。 本篇文章会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读">
 <meta name="keywords" content="移动架构">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android中View的绘制流程">
 <meta property="og:url" content="http://yoursite.com/2015/10/02/Android中View的绘制流程/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
+<meta property="og:description" content="##概述 本篇文章转载https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0并添加自己的理解和试验结果。 本篇文章会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/img/2397836-f1f6a200704884a2.png">
 <meta property="og:image" content="http://yoursite.com/img/2397836-19c08de6439514a7.png">
-<meta property="og:updated_time" content="2018-02-06T06:53:16.002Z">
+<meta property="og:updated_time" content="2018-02-06T07:01:24.483Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android中View的绘制流程">
-<meta name="twitter:description" content="##概述 本篇文章摘自https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。在进行实际的分析之前，我们先来看下面">
+<meta name="twitter:description" content="##概述 本篇文章转载https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0并添加自己的理解和试验结果。 本篇文章会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读">
 <meta name="twitter:image" content="http://yoursite.com/img/2397836-f1f6a200704884a2.png">
 
 
@@ -314,7 +314,8 @@
 
       
         <p>##概述</p>
-<p>本篇文章摘自<a href="https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0" title="https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0" target="_blank" rel="noopener">https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0</a>会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。<br>在进行实际的分析之前，我们先来看下面这张图：</p>
+<p>本篇文章转载<a href="https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0" title="https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0" target="_blank" rel="noopener">https://www.cnblogs.com/jycboy/p/6219915.html#autoid-0-0-0</a>并添加自己的理解和试验结果。</p>
+<p>本篇文章会从源码（基于Android 6.0）角度分析Android中View的绘制流程，侧重于对整体流程的分析，对一些难以理解的点加以重点阐述，目的是把View绘制的整个流程把握好，而对于特定实现细节则可以日后再对相应源码进行研读。<br>在进行实际的分析之前，我们先来看下面这张图：</p>
 <p><img src="/img/2397836-f1f6a200704884a2.png" alt=""></p>
 <p>我们来对上图做出简单解释：DecorView是一个应用窗口的根容器，它本质上是一个FrameLayout。DecorView有唯一一个子View，它是一个垂直LinearLayout，包含两个子元素，一个是TitleView（ActionBar的容器），另一个是ContentView（窗口内容的容器）。关于ContentView，它是一个FrameLayout（android.R.id.content)，我们平常用的setContentView就是设置它的子View。上图还表达了每个Activity都与一个Window（具体来说是PhoneWindow）相关联，用户界面则由Window所承载。</p>
 <h1 id="Window"><a href="#Window" class="headerlink" title="Window"></a>Window</h1><p>Window即窗口，这个概念在Android Framework中的实现为android.view.Window这个抽象类，这个抽象类是对Android系统中的窗口的抽象。在介绍这个类之前，我们先来看看究竟什么是窗口呢？</p>
@@ -1090,7 +1091,7 @@ lp.topMargin - lp.bottomMargin;
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">69</span>
+                  <span class="site-state-item-count">70</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -1103,7 +1104,7 @@ lp.topMargin - lp.bottomMargin;
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">22</span>
+                  <span class="site-state-item-count">23</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
