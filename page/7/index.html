@@ -313,15 +313,14 @@
       
         
           
-          由于数组内容的不一样，导致选择排序和插入排序有不同的使用空间，基本上插入排序快于选择排序，而插入排序改进版快于插入排序基本版，在数组不需要太多变动的情况下，插入排序改进版速度最快。
+          由于数组内容的不一样，导致选择排序和插入排序有不同的使用空间，基本上插入排序快于选择排序，而插入排序改进版快于插入排序基本版，在数组不需要太多变动的情况下，插入排序改进版速度最快。插入排序可以提前终止。
 import java.util.Random;
 
 public class DurationTest {
 
     public static int[] makeArray() {
         int size = 10000;
-        int a[] = new int[size];
-       
+        int a[] = new int[siz
           ...
           <!--noindex-->
           <div class="post-button text-center">
@@ -447,12 +446,13 @@ public class DurationTest {
       
         
           
-          目标：一般来说，插入排序都采用在数组上实现。具体算法描述如下：⒈ 从第一个元素开始，该元素可以认为已经被排序⒉ 取出下一个元素，在已经排序的元素序列中从后向前扫描⒊ 如果该元素（已排序）大于新元素，将该元素和新元素互换⒋ 重复步骤3，直到找到已排序的元素小于或者等于新元素的位置⒌ 将新元素插入到下一位置中⒍ 重复步骤2~5
+          插入排序可以提前终止。
+目标：一般来说，插入排序都采用在数组上实现。具体算法描述如下：⒈ 从第一个元素开始，该元素可以认为已经被排序⒉ 取出下一个元素，在已经排序的元素序列中从后向前扫描⒊ 如果该元素（已排序）大于新元素，将该元素和新元素互换⒋ 重复步骤3，直到找到已排序的元素小于或者等于新元素的位置⒌ 将新元素插入到下一位置中⒍ 重复步骤2~5
 import java.util.Random;
 
 public class InsertSort {
 
-    public static void insertSort(
+    public static void
           ...
           <!--noindex-->
           <div class="post-button text-center">
