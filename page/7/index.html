@@ -242,6 +242,526 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/01/28/插入排序以及改进版和选择排序的速度比较md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/28/插入排序以及改进版和选择排序的速度比较md/" itemprop="url">插入排序以及改进版和选择排序的速度比较</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-28T20:59:59+08:00">
+                2013-01-28
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2013/01/28/插入排序以及改进版和选择排序的速度比较md/"class="leancloud_visitors" data-flag-title="插入排序以及改进版和选择排序的速度比较">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          由于数组内容的不一样，导致选择排序和插入排序有不同的使用空间，基本上插入排序快于选择排序，而插入排序改进版快于插入排序基本版，在数组不需要太多变动的情况下，插入排序改进版速度最快。
+import java.util.Random;
+
+public class DurationTest {
+
+    public static int[] makeArray() {
+        int size = 10000;
+        int a[] = new int[size];
+       
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2013/01/28/插入排序以及改进版和选择排序的速度比较md/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/01/27/插入排序以及改进版/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/27/插入排序以及改进版/" itemprop="url">插入排序以及改进版</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-27T20:59:59+08:00">
+                2013-01-27
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2013/01/27/插入排序以及改进版/"class="leancloud_visitors" data-flag-title="插入排序以及改进版">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          目标：一般来说，插入排序都采用在数组上实现。具体算法描述如下：⒈ 从第一个元素开始，该元素可以认为已经被排序⒉ 取出下一个元素，在已经排序的元素序列中从后向前扫描⒊ 如果该元素（已排序）大于新元素，将该元素和新元素互换⒋ 重复步骤3，直到找到已排序的元素小于或者等于新元素的位置⒌ 将新元素插入到下一位置中⒍ 重复步骤2~5
+import java.util.Random;
+
+public class InsertSort {
+
+    public static void insertSort(
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2013/01/27/插入排序以及改进版/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/01/26/选择排序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/26/选择排序/" itemprop="url">选择排序</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-26T20:59:59+08:00">
+                2013-01-26
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2013/01/26/选择排序/"class="leancloud_visitors" data-flag-title="选择排序">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          目标：对比数组中前一个元素跟后一个元素的大小，如果后面的元素比前面的元素小则用一个变量k来记住他的位置，接着第二次比较，前面“后一个元素”现变成了“前一个元素”，继续跟他的“后一个元素”进行比较如果后面的元素比他要小则用变量k记住它在数组中的位置(下标)，等到循环结束的时候，我们应该找到了最小的那个数的下标了，然后进行判断，如果这个元素的下标不是第一个元素的下标，就让第一个元素跟他交换一下值，这样就找到整个数组中最小的数了。然后找到数组中第二小的数，让他跟数组中第二个元素交换一下值，以此类推。
+
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2013/01/26/选择排序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/01/25/快速排序/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2013/01/25/快速排序/" itemprop="url">快速排序</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2013-01-25T20:59:59+08:00">
+                2013-01-25
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2013/01/25/快速排序/"class="leancloud_visitors" data-flag-title="快速排序">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>#前情回顾</p>
+<ul>
+<li><p>上次说的<a href="https://leequer.github.io/2013/01/24/%E5%86%92%E6%B3%A1%E6%8E%92%E5%BA%8F/" target="_blank" rel="noopener">冒泡排序</a>解决了<a href="https://leequer.github.io/2013/01/23/%E6%A1%B6%E6%8E%92%E5%BA%8F%E7%AE%80%E5%8C%96%E7%89%88/" target="_blank" rel="noopener">桶排序</a>的占用空间的问题。</p>
+</li>
+<li><p>但是冒泡排序带了新问题，他的执行效率很慢，如果一个一秒10亿次的电脑对1亿个数进行排序，桶排序只需要0.1秒，而冒泡排序需要115天。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2013/01/25/快速排序/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2013/01/24/冒泡排序/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1005,531 +1525,11 @@ Linux 环境下的程序员如果不会使用 GNU make 来构建和管理自己�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2012/01/24/密码概要/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leequer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="有志青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2012/01/24/密码概要/" itemprop="url">密码概要</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-01-24T22:22:59+08:00">
-                2012-01-24
-              </time>
-            
-
-           
-          </span>
-
-   
-
-          
-          
-          
-			&nbsp; | &nbsp;
-			<span id="/2012/01/24/密码概要/"class="leancloud_visitors" data-flag-title="密码概要">
-				&nbsp;阅读次数
-            </span>
-          
-
-          
-
-         
-
-        
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          本标签中的文章记录阅读《图解密码技术》的笔记。
-1密码的应用
-a发送邮件给b，在这个过程中，a就是sender，b就是receiver。这个过程中有可能有eve监听或者截获了邮件。这个eve不一定是人，也可以是一段监听的程序。
-
-
-于是，a发送邮件的时候进行了加密，加密前的叫原文，加密后的叫密文，b收到后要解密才能看到原文。这样eve收到的也是密文。这样保证了&gt;机密性&lt;
-
-
-但是eve如果想知道邮件的内容，他会想办法去还原。这个过程叫做&gt;密码破译&lt;  也叫&gt;密码分析
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2012/01/24/密码概要/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/09/09/android知识点纪录/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leequer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="有志青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/09/09/android知识点纪录/" itemprop="url">android 知识点记录</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-09-09T14:55:59+08:00">
-                2011-09-09
-              </time>
-            
-
-           
-          </span>
-
-   
-
-          
-          
-          
-			&nbsp; | &nbsp;
-			<span id="/2011/09/09/android知识点纪录/"class="leancloud_visitors" data-flag-title="android 知识点记录">
-				&nbsp;阅读次数
-            </span>
-          
-
-          
-
-         
-
-        
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          —————-开发记录—————@隐藏指定的视频、或者图片文件夹在不想显示的目录下建个以.nomedia命名的文件夹就行了
-—————–Git——————-@文件如果之前已经被git跟踪了，这样修改是没有用的。每次修改完以后，用git status还是能看到提示它被修改了。解决办法就是在git中删除这个文件的跟踪记录，用这个命令
-git rm --cached 文件名路径和名称
-这样就从git的跟踪记录中删除了这个文件的跟踪记录。配合之前在.gitignore加的那行配置，以后你修改 projec
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/09/09/android知识点纪录/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/03/27/android-屏幕适配终极解决方案/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leequer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="有志青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/03/27/android-屏幕适配终极解决方案/" itemprop="url">Android-屏幕适配终极解决方案</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-03-27T21:20:59+08:00">
-                2011-03-27
-              </time>
-            
-
-           
-          </span>
-
-   
-
-          
-          
-          
-			&nbsp; | &nbsp;
-			<span id="/2011/03/27/android-屏幕适配终极解决方案/"class="leancloud_visitors" data-flag-title="Android-屏幕适配终极解决方案">
-				&nbsp;阅读次数
-            </span>
-          
-
-          
-
-         
-
-        
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          方案1
-ldpi,mdip,hdpi,xhdip,xxhdpi生成DP](https://github.com/luhaoaimama1/JavaZone/blob/master/JavaTest_Zone/src/%E9%80%82%E9%85%8D/MakeXml_Dp.java
-ldpi,mdip,hdpi,xhdip,xxhdpi生成SP](https://github.com/luhaoaimama1/JavaZone/blob/master/JavaTest_Zone/src/%E9
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/03/27/android-屏幕适配终极解决方案/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2011/03/26/android和ios_开发_要几套设计图和切图？/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leequer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="有志青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2011/03/26/android和ios_开发_要几套设计图和切图？/" itemprop="url">Android和iOS 开发 要几套设计图和切图</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2011-03-26T21:20:59+08:00">
-                2011-03-26
-              </time>
-            
-
-           
-          </span>
-
-   
-
-          
-          
-          
-			&nbsp; | &nbsp;
-			<span id="/2011/03/26/android和ios_开发_要几套设计图和切图？/"class="leancloud_visitors" data-flag-title="Android和iOS 开发 要几套设计图和切图">
-				&nbsp;阅读次数
-            </span>
-          
-
-          
-
-         
-
-        
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          ##方案一 iOS与Android共用一套效果图 1242*2208
-iOS与Android常用的尺寸中，最大尺寸的为i6+的尺寸，即1242*2208px
-iOS常用尺寸为12422208  7501334  6401136  640960其中7501334  6401136  640960同为@2x，12422208为@3x所以7501334  6401136  640960只做一套6401136就好了
-Android常用尺寸为 10801920  7201280  480800他们之间相邻
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2011/03/26/android和ios_开发_要几套设计图和切图？/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span>
+    <a class="extend prev" rel="prev" href="/page/6/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1575,7 +1575,7 @@ Android常用尺寸为 10801920  7201280  480800他们之间相邻
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">70</span>
+                  <span class="site-state-item-count">74</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
