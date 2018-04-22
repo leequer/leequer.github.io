@@ -242,6 +242,274 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2012/05/19/Makefile语法2-自定义方法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/05/19/Makefile语法2-自定义方法/" itemprop="url">Makefile语法2-自定义方法，递归式展开</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-05-19T00:00:00+08:00">
+                2012-05-19
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2012/05/19/Makefile语法2-自定义方法/"class="leancloud_visitors" data-flag-title="Makefile语法2-自定义方法，递归式展开">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          #1自定义方法
+#自定义方法myfun 两个参数 
+myfun=$2 $1
+#自定义方法myfun_ret 调用myfun方法 传入第二个参数20 第一个参数10 注意顺序 是反着的
+myfun_ret=$(call myfun,20,10)
+#输出
+test:
+    @echo $(myfun_ret)
+###$&gt;执行make test 结果是10 20
+#2递归式展开 是用等号 =
+str2是str1赋值的，递归展开寻找
+str2=$(str1)
+str1=hello
+test:
+ 
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2012/05/19/Makefile语法2-自定义方法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2012/04/10/Makefile语法1-基本使用/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2012/04/10/Makefile语法1-基本使用/" itemprop="url">Makefile 语法 一</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2012-04-10T00:00:00+08:00">
+                2012-04-10
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2012/04/10/Makefile语法1-基本使用/"class="leancloud_visitors" data-flag-title="Makefile 语法 一">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          #1简介
+Linux 环境下的程序员如果不会使用 GNU make 来构建和管理自己的工程，应该不能算是一个合格的专业程序员，至少不能称得上是 Unix 程序员。在 Linux（unix）环境下使用 GNU 的 make 工具能够比较容易的构建一个属于你自己的工程，整个工程的编译只需要一个命令就可以完成编译、连接以至于最后的执行。不过这需要我们投入一些时间去完成一个或者多个称之为 Makefile 文件的编写。此文件正是 make 正常工作的基础。Makefile只能在Linux下使用。
+###
+          ...
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2012/04/10/Makefile语法1-基本使用/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2012/01/24/密码概要/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -799,7 +1067,7 @@ Android常用尺寸为 10801920  7201280  480800他们之间相邻
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">74</span>
+                  <span class="site-state-item-count">76</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
