@@ -87,12 +87,10 @@
 <meta property="og:site_name" content="有志青年">
 <meta property="og:description" content="引  在以太坊-私有链的安装，启动，操作一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？ 智能合约  智能合约是运行在以太坊上的一段代码。合约可以完成一些交易，查询等功能。 为什么要写智能合约  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如果这保单运行在以">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/img/remix.png">
-<meta property="og:updated_time" content="2018-04-22T15:41:57.409Z">
+<meta property="og:updated_time" content="2018-04-23T13:02:47.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="智能合约 solidity基础">
 <meta name="twitter:description" content="引  在以太坊-私有链的安装，启动，操作一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？ 智能合约  智能合约是运行在以太坊上的一段代码。合约可以完成一些交易，查询等功能。 为什么要写智能合约  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如果这保单运行在以">
-<meta name="twitter:image" content="http://yoursite.com/img/remix.png">
 
 
 
@@ -316,7 +314,32 @@
 <h2 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a>智能合约</h2><p>  智能合约是运行在以太坊上的一段代码。合约可以完成一些交易，查询等功能。</p>
 <h3 id="为什么要写智能合约"><a href="#为什么要写智能合约" class="headerlink" title="为什么要写智能合约"></a>为什么要写智能合约</h3><p>  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如果这保单运行在以太坊系统上，当被保人达到一定赔付要求，保单就会自动运行检查和赔付功能。不需要被保人繁琐的提交证明。而且执行过程中不会被第三方打扰，做到公平，公正。</p>
 <h3 id="开发语言-solidity"><a href="#开发语言-solidity" class="headerlink" title="开发语言-solidity"></a>开发语言-solidity</h3><p>  作为智能合约的主要官方推荐开发语言。它的编译环境Remix 在一个在线的网页上。地址是<a href="https://ethereum.github.io/browser-solidity/#optimize=false&amp;version=soljson-v0.4.21+commit.dfe3193c.js" target="_blank" rel="noopener">https://ethereum.github.io/browser-solidity/#optimize=false&amp;version=soljson-v0.4.21+commit.dfe3193c.js</a>在这里可以编辑开发智能合约。</p>
-<h3 id="Remix简介"><a href="#Remix简介" class="headerlink" title="Remix简介"></a>Remix简介</h3><p>  <img src="/img/remix.png" alt="remix概况"></p>
+<h3 id="Remix简介"><a href="#Remix简介" class="headerlink" title="Remix简介"></a>Remix简介</h3><p>reminx是solidity编写智能合约的在线ide，检查代码的正确性并执行，是在remix所在的以太坊执行这段合约。</p>
+<p>   <a href="/img/remix.png">remix概况</a></p>
+<ul>
+<li>1.代码区。编写合约。</li>
+<li>2.手动和自动编译按钮，自动编译选中后，每次改变代码，自动编译。</li>
+<li>3.当前编译的合约名字，点击Details显示合约相关信息，比如abi等。</li>
+<li>4.在1的下面，是执行后的输出区域。</li>
+</ul>
+<p>   <a href="/img/img_run.png">run</a></p>
+<p>   右边切换到run的tab，</p>
+<ul>
+<li>Environment，运行的环境，</li>
+<li>Account 提供的测试用户。</li>
+<li>Gas Limit 合约话费上限</li>
+<li>value 如果你写的交易是需要话费gas的，那这里写gas的数量</li>
+<li>当前运行的合约</li>
+<li><p>Create 点击此按钮时，上面Account中选择的用户则是此合约的创建用户。左边的输入框是当你的合约的构造函数中输入需要参数，那你点击create时需要输入参数。</p>
+<p><a href="/img/1524488065.png">如图</a></p>
+</li>
+<li><p>2 是此合约的地址，复制此地址填入到1的位置，点击at address，就会产生和点击create一模一样的结果。</p>
+</li>
+</ul>
+<ul>
+<li>3 是点击create后产生的结果，就是你的合约中的方法，红色的是没有输出值的，就是结果不会显示在这里。灰色的就是执行完毕后会显示在这里，比如chairperson这个返回了当前合约的创建人。</li>
+</ul>
+<h2 id="solidity语法摘要"><a href="#solidity语法摘要" class="headerlink" title="solidity语法摘要"></a>solidity语法摘要</h2><p>### </p>
 
       
     </div>
@@ -503,7 +526,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引"><span class="nav-number">1.</span> <span class="nav-text">引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能合约"><span class="nav-number">2.</span> <span class="nav-text">智能合约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要写智能合约"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要写智能合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发语言-solidity"><span class="nav-number">2.2.</span> <span class="nav-text">开发语言-solidity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remix简介"><span class="nav-number">2.3.</span> <span class="nav-text">Remix简介</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引"><span class="nav-number">1.</span> <span class="nav-text">引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能合约"><span class="nav-number">2.</span> <span class="nav-text">智能合约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要写智能合约"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要写智能合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发语言-solidity"><span class="nav-number">2.2.</span> <span class="nav-text">开发语言-solidity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remix简介"><span class="nav-number">2.3.</span> <span class="nav-text">Remix简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solidity语法摘要"><span class="nav-number">3.</span> <span class="nav-text">solidity语法摘要</span></a></li></ol></div>
             
 
           </div>
