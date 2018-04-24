@@ -79,18 +79,22 @@
 
 
 
-<meta name="description" content="引  在以太坊-私有链的安装，启动，操作一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？ 智能合约  智能合约是运行在以太坊上的一段代码。合约可以完成一些交易，查询等功能。 为什么要写智能合约  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如果这保单运行在以">
+<meta name="description" content="引  在以太坊-私有链的安装，启动，操作一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？ 智能合约  智能合约是运行在以太坊虚拟机（EVM）上的一段代码。合约可以完成一些交易，查询等功能。 为什么要写智能合约  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如">
 <meta name="keywords" content="区块链">
 <meta property="og:type" content="article">
 <meta property="og:title" content="智能合约 solidity基础">
 <meta property="og:url" content="http://yoursite.com/2017/11/20/solidity基础/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="引  在以太坊-私有链的安装，启动，操作一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？ 智能合约  智能合约是运行在以太坊上的一段代码。合约可以完成一些交易，查询等功能。 为什么要写智能合约  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如果这保单运行在以">
+<meta property="og:description" content="引  在以太坊-私有链的安装，启动，操作一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？ 智能合约  智能合约是运行在以太坊虚拟机（EVM）上的一段代码。合约可以完成一些交易，查询等功能。 为什么要写智能合约  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-23T13:02:47.538Z">
+<meta property="og:image" content="http://yoursite.com/img/remix.png">
+<meta property="og:image" content="http://yoursite.com/img/img_run.png">
+<meta property="og:image" content="http://yoursite.com/img/1524488065.png">
+<meta property="og:updated_time" content="2018-04-24T01:51:26.759Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="智能合约 solidity基础">
-<meta name="twitter:description" content="引  在以太坊-私有链的安装，启动，操作一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？ 智能合约  智能合约是运行在以太坊上的一段代码。合约可以完成一些交易，查询等功能。 为什么要写智能合约  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如果这保单运行在以">
+<meta name="twitter:description" content="引  在以太坊-私有链的安装，启动，操作一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？ 智能合约  智能合约是运行在以太坊虚拟机（EVM）上的一段代码。合约可以完成一些交易，查询等功能。 为什么要写智能合约  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如">
+<meta name="twitter:image" content="http://yoursite.com/img/remix.png">
 
 
 
@@ -311,27 +315,27 @@
 
       
         <h2 id="引"><a href="#引" class="headerlink" title="引"></a>引</h2><p>  在<a href="https://leequer.github.io/2017/11/01/%E4%BB%A5%E5%A4%AA%E5%9D%8A-%E7%A7%81%E6%9C%89%E9%93%BE%E7%9A%84%E5%AE%89%E8%A3%85%EF%BC%8C%E5%90%AF%E5%8A%A8%EF%BC%8C%E6%93%8D%E4%BD%9C/" title="以太坊-私有链的安装，启动，操作" target="_blank" rel="noopener">以太坊-私有链的安装，启动，操作</a>一文中，我们建立了一个自己的链，运行了一些命令，简单的操作。我们知道，以太坊和比特币区别之一是可以运行智能合约。那什么是智能合约呢？</p>
-<h2 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a>智能合约</h2><p>  智能合约是运行在以太坊上的一段代码。合约可以完成一些交易，查询等功能。</p>
+<h2 id="智能合约"><a href="#智能合约" class="headerlink" title="智能合约"></a>智能合约</h2><p>  智能合约是运行在以太坊虚拟机（EVM）上的一段代码。合约可以完成一些交易，查询等功能。</p>
 <h3 id="为什么要写智能合约"><a href="#为什么要写智能合约" class="headerlink" title="为什么要写智能合约"></a>为什么要写智能合约</h3><p>  智能合约可以在满足条件的情况下，自动执行代码，并完成合约内容。不受第三方干扰。比如，保险公司一张保单，如果这保单运行在以太坊系统上，当被保人达到一定赔付要求，保单就会自动运行检查和赔付功能。不需要被保人繁琐的提交证明。而且执行过程中不会被第三方打扰，做到公平，公正。</p>
 <h3 id="开发语言-solidity"><a href="#开发语言-solidity" class="headerlink" title="开发语言-solidity"></a>开发语言-solidity</h3><p>  作为智能合约的主要官方推荐开发语言。它的编译环境Remix 在一个在线的网页上。地址是<a href="https://ethereum.github.io/browser-solidity/#optimize=false&amp;version=soljson-v0.4.21+commit.dfe3193c.js" target="_blank" rel="noopener">https://ethereum.github.io/browser-solidity/#optimize=false&amp;version=soljson-v0.4.21+commit.dfe3193c.js</a>在这里可以编辑开发智能合约。</p>
 <h3 id="Remix简介"><a href="#Remix简介" class="headerlink" title="Remix简介"></a>Remix简介</h3><p>reminx是solidity编写智能合约的在线ide，检查代码的正确性并执行，是在remix所在的以太坊执行这段合约。</p>
-<p>   <a href="/img/remix.png">remix概况</a></p>
+<p>   <img src="/img/remix.png" alt="remix概况"></p>
 <ul>
 <li>1.代码区。编写合约。</li>
 <li>2.手动和自动编译按钮，自动编译选中后，每次改变代码，自动编译。</li>
 <li>3.当前编译的合约名字，点击Details显示合约相关信息，比如abi等。</li>
 <li>4.在1的下面，是执行后的输出区域。</li>
 </ul>
-<p>   <a href="/img/img_run.png">run</a></p>
+<p>   <img src="/img/img_run.png" alt="run"></p>
 <p>   右边切换到run的tab，</p>
 <ul>
 <li>Environment，运行的环境，</li>
-<li>Account 提供的测试用户。</li>
+<li>Account 提供的测试用户。需要注意的是，当你点击create时，此栏选中的用户就是合约创建者，拥有者，msg.sender 也是它，但当你create完毕后，执行某个方法前，重新选了用户，那么这个msg.sender就是你当前选中的用户，但合约所有者不变，还是create时的那个用户。切记</li>
 <li>Gas Limit 合约话费上限</li>
 <li>value 如果你写的交易是需要话费gas的，那这里写gas的数量</li>
 <li>当前运行的合约</li>
 <li><p>Create 点击此按钮时，上面Account中选择的用户则是此合约的创建用户。左边的输入框是当你的合约的构造函数中输入需要参数，那你点击create时需要输入参数。</p>
-<p><a href="/img/1524488065.png">如图</a></p>
+<p><img src="/img/1524488065.png" alt="如图"></p>
 </li>
 <li><p>2 是此合约的地址，复制此地址填入到1的位置，点击at address，就会产生和点击create一模一样的结果。</p>
 </li>
@@ -339,7 +343,202 @@
 <ul>
 <li>3 是点击create后产生的结果，就是你的合约中的方法，红色的是没有输出值的，就是结果不会显示在这里。灰色的就是执行完毕后会显示在这里，比如chairperson这个返回了当前合约的创建人。</li>
 </ul>
-<h2 id="solidity语法摘要"><a href="#solidity语法摘要" class="headerlink" title="solidity语法摘要"></a>solidity语法摘要</h2><p>### </p>
+<h2 id="solidity语法摘要"><a href="#solidity语法摘要" class="headerlink" title="solidity语法摘要"></a>solidity语法摘要</h2><h3 id="Solidity文件结构"><a href="#Solidity文件结构" class="headerlink" title="Solidity文件结构"></a>Solidity文件结构</h3><blockquote>
+<p>一个合约文件可以包含任意数量的合约定义。</p>
+</blockquote>
+<h3 id="pragma"><a href="#pragma" class="headerlink" title="pragma"></a>pragma</h3><blockquote>
+<p>使用哪个版本的solidity编译,写在合约的开头。</p>
+</blockquote>
+<p>版本指令应用举例：</p>
+<pre><code>pragma solidity ^0.4.0;
+</code></pre><p>只能用0.4.0到0.5.0之间版本的编译器编译</p>
+<p>第二个编译条件可以通过使用^添加</p>
+<pre><code>pragma solidity ^0.4.0^;
+</code></pre><p>可以用0.4.0之后所有版本的编译器编译</p>
+<p>更复杂的控制编译源码的编译器版本的表达式，可以遵照npm的规则设计。</p>
+<h3 id="源文件引用"><a href="#源文件引用" class="headerlink" title="源文件引用"></a>源文件引用</h3><p>Solidity引用源文件的方式与JavaScript（ES6及以后）类似，但是Solidity中没有“default export”。</p>
+<ul>
+<li>引入到全局变量空间：<br>  import “filename”;</li>
+</ul>
+<p>把“filename”中所有变量全部导入到当前文件的全局变量空间（实际上是整个文件都导过来了，包括这个文件导入的其他文件）此用法与ES6的使用方式不同，但在Solidity中是向后兼容的。</p>
+<ul>
+<li>引入到自定义命名空间：</li>
+</ul>
+<pre><code>import * as symbolName from “filename&quot;;
+</code></pre><p>把“filename”中所有变量全部导入到全局变量symbolName中并作为其成员。</p>
+<pre><code>import {symbol1 as alias, symbol2} from &quot;filename&quot;;
+</code></pre><p>把“filename”中symbol1和symbol2两个变量分别导入到全局变量alias和symbol2中，其中使用as重新命名symbol1。</p>
+<p>文件路径也不必一定要映射到本地文件系统，也可以通过ipfs，http或git映射到网络文件。    </p>
+<blockquote>
+<p>举例</p>
+</blockquote>
+<ul>
+<li><p>base.sol </p>
+<pre><code>contract BaseInclude {
+    string mString;
+    function BaseInclude(string pString){
+        mString = pString;
+    }
+}
+</code></pre></li>
+<li><p>extends.sol</p>
+<pre><code>import &quot;./base.sol&quot; ;//引入base.sol 文件
+
+contract newChild is BaseInclude(){ //继承
+
+    function newChild(string pStr) BaseInclude(pStr){
+
+    }
+    function main ()public constant returns (string){
+        return mString;
+    }
+}
+</code></pre></li>
+</ul>
+<h3 id="合约结构体"><a href="#合约结构体" class="headerlink" title="合约结构体"></a>合约结构体</h3><blockquote>
+<p>Solidity合约类似于面向对象语言的类。</p>
+<p>每个合约都可以包含State Variables, Functions, Function Modifiers, Events, Structs Types 和 Enum Types声明。 合约也可以继承其他合约。</p>
+</blockquote>
+<h4 id="state-variables-状态变量"><a href="#state-variables-状态变量" class="headerlink" title="state variables 状态变量"></a>state variables 状态变量</h4><ul>
+<li>状态变量是永久存储在合约存储中的值。</li>
+</ul>
+<pre><code>pragma solidity ^0.4.0;
+contract SimpleStorage {
+    uint storedData; // 状态变量
+    // ...
+}
+</code></pre><h4 id="函数-Functions"><a href="#函数-Functions" class="headerlink" title="函数 Functions"></a>函数 Functions</h4><ul>
+<li><p>函数是代码合约中的可执行单元。</p>
+<pre><code>pragma solidity ^0.4.0;
+contract SimpleAuction {
+    function bid() payable { // 函数
+        // ...
+    }
+}
+</code></pre><h4 id="函数类型-需要补充"><a href="#函数类型-需要补充" class="headerlink" title="函数类型 (需要补充)"></a>函数类型 (需要补充)</h4></li>
+<li><p>payable 交易类型的函数，需要付gas</p>
+</li>
+</ul>
+<p>举例 </p>
+<pre><code>function transcationToSomeOne(address pAdderss) public payable{
+        pAdderss.transfer(50);
+}
+</code></pre><p>此方法中的内容是向参数地址转50 wei个以太币，像这样的交易 需要声明方法名payable。</p>
+<p>同时你要注意的是：</p>
+<ul>
+<li><p>在这个交易中，合约的创建人要转50wei的以太币给参数中的地址，方法是接受方调用transfer方法，而不是付款方。付款方默认是当前合约的创建者，就是执行create时，那个Account中选中的用户。如果你要付款50个以太币，就是</p>
+<p>  pAdderss.transfer(50 ether);  量和单位之间加空格</p>
+</li>
+<li><p>如果想执行这个交易，在value的部分你要输入需要消耗的gas，这个gas要大于你当前转账的50wei，就是至少是60wei。因为这种交易需额外的费用。</p>
+</li>
+</ul>
+<h4 id="结构类型-struct"><a href="#结构类型-struct" class="headerlink" title="结构类型 struct"></a>结构类型 struct</h4><p>struct是可以包含几个变量的自定义类型，相当于java中的bean</p>
+<pre><code>pragma solidity ^0.4.0;
+contract Ballot {
+    struct Voter { // 结构体
+        uint weight;
+        bool voted;
+        address delegate;
+        uint vote;
+    }
+}
+</code></pre><h4 id="事件"><a href="#事件" class="headerlink" title="事件"></a>事件</h4><p>事件是与EVM日志工具便捷接口。(需要补充)</p>
+<h4 id="移位操作"><a href="#移位操作" class="headerlink" title="移位操作"></a>移位操作</h4><p>移位操作的结果是左操作数的类型。 表达式x &lt;&lt; y等价于x <em> 2 <em>* y，x &gt;&gt; y等价于x / 2 </em></em> y。 这意味着，移位负数符号延伸。 移位操作使用负数会引发运行时异常。<br>警告:<br>有符号整数类型的负值向右位移所产生的结果，与其他编程语言不同。 在“Solidity”中，将右移转换为除法，所以偏移的负值将向零舍入（截断）。 在其他编程语言中，负值的右移朝向负无穷大。</p>
+<h4 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h4><h5 id="值类型"><a href="#值类型" class="headerlink" title="值类型"></a>值类型</h5><p>就是传递值，而不是地址的数据类型，如果你把一个值类型作为参数传递给一个函数，那么在函数体内的任何对这个值类型的变量的操作，都不会影响到方法外的变量的值。</p>
+<p>solidity的值类型的有：</p>
+<h6 id="bool：值的常是量是true和false。"><a href="#bool：值的常是量是true和false。" class="headerlink" title="bool：值的常是量是true和false。"></a>bool：值的常是量是true和false。</h6><h6 id="int-uint：各种大小的有符号和无符号整数。"><a href="#int-uint：各种大小的有符号和无符号整数。" class="headerlink" title="int/uint：各种大小的有符号和无符号整数。"></a>int/uint：各种大小的有符号和无符号整数。</h6><pre><code>1.int是有符号整形，分别有int8，int16，int24，int32.。。。。一直到int256，步幅是8
+2.uint是无符号整形，分别有uint8，uint16，uint24，uint32.。。。一直到uint256，步幅也是8
+3.uint和int分别是uint256和int256的别名。
+4.[由类型溢出引发的血案](https://zhuanlan.zhihu.com/p/35989258?utm_medium=social&amp;utm_source=wechat_session&amp;from=groupmessage&amp;isappinstalled=0&amp;wechatShare=1) 这个需要关注，引以为戒。
+</code></pre><h6 id="Address"><a href="#Address" class="headerlink" title="Address"></a>Address</h6><p>地址：保存一个20个字节的值（Ethereum地址的大小）。 地址类型也有成员，作为所有合约的基础。</p>
+<p>地址的操作</p>
+<pre><code>&lt;=, &lt;, ==, !=, &gt;= 和 &gt;  这是判断
+</code></pre><p>地址成员 （地址属性）</p>
+<ul>
+<li><p>balance</p>
+<p>  myAddress.balance &gt;= 10  判断地址余额是否大于等于0</p>
+</li>
+<li><p>transfer </p>
+<p>  x.transfer(10) 给x地址 10个wei</p>
+</li>
+</ul>
+<p>如果x是合约地址，则其代码（更具体地说：其回退函数（如果存在））将与传送调用一起执行（这是EVM的限制，不能防止）。 如果执行任务无法运行，或以任何方式失败，则已经花费的以太币不会被退回，并且当前的合约将以异常方式停止。</p>
+<ul>
+<li><p>send</p>
+<p>  send是低级对等的转账。 如果执行失败，当前合约将不会以异常方式停止，但发送将返回false。</p>
+</li>
+</ul>
+<p>注意send和transfer的区别，send如果执行失败，不会抛出异常，但会返回false。transfer会报异常，程序终止，但没有返回值。</p>
+<ul>
+<li>call, callcode and delegatecall</li>
+</ul>
+<p>所有这些功能都是低级别的功能，应小心使用。 具体而言，任何未知的合约都可能是恶意的，如果你调用它，你将交出控制权，该合约可能又回调到你的合约，从而要改变你的状态变量。</p>
+<h6 id="固定大小的字节数组-byte"><a href="#固定大小的字节数组-byte" class="headerlink" title="固定大小的字节数组 byte"></a>固定大小的字节数组 byte</h6><pre><code>bytes1，bytes2，bytes3，…，bytes32。 byte是bytes1的别名
+</code></pre><ul>
+<li><p>字节数组操作：</p>
+<p>  1.比较：&lt;=，&lt;，==，!=，&gt;=，&gt;（评估为bool）</p>
+<p>  2.位运算符：＆，|，^（按位异或），〜（逐位否定），&lt;&lt;（左移），&gt;&gt;（右移）,移位操作符可以以任何整数类型作为右操作数（将返回左操作数的类型），用以表示要移位的位数。 移动负数将导致运行时异常。</p>
+<p>  3.索引访问：如果x的类型为bytesi，则0 &lt;= k &lt;i的x [k]返回第k个字节（只读）</p>
+<p>  4..length返回字节数组的固定长度（只读）</p>
+</li>
+</ul>
+<h6 id="String-字符串类型"><a href="#String-字符串类型" class="headerlink" title="String 字符串类型"></a>String 字符串类型</h6><p>字符串文字用双引号或单引号（”foo”或’bar’）标注。 它们并不像C中那样以零结束; “foo”代表三个而不是四个字节。 与整数文字一样，它们的类型可以有所变化，它们可以隐式转换为bytes1，…，bytes32（如果它们适合）到字节和字符串。</p>
+<p>字符串文字支持转义字符，例如\n，\xNN和\uNNNN。 \xNN取十六进制值并插入相应的字节，而\uNNNN则使用Unicode代码点并插入UTF-8序列 </p>
+<h6 id="十六进制文字"><a href="#十六进制文字" class="headerlink" title="十六进制文字"></a>十六进制文字</h6><p>Hexademical Literals以关键字hex为前缀，用双引号或单引号（hex”001122FF”）标注。 它们的内容必须是十六进制字符串，它们的值是这些值的二进制表示。</p>
+<p>Hexademical Literals像字符串文字，具有相同的可转换性限制。</p>
+<h6 id="枚举类型"><a href="#枚举类型" class="headerlink" title="枚举类型"></a>枚举类型</h6><p>枚举可用于创建具有有限值集的自定义类型，在Solidity中，枚举是创建用户定义类型的一种方式。 它们可以显式转换为整数类型，也可以隐式转换。 显式转换在运行时检查值范围，失败会导致异常。 枚举需要至少一个成员</p>
+<pre><code>pragma solidity ^0.4.0;
+contract test {
+    enum ActionChoices { GoLeft, GoRight, GoStraight, SitStill }
+    ActionChoices choice;
+    ActionChoices constant defaultChoice = ActionChoices.GoStraight;
+    function setGoStraight() {
+        choice = ActionChoices.GoStraight;
+    }
+    // 由于枚举类型不是ABI的一部分，所以对于Solidity之外的所有事务，“getChoice”的签名将自动更改为“getChoice（）return（uint8）”）。 所使用的整数类型足够大以容纳所有枚举值，即如果你有更多值，则将使用`uint16`等等。
+    function getChoice() returns (ActionChoices) {
+        return choice;
+    }
+    function getDefaultChoice() returns (uint) {
+        return uint(defaultChoice);
+    }
+}
+</code></pre><h6 id="函数类型"><a href="#函数类型" class="headerlink" title="函数类型"></a>函数类型</h6><ul>
+<li><p>函数前置修饰符 (需要补充)</p>
+<ul>
+<li>modifiers 这个函数修饰符修饰函数，当这个函数被是哟用时，首先执行此函数，再执行调用此函数的函数。</li>
+</ul>
+</li>
+</ul>
+<p>举例：</p>
+<pre><code>pragma solidity ^0.4.11;
+contract Purchase {
+    address public seller;
+    modifier onlySeller() { // Modifier 修饰的函数
+        require(msg.sender == seller);
+        _;
+    }
+    function abort() onlySeller returns (bool isSelf) { // 调用Modifier
+        return isSelf
+    }
+}
+</code></pre><p>abort函数使用了 onlySeller这个函数，在运行abort这个函数前，会先执行onlySelf方法的内容。</p>
+<ul>
+<li><p>函数后置修饰符 (需要补充)</p>
+<ul>
+<li><p>internal</p>
+</li>
+<li><p>private </p>
+</li>
+<li><p>public</p>
+</li>
+<li><p>whenNotPaused </p>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="引用类型"><a href="#引用类型" class="headerlink" title="引用类型"></a>引用类型</h5><p>复杂类型，即不总是适合256位的类型，需要比其他值类型更仔细地处理。 由于复制它们相当昂贵，必须考虑我们是否希望将它们存储在内存中或存储（保存状态变量的位置）</p>
+<h6 id="数据位置-Data-location-（需要补充）"><a href="#数据位置-Data-location-（需要补充）" class="headerlink" title="数据位置 Data location （需要补充）"></a>数据位置 Data location （需要补充）</h6><h6 id="数组"><a href="#数组" class="headerlink" title="数组"></a>数组</h6><p>数组可以是编译时固定大小，也可以是动态的。 对于存储阵列，元素类型可以是任意的（其他数组，映射或结构）。存储器阵列不能是映射，如果它作为公共可见函数的参数，则必须是ABI类型。</p>
 
       
     </div>
@@ -526,7 +725,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引"><span class="nav-number">1.</span> <span class="nav-text">引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能合约"><span class="nav-number">2.</span> <span class="nav-text">智能合约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要写智能合约"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要写智能合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发语言-solidity"><span class="nav-number">2.2.</span> <span class="nav-text">开发语言-solidity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remix简介"><span class="nav-number">2.3.</span> <span class="nav-text">Remix简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solidity语法摘要"><span class="nav-number">3.</span> <span class="nav-text">solidity语法摘要</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#引"><span class="nav-number">1.</span> <span class="nav-text">引</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#智能合约"><span class="nav-number">2.</span> <span class="nav-text">智能合约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么要写智能合约"><span class="nav-number">2.1.</span> <span class="nav-text">为什么要写智能合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#开发语言-solidity"><span class="nav-number">2.2.</span> <span class="nav-text">开发语言-solidity</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Remix简介"><span class="nav-number">2.3.</span> <span class="nav-text">Remix简介</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#solidity语法摘要"><span class="nav-number">3.</span> <span class="nav-text">solidity语法摘要</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Solidity文件结构"><span class="nav-number">3.1.</span> <span class="nav-text">Solidity文件结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pragma"><span class="nav-number">3.2.</span> <span class="nav-text">pragma</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源文件引用"><span class="nav-number">3.3.</span> <span class="nav-text">源文件引用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#合约结构体"><span class="nav-number">3.4.</span> <span class="nav-text">合约结构体</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#state-variables-状态变量"><span class="nav-number">3.4.1.</span> <span class="nav-text">state variables 状态变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数-Functions"><span class="nav-number">3.4.2.</span> <span class="nav-text">函数 Functions</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#函数类型-需要补充"><span class="nav-number">3.4.3.</span> <span class="nav-text">函数类型 (需要补充)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#结构类型-struct"><span class="nav-number">3.4.4.</span> <span class="nav-text">结构类型 struct</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#事件"><span class="nav-number">3.4.5.</span> <span class="nav-text">事件</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#移位操作"><span class="nav-number">3.4.6.</span> <span class="nav-text">移位操作</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据类型"><span class="nav-number">3.4.7.</span> <span class="nav-text">数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#值类型"><span class="nav-number">3.4.7.1.</span> <span class="nav-text">值类型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#bool：值的常是量是true和false。"><span class="nav-number">3.4.7.1.1.</span> <span class="nav-text">bool：值的常是量是true和false。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#int-uint：各种大小的有符号和无符号整数。"><span class="nav-number">3.4.7.1.2.</span> <span class="nav-text">int/uint：各种大小的有符号和无符号整数。</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#Address"><span class="nav-number">3.4.7.1.3.</span> <span class="nav-text">Address</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#固定大小的字节数组-byte"><span class="nav-number">3.4.7.1.4.</span> <span class="nav-text">固定大小的字节数组 byte</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#String-字符串类型"><span class="nav-number">3.4.7.1.5.</span> <span class="nav-text">String 字符串类型</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#十六进制文字"><span class="nav-number">3.4.7.1.6.</span> <span class="nav-text">十六进制文字</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#枚举类型"><span class="nav-number">3.4.7.1.7.</span> <span class="nav-text">枚举类型</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#函数类型"><span class="nav-number">3.4.7.1.8.</span> <span class="nav-text">函数类型</span></a></li></ol></li><li class="nav-item nav-level-5"><a class="nav-link" href="#引用类型"><span class="nav-number">3.4.7.2.</span> <span class="nav-text">引用类型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#数据位置-Data-location-（需要补充）"><span class="nav-number">3.4.7.2.1.</span> <span class="nav-text">数据位置 Data location （需要补充）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#数组"><span class="nav-number">3.4.7.2.2.</span> <span class="nav-text">数组</span></a></li></ol></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
