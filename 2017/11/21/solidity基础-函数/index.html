@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="有志青年">
 <meta property="og:description" content="函数类型函数是代码合约中的可执行单元。pragma solidity ^0.4.0; contract SimpleAuction {     function bid() payable { // 函数         // ...     } } 函数前置修饰符 (需要补充)modifiers 这个函数修饰符修饰函数，当这个函数被是哟用时，首先执行此函数，再执行调用此函数的函数。举例： pra">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-04-24T02:00:14.126Z">
+<meta property="og:updated_time" content="2018-04-24T02:06:02.862Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="solidity基础-函数">
 <meta name="twitter:description" content="函数类型函数是代码合约中的可执行单元。pragma solidity ^0.4.0; contract SimpleAuction {     function bid() payable { // 函数         // ...     } } 函数前置修饰符 (需要补充)modifiers 这个函数修饰符修饰函数，当这个函数被是哟用时，首先执行此函数，再执行调用此函数的函数。举例： pra">
@@ -329,7 +329,8 @@ contract Purchase {
     }
 }
 </code></pre><p>abort函数使用了 onlySeller这个函数，在运行abort这个函数前，会先执行onlySelf方法的内容。</p>
-<h3 id="函数后置修饰符-需要补充"><a href="#函数后置修饰符-需要补充" class="headerlink" title="函数后置修饰符 (需要补充)"></a>函数后置修饰符 (需要补充)</h3><h4 id="internal"><a href="#internal" class="headerlink" title="internal"></a>internal</h4><h4 id="private"><a href="#private" class="headerlink" title="private"></a>private</h4><h4 id="public"><a href="#public" class="headerlink" title="public"></a>public</h4><h4 id="whenNotPaused"><a href="#whenNotPaused" class="headerlink" title="whenNotPaused"></a>whenNotPaused</h4><h4 id="payable-交易类型的函数，需要付gas"><a href="#payable-交易类型的函数，需要付gas" class="headerlink" title="payable 交易类型的函数，需要付gas"></a>payable 交易类型的函数，需要付gas</h4><p>举例 </p>
+<h3 id="函数后置修饰符-需要补充"><a href="#函数后置修饰符-需要补充" class="headerlink" title="函数后置修饰符 (需要补充)"></a>函数后置修饰符 (需要补充)</h3><h4 id="internal"><a href="#internal" class="headerlink" title="internal"></a>internal</h4><h4 id="private"><a href="#private" class="headerlink" title="private"></a>private</h4><h4 id="public"><a href="#public" class="headerlink" title="public"></a>public</h4><h4 id="whenNotPaused"><a href="#whenNotPaused" class="headerlink" title="whenNotPaused"></a>whenNotPaused</h4><h4 id="payable"><a href="#payable" class="headerlink" title="payable"></a>payable</h4><p>交易类型的函数，需要付gas</p>
+<p>举例 </p>
 <pre><code>function transcationToSomeOne(address pAdderss) public payable{
         pAdderss.transfer(50);
 }
@@ -466,7 +467,7 @@ contract Purchase {
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">77</span>
+                  <span class="site-state-item-count">78</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -528,7 +529,7 @@ contract Purchase {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#函数类型"><span class="nav-number">1.</span> <span class="nav-text">函数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数是代码合约中的可执行单元。"><span class="nav-number">1.1.</span> <span class="nav-text">函数是代码合约中的可执行单元。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数前置修饰符-需要补充"><span class="nav-number">1.1.1.</span> <span class="nav-text">函数前置修饰符 (需要补充)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#modifiers-这个函数修饰符修饰函数，当这个函数被是哟用时，首先执行此函数，再执行调用此函数的函数。"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">modifiers 这个函数修饰符修饰函数，当这个函数被是哟用时，首先执行此函数，再执行调用此函数的函数。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数后置修饰符-需要补充"><span class="nav-number">1.1.2.</span> <span class="nav-text">函数后置修饰符 (需要补充)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#internal"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">internal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#private"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">private</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#public"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">public</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whenNotPaused"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">whenNotPaused</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#payable-交易类型的函数，需要付gas"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">payable 交易类型的函数，需要付gas</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#函数类型"><span class="nav-number">1.</span> <span class="nav-text">函数类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#函数是代码合约中的可执行单元。"><span class="nav-number">1.1.</span> <span class="nav-text">函数是代码合约中的可执行单元。</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#函数前置修饰符-需要补充"><span class="nav-number">1.1.1.</span> <span class="nav-text">函数前置修饰符 (需要补充)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#modifiers-这个函数修饰符修饰函数，当这个函数被是哟用时，首先执行此函数，再执行调用此函数的函数。"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">modifiers 这个函数修饰符修饰函数，当这个函数被是哟用时，首先执行此函数，再执行调用此函数的函数。</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数后置修饰符-需要补充"><span class="nav-number">1.1.2.</span> <span class="nav-text">函数后置修饰符 (需要补充)</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#internal"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">internal</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#private"><span class="nav-number">1.1.2.2.</span> <span class="nav-text">private</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#public"><span class="nav-number">1.1.2.3.</span> <span class="nav-text">public</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#whenNotPaused"><span class="nav-number">1.1.2.4.</span> <span class="nav-text">whenNotPaused</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#payable"><span class="nav-number">1.1.2.5.</span> <span class="nav-text">payable</span></a></li></ol></li></ol></li></ol></li></ol></div>
             
 
           </div>
