@@ -242,6 +242,131 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/26/Rxjava基本用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2016/01/26/Rxjava基本用法/" itemprop="url">Rxjava -2 基本用法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-01-26T16:59:59+08:00">
+                2016-01-26
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2016/01/26/Rxjava基本用法/"class="leancloud_visitors" data-flag-title="Rxjava -2 基本用法">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="创建observer-观察者。"><a href="#创建observer-观察者。" class="headerlink" title="创建observer 观察者。"></a>创建observer 观察者。</h2><ul>
+<li>observer决定了事件发生的时候发生什么样的行为。由observer接口实现。
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/01/26/Rxjava基本用法/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/01/26/RxJava理解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1395,141 +1520,6 @@ Ubuntu下设置环境变量有三种方法，一种用于当前终端，一种�
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/09/02/从setContextView分析界面加载流程/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="leequer">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="有志青年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/09/02/从setContextView分析界面加载流程/" itemprop="url">从setContextView分析Android界面加载流程</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-09-02T21:05:23+08:00">
-                2015-09-02
-              </time>
-            
-
-           
-          </span>
-
-   
-
-          
-          
-          
-			&nbsp; | &nbsp;
-			<span id="/2015/09/02/从setContextView分析界面加载流程/"class="leancloud_visitors" data-flag-title="从setContextView分析Android界面加载流程">
-				&nbsp;阅读次数
-            </span>
-          
-
-          
-
-         
-
-        
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-          
-我们通过源码来了解view的加载流程。
-
-  首先我们加载布局是通过setContentView(R.layout.xxx);我们看setContentView这个方法的源码：
-public void setContentView(int layoutResID) {
-    getWindow().setContentView(layoutResID);---@1
-    initActionBar();
-}
-@1：getWindow（）源码：
-public Window getWindow
-          ...
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2015/09/02/从setContextView分析界面加载流程/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1580,7 +1570,7 @@ public Window getWindow
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">78</span>
+                  <span class="site-state-item-count">79</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

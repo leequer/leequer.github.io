@@ -1,0 +1,1210 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="区块链," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介Truffle是以太坊智能合约的开发环境，测试框架，以太坊的资源管理通道，致力于让以太坊上的开发变得简单。 Truffle有以下特点： 内置的智能合约编译，链接，部署和二进制文件的管理。  快速开发下的自动合约测试。  脚本化的，可扩展的部署与发布框架。  部署到不管多少的公网或私网的网络环境管理功能  使用EthPM&amp;amp;NPM提供的包管理，使用ERC190标准。  与合约直接通信的直接">
+<meta name="keywords" content="区块链">
+<meta property="og:type" content="article">
+<meta property="og:title" content="truffle">
+<meta property="og:url" content="http://yoursite.com/2017/11/22/truffle/index.html">
+<meta property="og:site_name" content="有志青年">
+<meta property="og:description" content="简介Truffle是以太坊智能合约的开发环境，测试框架，以太坊的资源管理通道，致力于让以太坊上的开发变得简单。 Truffle有以下特点： 内置的智能合约编译，链接，部署和二进制文件的管理。  快速开发下的自动合约测试。  脚本化的，可扩展的部署与发布框架。  部署到不管多少的公网或私网的网络环境管理功能  使用EthPM&amp;amp;NPM提供的包管理，使用ERC190标准。  与合约直接通信的直接">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/img/1524539079.png">
+<meta property="og:updated_time" content="2018-04-24T03:49:24.084Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="truffle">
+<meta name="twitter:description" content="简介Truffle是以太坊智能合约的开发环境，测试框架，以太坊的资源管理通道，致力于让以太坊上的开发变得简单。 Truffle有以下特点： 内置的智能合约编译，链接，部署和二进制文件的管理。  快速开发下的自动合约测试。  脚本化的，可扩展的部署与发布框架。  部署到不管多少的公网或私网的网络环境管理功能  使用EthPM&amp;amp;NPM提供的包管理，使用ERC190标准。  与合约直接通信的直接">
+<meta name="twitter:image" content="http://yoursite.com/img/1524539079.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2017/11/22/truffle/"/>
+
+
+
+
+
+  <title>truffle | 有志青年</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">有志青年</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/22/truffle/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="leequer">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="有志青年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">truffle</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T22:00:00+08:00">
+                2017-11-22
+              </time>
+            
+
+           
+          </span>
+
+   
+
+          
+          
+          
+			&nbsp; | &nbsp;
+			<span id="/2017/11/22/truffle/"class="leancloud_visitors" data-flag-title="truffle">
+				&nbsp;阅读次数
+            </span>
+          
+
+          
+
+         
+
+        
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>Truffle是以太坊智能合约的开发环境，测试框架，以太坊的资源管理通道，致力于让以太坊上的开发变得简单。</p>
+<h1 id="Truffle有以下特点："><a href="#Truffle有以下特点：" class="headerlink" title="Truffle有以下特点："></a>Truffle有以下特点：</h1><ul>
+<li>内置的智能合约编译，链接，部署和二进制文件的管理。 </li>
+<li>快速开发下的自动合约测试。 </li>
+<li>脚本化的，可扩展的部署与发布框架。 </li>
+<li>部署到不管多少的公网或私网的网络环境管理功能 </li>
+<li>使用EthPM&amp;NPM提供的包管理，使用ERC190标准。 </li>
+<li>与合约直接通信的直接交互控制台（写完合约就可以命令行里验证了）。</li>
+<li>可配的构建流程，支持紧密集成。</li>
+<li>在Truffle环境里支持执行外部的脚本。</li>
+</ul>
+<h1 id="truffle使用"><a href="#truffle使用" class="headerlink" title="truffle使用"></a>truffle使用</h1><h2 id="前置工作"><a href="#前置工作" class="headerlink" title="前置工作"></a>前置工作</h2><h3 id="环境要求-NodeJS-5-0"><a href="#环境要求-NodeJS-5-0" class="headerlink" title="环境要求  NodeJS 5.0+"></a>环境要求  NodeJS 5.0+</h3><p>先安装node，依次执行以下2条命令： </p>
+<pre><code>curl -sL https://deb.nodesource.com/setup_9.x 
+
+sudo -E bash apt-get install nodejs
+</code></pre><h3 id="truffle安装"><a href="#truffle安装" class="headerlink" title="truffle安装"></a>truffle安装</h3><p>安装方式： </p>
+<pre><code>$ npm install -g truffle
+</code></pre><h3 id="TestRPC客户端安装"><a href="#TestRPC客户端安装" class="headerlink" title="TestRPC客户端安装"></a>TestRPC客户端安装</h3><p>Truffle需要以太坊客户端，需要支持标准的JSON RPC API。用普通话说就是 需要一个可以跑合约的以太坊私链。就是<a href="https://leequer.github.io/2017/11/01/%E4%BB%A5%E5%A4%AA%E5%9D%8A-%E7%A7%81%E6%9C%89%E9%93%BE%E7%9A%84%E5%AE%89%E8%A3%85%EF%BC%8C%E5%90%AF%E5%8A%A8%EF%BC%8C%E6%93%8D%E4%BD%9C/" title="以太坊-私有链的安装，启动，操作" target="_blank" rel="noopener">以太坊-私有链的安装，启动，操作</a>一文中我们建立的私链，启动这个私链也可以。</p>
+<p>安装TestRPC为例: </p>
+<pre><code>sudo -E npm install ethereumjs-testrpc -g
+</code></pre><p>运行下面命令启动TestRPC</p>
+<pre><code>testrpc
+</code></pre><p>可看到testrpc版本号、初始化以太坊地址和监听端口，此处版本号为v3.0.5</p>
+<p>运行结果：</p>
+<pre><code>root@blockchain:~$ testrpc Secp256k1 bindings are not compiled. Pure JS implementation will be used. EthereumJS TestRPC v3.0.5 Available 
+Accounts ================== 
+(0) 0x6f41fffc0338e715e8aac4851afc4079b712af70 🔒 
+(1) 0xad8926fdb14c2ca283ab1e8a05c0b6707bc03f97 🔒 
+(2) 0x1cb0ff92ec067169fd6b1b12c6d39a4f6c2cf6f9 🔒 
+(3) 0x594b70524993798cb093ca8a2bd7f02f904b66d3 🔒 
+(4) 0x2f1ee0930f00b0f3cdab66d916cbd1fa4fe9535a 🔒 
+(5) 0x5513a551c5aafaa8719a0df5bf398d4b3af4e211 🔒 
+(6) 0xa1bf121993c23cc467eec8b7e453011dae250404 🔒 
+(7) 0xe0b161979ebca95235c4cfeddfd11fb30d782a4d 🔒 
+(8) 0x093b30604ac41e054e71b670d8e3ab68360017c9 🔒 
+(9) 0x1cac60d851a44305d7dd6ecf8ff32f3403427d3d 🔒 
+Private Keys ================== 
+(0) db3ecbc77961edb030858411850bd1ed12915dcf3c13762ec3692989810c2870 
+(1) e0cc6b69516123fdf5d739dc9109ab486cf385affba555f0f03a7c74d7c1a88f 
+(2) cea171049aa817c8ecade84ed8d20ce9e2312bed6e0f39548c9673a65bd47a47 
+(3) e7f5cbba7403d0c5ea421f6ce64165b79d5c13594ad4a0ffa27896b498d6f5ad 
+(4) 6d1cd1fa965caf8a0b073faff072732de0eb0a8c153cc355f89eedb49c12ed12 
+(5) c535a490deefd452daab45b01daaf34366d6748afa5f0778aac5dae6c590c135 
+(6) 1292992fba6774016899237b8eb217108c5f9021e0e334aa5fad3db62e5c406b 
+(7) 03d02b40ab919c9d51e26fdc2e70c221d65ec1970f1283acad8b3445c5771f56 
+(8) 018069b07dc4d177a612ef0e20f63b9962781ab2d57d2ad50d9361a9be804bc4 
+(9) cd348e9ee0bc2cfbda9b9822d42b3dd3b83d180425bc153ffbc7e7e5bf13fa28 
+HD Wallet ================== 
+Mnemonic: say slight close trip refuse seven marble fun edge galaxy cash pioneer Base HD Path: m/44&apos;/60&apos;/0&apos;/0/
+Listening on localhost:8545
+</code></pre><blockquote>
+<p>8584 就是rpc端口，就是合约监听端口。如果我们不用testrpc，启动自己的私链，那么启动命令就要带这个–rpc的参数，指定端口号。否则合约无法编译。</p>
+</blockquote>
+<h2 id="truffle的使用并编译和发布合约，交互合约"><a href="#truffle的使用并编译和发布合约，交互合约" class="headerlink" title="truffle的使用并编译和发布合约，交互合约"></a>truffle的使用并编译和发布合约，交互合约</h2><h3 id="用truffle创建项目"><a href="#用truffle创建项目" class="headerlink" title="用truffle创建项目"></a>用truffle创建项目</h3><pre><code>$ mkdir -p /home/liqing/Documents/Ethereum/truffle/workspace/test1
+</code></pre><h3 id="初始化框架"><a href="#初始化框架" class="headerlink" title="初始化框架"></a>初始化框架</h3><p>进入到工程根目录下(现在应该是个空目录)，并执行下述命令。<br>    $ cd /home/liqing/Documents/Ethereum/truffle/workspace/test1</p>
+<pre><code>$ truffle init
+</code></pre><p>正确执行后，我们将得到下面这样的目录结构：</p>
+<p><img src="/img/1524539079.png" alt=""></p>
+<p>目录结构简单说明如下：</p>
+<ul>
+<li><p>contract/ - Truffle默认的合约文件存放地址。</p>
+</li>
+<li><p>migrations/ - 存放发布脚本文件</p>
+</li>
+<li><p>test/ - 用来测试应用和合约的测试文件</p>
+</li>
+<li><p>truffle.js - Truffle的配置文件</p>
+</li>
+</ul>
+<h3 id="新建合约"><a href="#新建合约" class="headerlink" title="新建合约"></a>新建合约</h3><ul>
+<li><p>删除./contract目录下的自带demo合约，切记不要删除./contract/Migrations.sol合约，它是Truffle用来帮助部署的。</p>
+<p>  $ cd /Users/admin/develop/blockchain_workspace/truffleTest/contracts</p>
+</li>
+<li><p>在./contract目录下创建一个自己的合约文Greeter.sol。</p>
+<pre><code>pragma solidity ^0.4.0;
+contract Greeter
+{
+address creator;
+string greeting;
+function Greeter(string _greeting) public
+{
+creator = msg.sender;
+greeting = _greeting;
+}
+function greet() constant returns (string)
+{
+return greeting;
+}
+function setGreeting(string _newgreeting)
+{
+greeting = _newgreeting;
+}
+/**********
+Standard kill() function to recover funds
+**********/
+function kill()
+{
+if (msg.sender == creator)
+suicide(creator); // kills this contract and sends remaining funds back to creator
+}
+}
+</code></pre></li>
+</ul>
+<h3 id="修改发布脚本"><a href="#修改发布脚本" class="headerlink" title="修改发布脚本"></a>修改发布脚本</h3><p>将./migrations/2_deploy_contracts.js（如果没有新建一个，不要动1_xxx.js文件，文件是按照文件名编号顺序执行的）下的内容由：</p>
+<pre><code>module.exports = function(deployer) 
+{
+    deployer.deploy(ConvertLib);
+    deployer.autolink();
+    deployer.deploy(MetaCoin);
+};
+</code></pre><p>修改为：</p>
+<pre><code>var Greeter = artifacts.require(&quot;./Greeter.sol&quot;);
+module.exports = function(deployer) {
+    deployer.deploy(Greeter,&quot;hellow world!&quot;);
+};
+</code></pre><p>目的是去掉原有自带的Demo部署流程，修改为要部署的合约。修改完后，记得保存，不然发布时会报错，找不到相关合约。</p>
+<h3 id="编译"><a href="#编译" class="headerlink" title="编译"></a>编译</h3><p>进入到工程根目录下，进行编译：</p>
+<pre><code>$ truffle compile
+Compiling Greeter.sol...
+Writing artifacts to ./build/contracts
+</code></pre><h3 id="部署合约"><a href="#部署合约" class="headerlink" title="部署合约"></a>部署合约</h3><p>部署合约需要有启动的节点，可以启动你的私链，也可以启动测试客户端testrpc</p>
+<ul>
+<li>启动你的客户端</li>
+</ul>
+<p>启动之前安装好的EthereumJS RPC客户端。刚才如果启动了就不用管这步了。</p>
+<ul>
+<li>部署合约(migrate)</li>
+</ul>
+<p>修改 truffle.js 的网络连接信息如下：</p>
+<pre><code>module.exports = {
+    networks: {
+        development: {
+            host: &quot;localhost&quot;,
+            port: 8545,
+            network_id: &quot;*&quot; // 匹配任何network id
+        }
+    }
+};
+</code></pre><p>部署合约到网络上：</p>
+<pre><code>$ truffle migrate
+
+Running migration: 2_deploy_contracts.js
+Deploying Greeter...
+Greeter: 0xe66038995cf64b14da96d26cbe1c96d30dec0e95
+Saving successful migration to network...
+Saving artifacts...
+</code></pre><p>备注</p>
+<p> 如果报错出现了一些你之前编译部署过，但你已经不需要的合约，可以用truffle migrate –reset来重置部署，但可能根据情况，你需要更新移植版本号，来管理不同的版本，</p>
+<h3 id="运行合约"><a href="#运行合约" class="headerlink" title="运行合约"></a>运行合约</h3><p>我们使用下面命令</p>
+<pre><code>truffle console
+</code></pre><p>在控制台与合约交互，执行后显示。</p>
+<pre><code>truffle(development)&gt; 
+</code></pre><p>这个破折号后面就可以输入东西了</p>
+<p>我们输入</p>
+<pre><code>Greeter.deployed().then(function(instance){cc= instance;});
+</code></pre><ul>
+<li><p>Greeter是合约的文件名也是合约名，合约的名字和合约的文件名要相同否则</p>
+<pre><code>ReferenceError: test is not defined
+</code></pre></li>
+<li><p>上面的命令意思是Greeter这个合约已经部署了，然后，将合约实例赋值给cc，那我们就可以通过cc来调用合约方法了。</p>
+</li>
+<li><p>调用合约方法,输入cc.  如果不知道优什么方法，多按几次tab键 就会展示方法。</p>
+</li>
+</ul>
+<p>我们执行greet（）方法</p>
+<pre><code>truffle(development)&gt; cc.greet();    
+</code></pre><p>返回</p>
+<pre><code>&apos;hellow world!&apos;
+</code></pre><ul>
+<li><p>控制台内，可以通过声明变量来减少输入的内容，比如</p>
+<pre><code>var g = Greeter.deployed();g.greet();
+</code></pre></li>
+<li><p>退出用 .exit</p>
+</li>
+</ul>
+<h3 id="常见报错"><a href="#常见报错" class="headerlink" title="常见报错"></a>常见报错</h3><ul>
+<li><p>以太坊客户端连接配置不正确，或未正常启动时。</p>
+<pre><code>$ truffle console
+/usr/local/lib/node_modules/truffle/lib/repl.js:25
+if (err) return done(err);
+^
+ReferenceError: done is not defined
+at /usr/local/lib/node_modules/truffle/lib/repl.js:25:21
+at /usr/local/lib/node_modules/truffle/lib/repl.js:57:21
+at /usr/local/lib/node_modules/truffle/lib/contracts.js:46:25
+at /usr/local/lib/node_modules/truffle/node_modules/web3/lib/web3/property.js:119:13
+at /usr/local/lib/node_modules/truffle/node_modules/web3/lib/web3/requestmanager.js:82:20
+at exports.XMLHttpRequest.request.onreadystatechange (/usr/local/lib/node_modules/truffle/node_modules/web3/lib/web3/httppro
+vider.js:114:13)
+at exports.XMLHttpRequest.dispatchEvent (/usr/local/lib/node_modules/truffle/node_modules/xmlhttprequest/lib/XMLHttpRequest.
+js:591:25)
+at setState (/usr/local/lib/node_modules/truffle/node_modules/xmlhttprequest/lib/XMLHttpRequest.js:610:14)
+at exports.XMLHttpRequest.handleError (/usr/local/lib/node_modules/truffle/node_modules/xmlhttprequest/lib/XMLHttpRequest.js
+:532:5)
+at ClientRequest.errorHandler (/usr/local/lib/node_modules/truffle/node_modules/xmlhttprequest/lib/XMLHttpRequest.js:459:14)
+at emitOne (events.js:96:13)
+at ClientRequest.emit (events.js:188:7)
+at Socket.socketErrorListener (_http_client.js:309:9)
+at emitOne (events.js:96:13)
+at Socket.emit (events.js:188:7)
+at emitErrorNT (net.js:1281:8)
+</code></pre></li>
+<li><p>若合约未进行部署就进行调用，可能出现下述报错：</p>
+<pre><code>truffle(default)&gt; Greeter.deployed().setGreeting(&quot;Hello world!&quot;);
+Error: Cannot find deployed address: Greeter not deployed or address not set.
+at Function.Contract.deployed (/Users/admin/develop/blockchain_workspace/truffleTest/build/contracts/Greeter.sol.js:311:1
+3)
+at evalmachine.&lt;anonymous&gt;:1:-53
+at ContextifyScript.Script.runInContext (vm.js:37:29)
+at Object.exports.runInContext (vm.js:69:17)
+at TruffleInterpreter.interpret (/usr/local/lib/node_modules/truffle/lib/repl.js:99:17)
+at bound (domain.js:280:14)
+at REPLServer.runBound [as eval] (domain.js:293:12)
+at REPLServer.onLine (repl.js:513:10)
+at emitOne (events.js:96:13)
+</code></pre></li>
+</ul>
+<p>##问题来了</p>
+<h3 id="问题1-我如果要部署两个合约怎么弄？"><a href="#问题1-我如果要部署两个合约怎么弄？" class="headerlink" title="问题1.我如果要部署两个合约怎么弄？"></a>问题1.我如果要部署两个合约怎么弄？</h3><ul>
+<li>1.把合约文件放在contracts文件夹下</li>
+<li><p>2.修改2_deploy_contracts.js 文件</p>
+<pre><code>var Greeter = artifacts.require(&quot;./Greeter.sol&quot;);//第一个合约
+var test = artifacts.require(&quot;./DemoTypes.sol&quot;);//第二个合约
+module.exports = function(deployer) {
+deployer.deploy(Greeter,&quot;hellow world!&quot;);
+deployer.deploy(test);
+};
+</code></pre></li>
+<li><p>3.执行编译truffle compile</p>
+</li>
+<li><p>4.部署 truffle migrate 出现了问题</p>
+<pre><code>exceeds block gas limit
+</code></pre><p>这是说你的合约执行话费多余了你当前设置的最高限度，那我们要修改这个limit </p>
+<p>打开truffle.js 添加</p>
+<pre><code>gas:4712388, //Gas limit used for deploys. Default is web3.eth.getBlock(“pending”).gasLimit==4712388.
+gasPrice:18000000000, //Gas price used for deploys. Default is 100000000000 (100 Shannon).
+</code></pre><p>文件变为</p>
+<pre><code>module.exports = {
+  // See &lt;http://truffleframework.com/docs/advanced/configuration&gt;
+  // to customize your Truffle configuration!
+   networks: {
+    development: {
+    host: &quot;localhost&quot;,
+    port: 8545,
+        gas:4712388, //Gas limit used for deploys. Default is web3.eth.getBlock(“pending”).gasLimit==4712388.
+    gasPrice:18000000000, //Gas price used for deploys. Default is 100000000000 (100 Shannon).
+
+    network_id: &quot;*&quot; // 匹配任何network id
+    }
+}
+};
+</code></pre><p>我们重新设置了gas花费上限</p>
+<p>这样就可以了。后面就没有问题了。</p>
+</li>
+</ul>
+<h3 id="问题2：为什么我的合约部署一直停在那里？"><a href="#问题2：为什么我的合约部署一直停在那里？" class="headerlink" title="问题2：为什么我的合约部署一直停在那里？"></a>问题2：为什么我的合约部署一直停在那里？</h3><p>遇到这个问题，多半是你没有用testrcp，换成了自己的私链，而和testrcp相比，testrcp是自动挖矿的，如你开启了自己的私链，但没有挖矿，那么你的合约部署是不会执行的，所以解决方法就是，开启你私链的挖矿。miner.start()</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/区块链/" rel="tag"># 区块链</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/21/truffle使用/" rel="next" title="truffle使用">
+                <i class="fa fa-chevron-left"></i> truffle使用
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/04/23/solidity基础- 一行代码蒸发了¥6,447,277,680 人民币！/" rel="prev" title="solidity基础- 一行代码蒸发了¥6,447,277,680 人民币！">
+                solidity基础- 一行代码蒸发了¥6,447,277,680 人民币！ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8zMzI0Mi85Nzk5"></div>
+    </div>
+
+  
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">leequer</p>
+              <p class="site-description motion-element" itemprop="description">我不是胖，只是肉有点多</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">79</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/leequer" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:447476554@qq.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Truffle有以下特点："><span class="nav-number">2.</span> <span class="nav-text">Truffle有以下特点：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#truffle使用"><span class="nav-number">3.</span> <span class="nav-text">truffle使用</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#前置工作"><span class="nav-number">3.1.</span> <span class="nav-text">前置工作</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#环境要求-NodeJS-5-0"><span class="nav-number">3.1.1.</span> <span class="nav-text">环境要求  NodeJS 5.0+</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#truffle安装"><span class="nav-number">3.1.2.</span> <span class="nav-text">truffle安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TestRPC客户端安装"><span class="nav-number">3.1.3.</span> <span class="nav-text">TestRPC客户端安装</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#truffle的使用并编译和发布合约，交互合约"><span class="nav-number">3.2.</span> <span class="nav-text">truffle的使用并编译和发布合约，交互合约</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#用truffle创建项目"><span class="nav-number">3.2.1.</span> <span class="nav-text">用truffle创建项目</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化框架"><span class="nav-number">3.2.2.</span> <span class="nav-text">初始化框架</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建合约"><span class="nav-number">3.2.3.</span> <span class="nav-text">新建合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#修改发布脚本"><span class="nav-number">3.2.4.</span> <span class="nav-text">修改发布脚本</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译"><span class="nav-number">3.2.5.</span> <span class="nav-text">编译</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#部署合约"><span class="nav-number">3.2.6.</span> <span class="nav-text">部署合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#运行合约"><span class="nav-number">3.2.7.</span> <span class="nav-text">运行合约</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#常见报错"><span class="nav-number">3.2.8.</span> <span class="nav-text">常见报错</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题1-我如果要部署两个合约怎么弄？"><span class="nav-number">3.2.9.</span> <span class="nav-text">问题1.我如果要部署两个合约怎么弄？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#问题2：为什么我的合约部署一直停在那里？"><span class="nav-number">3.2.10.</span> <span class="nav-text">问题2：为什么我的合约部署一直停在那里？</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">leequer</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.4</div>
+  <span id="busuanzi_container_site_pv">
+    本站总访问量<span id="busuanzi_value_site_pv"></span>次
+  </span>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname, 
+            owner: 'leequer',
+            repo: 'https://github.com/leequer/leequer.github.io.git',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '41d0c9bb7796c7728c1e23a7af8bde9c0487ed49',
+            
+                client_id: '19e9892b4e6b7eb2ccf5'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      function showGitment(){
+        document.getElementById("gitment-display-button").style.display = "none";
+        document.getElementById("gitment-container").style.display = "block";
+        renderGitment();
+      }
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("g6QTkM1EHRvlyWzXA7Uj9P6u-gzGzoHsz", "u7DkS9lXJisLp5VBDIleP8c1");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+		<script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+<script>AV.initialize("g6QTkM1EHRvlyWzXA7Uj9P6u-gzGzoHsz", "u7DkS9lXJisLp5VBDIleP8c1");</script>
+<script>
+function showTime(Counter) {
+	var query = new AV.Query(Counter);
+	$(".leancloud_visitors").each(function() {
+		var url = $(this).attr("id").trim();
+		query.equalTo("url", url);
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					var content = '0 ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+					return;
+				}
+				for (var i = 0; i < results.length; i++) {
+					var object = results[i];
+					var content = object.get('time') + ' ' + $(document.getElementById(url)).text();
+					$(document.getElementById(url)).text(content);
+				}
+			},
+			error: function(object, error) {
+				console.log("Error: " + error.code + " " + error.message);
+			}
+		});
+
+	});
+}
+
+function addCount(Counter) {
+	var Counter = AV.Object.extend("Counter");
+	url = $(".leancloud_visitors").attr('id').trim();
+	title = $(".leancloud_visitors").attr('data-flag-title').trim();
+	var query = new AV.Query(Counter);
+	query.equalTo("url", url);
+	query.find({
+		success: function(results) {
+			if (results.length > 0) {
+				var counter = results[0];
+				counter.fetchWhenSave(true);
+				counter.increment("time");
+				counter.save(null, {
+					success: function(counter) {
+						var content =  counter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(counter, error) {
+						console.log('Failed to save Visitor num, with error message: ' + error.message);
+					}
+				});
+			} else {
+				var newcounter = new Counter();
+				newcounter.set("title", title);
+				newcounter.set("url", url);
+				newcounter.set("time", 1);
+				newcounter.save(null, {
+					success: function(newcounter) {
+					    console.log("newcounter.get('time')="+newcounter.get('time'));
+						var content = newcounter.get('time') + ' ' + $(document.getElementById(url)).text();
+						$(document.getElementById(url)).text(content);
+					},
+					error: function(newcounter, error) {
+						console.log('Failed to create');
+					}
+				});
+			}
+		},
+		error: function(error) {
+			console.log('Error:' + error.code + " " + error.message);
+		}
+	});
+}
+$(function() {
+	var Counter = AV.Object.extend("Counter");
+	if ($('.leancloud_visitors').length == 1) {
+		addCount(Counter);
+	} else if ($('.post-title-link').length > 1) {
+		showTime(Counter);
+	}
+}); 
+</script>
+  
+</body>
+</html>
