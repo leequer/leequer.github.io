@@ -79,18 +79,18 @@
 
 
 
-<meta name="description" content="以太坊源码阅读-goeth客户端 编译我们编译了goeth的源码，今天分析下，源码的运行。 要看源码，我无从下手，先看那个go文件？ 从那个文件开始看？gdb这是我执行make命令的文件夹： liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum$  这是我执行geth命令的文">
+<meta name="description" content="以太坊源码阅读-goeth客户端 编译我们编译了goeth的源码，今天分析下，源码的运行。 编译和运行goEtherrum这是我执行make命令的文件夹： liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum$  这是我执行geth命令的文件夹： liqing@ubuntu:">
 <meta name="keywords" content="区块链">
 <meta property="og:type" content="article">
 <meta property="og:title" content="以太坊源码阅读-goeth客户端启动">
 <meta property="og:url" content="http://yoursite.com/2017/12/22/以太坊源码阅读-goeth客户端启动/index.html">
 <meta property="og:site_name" content="有志青年">
-<meta property="og:description" content="以太坊源码阅读-goeth客户端 编译我们编译了goeth的源码，今天分析下，源码的运行。 要看源码，我无从下手，先看那个go文件？ 从那个文件开始看？gdb这是我执行make命令的文件夹： liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum$  这是我执行geth命令的文">
+<meta property="og:description" content="以太坊源码阅读-goeth客户端 编译我们编译了goeth的源码，今天分析下，源码的运行。 编译和运行goEtherrum这是我执行make命令的文件夹： liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum$  这是我执行geth命令的文件夹： liqing@ubuntu:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-05-15T03:25:34.143Z">
+<meta property="og:updated_time" content="2018-05-15T05:57:41.167Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以太坊源码阅读-goeth客户端启动">
-<meta name="twitter:description" content="以太坊源码阅读-goeth客户端 编译我们编译了goeth的源码，今天分析下，源码的运行。 要看源码，我无从下手，先看那个go文件？ 从那个文件开始看？gdb这是我执行make命令的文件夹： liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum$  这是我执行geth命令的文">
+<meta name="twitter:description" content="以太坊源码阅读-goeth客户端 编译我们编译了goeth的源码，今天分析下，源码的运行。 编译和运行goEtherrum这是我执行make命令的文件夹： liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum$  这是我执行geth命令的文件夹： liqing@ubuntu:">
 
 
 
@@ -311,8 +311,7 @@
 
       
         <p><a href="&quot;https://leequer.github.io/2017/12/02/%E4%BB%A5%E5%A4%AA%E5%9D%8A%E6%BA%90%E7%A0%81%E9%98%85%E8%AF%BB-goeth%E5%AE%A2%E6%88%B7%E7%AB%AF%20%E7%BC%96%E8%AF%91/&quot;">以太坊源码阅读-goeth客户端 编译</a>我们编译了goeth的源码，今天分析下，源码的运行。</p>
-<p>要看源码，我无从下手，先看那个go文件？</p>
-<h1 id="从那个文件开始看？"><a href="#从那个文件开始看？" class="headerlink" title="从那个文件开始看？"></a>从那个文件开始看？</h1><h2 id="gdb"><a href="#gdb" class="headerlink" title="gdb"></a>gdb</h2><p>这是我执行make命令的文件夹：</p>
+<h1 id="编译和运行goEtherrum"><a href="#编译和运行goEtherrum" class="headerlink" title="编译和运行goEtherrum"></a>编译和运行goEtherrum</h1><p>这是我执行make命令的文件夹：</p>
 <pre><code>liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum$ 
 </code></pre><p>这是我执行geth命令的文件夹：</p>
 <pre><code>liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum/build/bin$ 
@@ -362,7 +361,7 @@ INFO [05-13|00:36:05] Imported new block receipts              count=788  elapse
 INFO [05-13|00:36:05] Imported new state entries               count=1959 elapsed=8.241ms   processed=321282 pending=2326  retry=0   duplicate=52 unexpected=328
 INFO [05-13|00:36:05] Imported new block headers               count=768  elapsed=127.307ms number=292752 hash=d79066…4f29c4 ignored=0
 </code></pre><p>那我们就从这里开始，看它怎么启动这个geth命令的。</p>
-<h1 id="现在这个客户端默认启动的是主节点，那需求来了，我们要默认启动自己的节点信息，怎么办？"><a href="#现在这个客户端默认启动的是主节点，那需求来了，我们要默认启动自己的节点信息，怎么办？" class="headerlink" title="现在这个客户端默认启动的是主节点，那需求来了，我们要默认启动自己的节点信息，怎么办？"></a>现在这个客户端默认启动的是主节点，那需求来了，我们要默认启动自己的节点信息，怎么办？</h1><h2 id="geth"><a href="#geth" class="headerlink" title="geth"></a>geth</h2><p>首先，geth命令执行的是/cmd/geth/main.go 中的geth方法</p>
+<h1 id="修改源码使得goEhereum默认启动自己的节点"><a href="#修改源码使得goEhereum默认启动自己的节点" class="headerlink" title="修改源码使得goEhereum默认启动自己的节点"></a>修改源码使得goEhereum默认启动自己的节点</h1><h2 id="geth"><a href="#geth" class="headerlink" title="geth"></a>geth</h2><p>首先，geth命令执行的是/cmd/geth/main.go 中的geth方法</p>
 <pre><code>// geth is the main entry point into the system if no special subcommand is ran.
 // It creates a default node based on the command line arguments and runs it in
 // blocking mode, waiting for it to be shut down.
@@ -540,6 +539,8 @@ var LinkBlockBootnodes = []string{
     &quot;enode://f2c91ee24585e592fa5adc1940360b90e1a10969c5955fc51807bb24ab5e34265994c36f3af51a982a3d6d66f73b8cbba99ad38739545812724d60bf5c58e684@39.104.104.233:30303&quot;, // IE
 
 }
+</code></pre><p>同时，这句代码改为：</p>
+<pre><code>urls := params.LinkBlockBootnodes
 </code></pre><p>这里改完了（其实在真正开发中，都是倒着找到的，看那些字在哪里出现，哪个方法被调用，都是倒着找的。），回到geth/config.go 文件来，看第二句 </p>
 <p>utils.RegisterEthService(stack, &amp;cfg.Eth) 源码如下：</p>
 <pre><code>var err error
@@ -700,7 +701,7 @@ INFO [05-13|17:08:14] Loaded most recent local fast block      number=0 hash=634
 INFO [05-13|17:08:14] Loaded local transaction journal         transactions=0 dropped=0
 INFO [05-13|17:08:14] Regenerated local transaction journal    transactions=0 accounts=0
 INFO [05-13|17:08:14] Starting P2P networking
-</code></pre><h1 id="调试："><a href="#调试：" class="headerlink" title="调试："></a>调试：</h1><p>我们执行 在bin目录下liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum/build/bin$ 执行：</p>
+</code></pre><h1 id="调试："><a href="#调试：" class="headerlink" title="调试："></a>调试：</h1><h2 id="gdb"><a href="#gdb" class="headerlink" title="gdb"></a>gdb</h2><p>我们执行 在bin目录下liqing@ubuntu:~/Documents/Ethereum/workspace/project/src/github.com/ethereum/go-ethereum/build/bin$ 执行：</p>
 <pre><code>gdb geth
 </code></pre><p>当出现gdb 命令控制台时，输入你想断点的文件的行数</p>
 <pre><code>break core/xxx.go:153
@@ -895,7 +896,7 @@ INFO [05-13|17:08:14] Starting P2P networking
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#从那个文件开始看？"><span class="nav-number">1.</span> <span class="nav-text">从那个文件开始看？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb"><span class="nav-number">1.1.</span> <span class="nav-text">gdb</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#现在这个客户端默认启动的是主节点，那需求来了，我们要默认启动自己的节点信息，怎么办？"><span class="nav-number">2.</span> <span class="nav-text">现在这个客户端默认启动的是主节点，那需求来了，我们要默认启动自己的节点信息，怎么办？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#geth"><span class="nav-number">2.1.</span> <span class="nav-text">geth</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调试："><span class="nav-number">3.</span> <span class="nav-text">调试：</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#编译和运行goEtherrum"><span class="nav-number">1.</span> <span class="nav-text">编译和运行goEtherrum</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#修改源码使得goEhereum默认启动自己的节点"><span class="nav-number">2.</span> <span class="nav-text">修改源码使得goEhereum默认启动自己的节点</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#geth"><span class="nav-number">2.1.</span> <span class="nav-text">geth</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#调试："><span class="nav-number">3.</span> <span class="nav-text">调试：</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#gdb"><span class="nav-number">3.1.</span> <span class="nav-text">gdb</span></a></li></ol></li></ol></div>
             
 
           </div>
